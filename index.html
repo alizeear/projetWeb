@@ -1,57 +1,67 @@
 <!DOCTYPE html>
 <html ng-app="MusicPlayer" xmlns="http://www.w3.org/1999/html">
     <head>
+        <title>Music Player</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="styles.css" />
     </head>
 
     <body>
-    <div id="dz-root"></div>
-    <div id="dz-player" style="width:100%;" align="center"></div>
-    <section>
-        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
-    </section>
-    <section ng-controller="TabController as tab">
-        <ul class="nav nav-pills">
-            <li ng-class="{ active:tab.isSet(1) }">
-                <a href ng-click="tab.setTab(1)">Playlist</a>
-            </li>
-            <li ng-class="{ active:tab.isSet(2) }">
-                <a href ng-click="tab.setTab(2)">Catalogue</a>
-            </li>
-        </ul>
+        <!--Le player graphique de deezer-->
+        <div id="dz-root"></div>
+        <div id="dz-player" style="width:100%;" align="center"></div>
+        <!--END player deezer-->
 
-        <!--  Description Tab's Content  -->
-        <div ng-show="tab.isSet(1)">
-            <h4>Playlist</h4>
-            <table class="table">
-                <tr>
-                    <th>Cover</th>
-                    <th>Album</th>
-                    <th>Morceau</th>
-                    <th>Artiste</th>
-                    <th>Durée</th>
-                    <th>Vote</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>Cover</td>
-                    <td>Album</td>
-                    <td>Morceau</td>
-                    <td>Artiste</td>
-                    <td>Durée</td>
-                    <td>5</td>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
+        <!--Player custom-->
+        <section id="player">
+            <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="widget.playAction();"></span>
+            <span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>
+        </section>
+        <!--END player custom-->
 
-        <!--  Spec Tab's Content  -->
-        <div ng-show="tab.isSet(2)">
-            <h4>Catalogue</h4>
-        </div>
+        <section ng-controller="TabController as tab">
+            <ul class="nav nav-pills">
+                <li ng-class="{ active:tab.isSet(1) }">
+                    <a href ng-click="tab.setTab(1)">Playlist</a>
+                </li>
+                <li ng-class="{ active:tab.isSet(2) }">
+                    <a href ng-click="tab.setTab(2)">Catalogue</a>
+                </li>
+            </ul>
+
+            <!--  Description Tab's Content  -->
+            <div ng-show="tab.isSet(1)">
+                <h4>Playlist</h4>
+                <table class="table">
+                    <tr>
+                        <th>Cover</th>
+                        <th>Album</th>
+                        <th>Morceau</th>
+                        <th>Artiste</th>
+                        <th>Durée</th>
+                        <th>Vote</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Cover</td>
+                        <td>Album</td>
+                        <td>Morceau</td>
+                        <td>Artiste</td>
+                        <td>Durée</td>
+                        <td>5</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!--  Spec Tab's Content  -->
+            <div ng-show="tab.isSet(2)">
+                <h4>Catalogue</h4>
+            </div>
     </section>
     <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
     <script>
         var app = angular.module("MusicPlayer", []);
         app.controller("TabController", function() {
