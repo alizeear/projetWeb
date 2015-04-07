@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html ng-app="MusicPlayer" xmlns="http://www.w3.org/1999/html">
     <head>
-        <title>Music Player</title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="styles.css" />
+        <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     </head>
 
     <body>
+    <!--Le player graphique de deezer-->
     <div id="dz-root"></div>
     <div id="dz-player" style="width:100%;" align="center"></div>
-
-
+    <!--END player deezer-->
     <!--Player custom-->
     <section id="player">
         <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="widget.playAction();"></span>
