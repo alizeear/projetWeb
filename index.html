@@ -8,73 +8,76 @@
     </head>
 
     <body>
-        <!--Le player graphique de deezer-->
-        <div id="dz-root"></div>
-        <div id="dz-player" style="width:100%;" align="center"></div>
-        <!--END player deezer-->
+    <div id="dz-root"></div>
+    <div id="dz-player" style="width:100%;" align="center"></div>
 
-        <!--Player custom-->
-        <section id="player">
-            <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="widget.playAction();"></span>
-            <span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>
-        </section>
-        <!--END player custom-->
 
-        <section ng-controller="TabController as tab">
-            <ul class="nav nav-pills">
-                <li ng-class="{ active:tab.isSet(1) }">
-                    <a href ng-click="tab.setTab(1)">Playlist</a>
-                </li>
-                <li ng-class="{ active:tab.isSet(2) }">
-                    <a href ng-click="tab.setTab(2)">Catalogue</a>
-                </li>
-            </ul>
+    <!--Player custom-->
+    <section id="player">
+        <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="widget.playAction();"></span>
+        <span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>
+    </section>
+    <!--END player custom-->
+    
+    <section ng-controller="TabController as tab">
+        <ul class="nav nav-pills">
+            <li ng-class="{ active:tab.isSet(1) }">
+                <a href ng-click="tab.setTab(1)">Playlist</a>
+            </li>
+            <li ng-class="{ active:tab.isSet(2) }">
+                <a href ng-click="tab.setTab(2)">Catalogue</a>
+            </li>
+        </ul>
 
-            <!--  Description Tab's Content  -->
-            <div ng-show="tab.isSet(1)">
-                <h4>Playlist</h4>
-                <table class="table">
-                    <tr>
-                        <th>Cover</th>
-                        <th>Album</th>
-                        <th>Morceau</th>
-                        <th>Artiste</th>
-                        <th>Durée</th>
-                        <th>Vote</th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <td>Cover</td>
-                        <td>Album</td>
-                        <td>Morceau</td>
-                        <td>Artiste</td>
-                        <td>Durée</td>
-                        <td>5</td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div>
+        <!--  Description Tab's Content  -->
+        <div ng-show="tab.isSet(1)">
+            <h4>Playlist</h4>
+            <table class="table">
+                <tr>
+                    <th>Cover</th>
+                    <th>Album</th>
+                    <th>Morceau</th>
+                    <th>Artiste</th>
+                    <th>Durée</th>
+                    <th>Vote</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="track in tab.tracks">
+                    <td>{{track.cover}}</td>
+                    <td>{{track.album}}</td>
+                    <td>{{track.morceau}}</td>
+                    <td>{{track.artiste}}</td>
+                    <td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>
+                    <td>{{track.vote}}</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
 
-            <!--  Spec Tab's Content  -->
-            <div ng-show="tab.isSet(2)">
-                <h4>Catalogue</h4>
-            </div>
+        <!--  Spec Tab's Content  -->
+        <div ng-show="tab.isSet(2)">
+            <h4>Catalogue</h4>
+        </div>
     </section>
     <script type="text/javascript" src="angular.min.js"></script>
-    <script type="text/javascript" src="jquery.min.js"></script>
     <script>
         var app = angular.module("MusicPlayer", []);
-        app.controller("TabController", function() {
-            this.tab = 1;
+        app.controller('TabController', ['$http', function($http){
+            var playlist = this;
+            playlist.tracks = [];
+            playlist.tab = 1;
 
-            this.isSet = function(checkTab) {
+            playlist.isSet = function(checkTab) {
                 return this.tab === checkTab;
-            };
+            }
 
-            this.setTab = function(setTab) {
+            playlist.setTab = function(setTab) {
                 this.tab = setTab;
             };
-        });
+            $http.get('test.json').success(function(data){
+                playlist.tracks = data;
+            });
+        }]);
     </script>
     <script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
     <script>

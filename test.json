@@ -1,26 +1,26 @@
 [
   {
-    "cover": "",
-    "album": "",
-    "morceau": ,
-    "artiste": ,
-    "durée": ,
-    "vote": ,
+    "cover": "https://api.deezer.com/album/302127/image",
+    "album": "album1",
+    "morceau": "Chanson 1",
+    "artiste": "nom1",
+    "duree": 90,
+    "vote": 2
   },
   {
-    "cover": "",
-    "album": "Some gems have hidden qualities beyond their luster, beyond their shine... Azurite is one of those gems.",
-    "morceau": 8,
-    "artiste": 110.50,
-    "durée": 7,
-    "vote": "#CCC",
+    "cover": "https://api.deezer.com/album/302127/image",
+    "album": "album2",
+    "morceau": "Chanson 2",
+    "artiste": "nom2",
+    "duree": 180,
+    "vote": 3
   },
   {
-    "cover": "Azurite",
-    "album": "Some gems have hidden qualities beyond their luster, beyond their shine... Azurite is one of those gems.",
-    "morceau": 8,
-    "artiste": 110.50,
-    "durée": 7,
-    "vote": "#CCC",
+    "cover": "https://api.deezer.com/album/302127/image",
+    "album": "album2",
+    "morceau": "Chanson 3",
+    "artiste": "nom2",
+    "duree": 240,
+    "vote": 4
   }
 ]
