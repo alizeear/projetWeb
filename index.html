@@ -1,7 +1,82 @@
-<html>
-    <head></head>
+<!DOCTYPE html>
+<html ng-app="MusicPlayer" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    </head>
+
     <body>
-        <script></script>
-        <h1>Bienvenue à toi !</h1>
+    <div id="dz-root"></div>
+    <div id="dz-player" style="width:100%;" align="center"></div>
+    <section>
+        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+    </section>
+    <section ng-controller="TabController as tab">
+        <ul class="nav nav-pills">
+            <li ng-class="{ active:tab.isSet(1) }">
+                <a href ng-click="tab.setTab(1)">Playlist</a>
+            </li>
+            <li ng-class="{ active:tab.isSet(2) }">
+                <a href ng-click="tab.setTab(2)">Catalogue</a>
+            </li>
+        </ul>
+
+        <!--  Description Tab's Content  -->
+        <div ng-show="tab.isSet(1)">
+            <h4>Playlist</h4>
+            <table class="table">
+                <tr>
+                    <th>Cover</th>
+                    <th>Album</th>
+                    <th>Morceau</th>
+                    <th>Artiste</th>
+                    <th>Durée</th>
+                    <th>Vote</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Cover</td>
+                    <td>Album</td>
+                    <td>Morceau</td>
+                    <td>Artiste</td>
+                    <td>Durée</td>
+                    <td>5</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <!--  Spec Tab's Content  -->
+        <div ng-show="tab.isSet(2)">
+            <h4>Catalogue</h4>
+        </div>
+    </section>
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script>
+        var app = angular.module("MusicPlayer", []);
+        app.controller("TabController", function() {
+            this.tab = 1;
+
+            this.isSet = function(checkTab) {
+                return this.tab === checkTab;
+            };
+
+            this.setTab = function(setTab) {
+                this.tab = setTab;
+            };
+        });
+    </script>
+    <script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
+    <script>
+        DZ.init({
+            appId  : 'YOUR_APP_ID',
+            channelUrl : 'http://YOUR_DOMAIN/channel.html',
+            player: {
+                container: 'dz-player',
+                width : 700,
+                height : 80
+            }
+        });
+    </script>
     </body>
 </html>

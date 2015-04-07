@@ -1,0 +1,26 @@
+[
+  {
+    "cover": "",
+    "album": "",
+    "morceau": ,
+    "artiste": ,
+    "durée": ,
+    "vote": ,
+  },
+  {
+    "cover": "",
+    "album": "Some gems have hidden qualities beyond their luster, beyond their shine... Azurite is one of those gems.",
+    "morceau": 8,
+    "artiste": 110.50,
+    "durée": 7,
+    "vote": "#CCC",
+  },
+  {
+    "cover": "Azurite",
+    "album": "Some gems have hidden qualities beyond their luster, beyond their shine... Azurite is one of those gems.",
+    "morceau": 8,
+    "artiste": 110.50,
+    "durée": 7,
+    "vote": "#CCC",
+  }
+]
