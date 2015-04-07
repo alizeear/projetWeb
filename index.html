@@ -8,9 +8,6 @@
     <body>
     <div id="dz-root"></div>
     <div id="dz-player" style="width:100%;" align="center"></div>
-    <section>
-        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
-    </section>
     <section ng-controller="TabController as tab">
         <ul class="nav nav-pills">
             <li ng-class="{ active:tab.isSet(1) }">
@@ -34,13 +31,13 @@
                     <th>Vote</th>
                     <th></th>
                 </tr>
-                <tr>
-                    <td>Cover</td>
-                    <td>Album</td>
-                    <td>Morceau</td>
-                    <td>Artiste</td>
-                    <td>Durée</td>
-                    <td>5</td>
+                <tr ng-repeat="track in tab.tracks">
+                    <td>{{track.cover}}</td>
+                    <td>{{track.album}}</td>
+                    <td>{{track.morceau}}</td>
+                    <td>{{track.artiste}}</td>
+                    <td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>
+                    <td>{{track.vote}}</td>
                     <td></td>
                 </tr>
             </table>
@@ -54,17 +51,22 @@
     <script type="text/javascript" src="angular.min.js"></script>
     <script>
         var app = angular.module("MusicPlayer", []);
-        app.controller("TabController", function() {
-            this.tab = 1;
+        app.controller('TabController', ['$http', function($http){
+            var playlist = this;
+            playlist.tracks = [];
+            playlist.tab = 1;
 
-            this.isSet = function(checkTab) {
+            playlist.isSet = function(checkTab) {
                 return this.tab === checkTab;
-            };
+            }
 
-            this.setTab = function(setTab) {
+            playlist.setTab = function(setTab) {
                 this.tab = setTab;
             };
-        });
+            $http.get('test.json').success(function(data){
+                playlist.tracks = data;
+            });
+        }]);
     </script>
     <script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
     <script>
