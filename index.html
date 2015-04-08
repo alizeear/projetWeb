@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html ng-app="MusicPlayer" xmlns="http://www.w3.org/1999/html">
     <head>
+        <title>Music player</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="styles.css" />
         <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     </head>
 
-    <body>
+    <body ng-controller="MusicPlayerController">
     <!--Le player graphique de deezer-->
     <div id="dz-root"></div>
     <div id="dz-player" style="width:100%;" align="center"></div>
@@ -17,7 +18,7 @@
         <span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>
     </section>
     <!--END player custom-->
-    
+    {{MusicPlayerController.trackss}}
     <section ng-controller="TabController as tab">
         <ul class="nav nav-pills">
             <li ng-class="{ active:tab.isSet(1) }">
@@ -27,7 +28,6 @@
                 <a href ng-click="tab.setTab(2)">Catalogue</a>
             </li>
         </ul>
-
         <!--  Description Tab's Content  -->
         <div ng-show="tab.isSet(1)">
             <h4>Playlist</h4>
@@ -59,6 +59,8 @@
         </div>
     </section>
     <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
     <script>
         var app = angular.module("MusicPlayer", []);
         app.controller('TabController', ['$http', function($http){
@@ -75,8 +77,17 @@
             };
             $http.get('test.json').success(function(data){
                 playlist.tracks = data;
+                console.log(playlist.tracks);
             });
         }]);
+
+        app.controller('MusicPlayerController', function($scope){
+            this.musicPlayer = new MusicPlayerRestClient();
+            this.trackss = [];
+            this.trackss = this.musicPlayer.getAllTrack();
+            console.log(this.trackss);
+        });
+
     </script>
     <script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
     <script>
@@ -89,6 +100,63 @@
                 height : 80
             }
         });
+    </script>
+    <script>
+        function MusicPlayerRestClient(){
+
+            var CURRENT_TRACK_URI   = 'http://localhost:3000/projetweb/tracks/currentTrack';
+            var ALL_TRACKS_URI      = 'http://localhost:3000/projetweb/tracks/allTracks';
+            var PROPOSED_TRACKS_URI = 'http://localhost:3000/projetweb/tracks/proposedTracks';
+            var PREVIOUS_TRACKS_URI = 'http://localhost:3000/projetweb/tracks/previousTracks';
+            var NEXT_TRACK_URI      = 'http://localhost:3000/projetweb/tracks/nextTrack';
+
+            this.getCurrentTrack = function(){
+                var currentTrack = this.doRequest('GET', CURRENT_TRACK_URI, null);
+                return currentTrack;
+            };
+
+            this.getAllTrack = function(){
+                var allTracks = this.doRequest('GET', ALL_TRACKS_URI, null);
+//                console.log(allTracks);
+                return allTracks;
+            };
+
+            this.getProposedTracks = function (){
+                var proposedTracks = this.doRequest('GET', PROPOSED_TRACKS_URI, null);
+                return proposedTracks;
+            };
+
+            this.getPreviousTracks = function(){
+                var previousTracks = this.doRequest('GET', PREVIOUS_TRACKS_URI, null);
+                return previousTracks;
+            };
+
+            this.getNextTrack = function(){
+                var nextTrack = this.doRequest('POST', NEXT_TRACK_URI, null);
+                return nextTrack;
+            };
+
+            this.doRequest = function(verb, url, data) {
+
+                var response;
+
+                $.ajax({
+                    url:  url,
+                    type: verb,
+                    async: false,
+                    success: function(resp) {
+                        response = resp;
+                    },
+                    error: function(xhr) {
+                        console.log("Error when " + verb + url);
+                    }
+                });
+
+                return response;
+
+            }; // method
+
+        } // class
     </script>
     </body>
 </html>
