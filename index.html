@@ -2,8 +2,8 @@
 <html ng-app="MusicPlayer" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="styles.css" />
         <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="styles.css" />
     </head>
 
     <body>
@@ -19,7 +19,7 @@
     <!--END player custom-->
     
     <section ng-controller="TabController as tab">
-        <ul class="nav nav-pills">
+        <ul class="nav nav-pills" align="center">
             <li ng-class="{ active:tab.isSet(1) }">
                 <a href ng-click="tab.setTab(1)">Playlist</a>
             </li>
@@ -29,7 +29,7 @@
         </ul>
 
         <!--  Description Tab's Content  -->
-        <div ng-show="tab.isSet(1)">
+        <div ng-show="tab.isSet(1)" align="center">
             <h4>Playlist</h4>
             <table class="table">
                 <tr>
@@ -42,13 +42,13 @@
                     <th></th>
                 </tr>
                 <tr ng-repeat="track in tab.tracks">
-                    <td>{{track.cover}}</td>
+                    <td><img ng-src="{{track.cover}}"/></td>
                     <td>{{track.album}}</td>
                     <td>{{track.morceau}}</td>
                     <td>{{track.artiste}}</td>
-                    <td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>
+                    <td>{{track.duree/60 | number: 00}}:{{track.duree%60 | number: 00}}</td>
                     <td>{{track.vote}}</td>
-                    <td></td>
+                    <td class=""></td>
                 </tr>
             </table>
         </div>
@@ -56,6 +56,24 @@
         <!--  Spec Tab's Content  -->
         <div ng-show="tab.isSet(2)">
             <h4>Catalogue</h4>
+            <table class="table">
+                <tr>
+                    <th>Cover</th>
+                    <th>Album</th>
+                    <th>Morceau</th>
+                    <th>Artiste</th>
+                    <th>Durée</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="track in tab.tracks">
+                    <td><img ng-src="{{track.cover}}"/></td>
+                    <td>{{track.album}}</td>
+                    <td>{{track.morceau}}</td>
+                    <td>{{track.artiste}}</td>
+                    <td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
     </section>
     <script type="text/javascript" src="angular.min.js"></script>

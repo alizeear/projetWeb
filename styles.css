@@ -18,3 +18,8 @@
     color: #c9302c;
     cursor: pointer;
 }
+
+.nav-pills > li{
+    float: none;
+    display: inline-block;
+}
