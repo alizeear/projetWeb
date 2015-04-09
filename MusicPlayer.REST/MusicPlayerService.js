@@ -30,7 +30,6 @@ app.get('/projetweb/tracks/allTracks', function (request, response) {
         });
 
         res.on('end', function () {
-            /*console.log(data);*/
             response.json(data);
         });
 
