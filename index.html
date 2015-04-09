@@ -15,8 +15,10 @@
     <!--END player deezer-->
     <!--Player custom-->
     <section id="player">
-        <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="widget.playAction();"></span>
-        <span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>
+        <span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>
+        <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
+        <span class="glyphicon glyphicon-pause" aria-hidden="true" onclick="DZ.player.pause();return false;"></span>
+        <!--<span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>-->
     </section>
     <!--END player custom-->
 
@@ -128,6 +130,12 @@
         });
     </script>
     <script>
+        // /!\A VOIR http://developers.deezer.com/inapp/player/methods pour les méthodes de controle du player
+        function Player(){
+            DZ.player.playTracks([3135554, 60200381], 0, function(response){
+                console.log("track list", response.tracks);
+            });
+        }
         function MusicPlayerRestClient(){
 
             var CURRENT_TRACK_URI   = 'http://localhost:3000/projetweb/tracks/currentTrack';
@@ -181,6 +189,7 @@
                 return response;
 
             }; // method
+
 
         } // class
     </script>
