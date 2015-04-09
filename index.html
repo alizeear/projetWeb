@@ -15,12 +15,38 @@
     <!--END player deezer-->
     <!--Player custom-->
     <section id="player">
-        <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="widget.playAction();"></span>
-        <span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>
+        <span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>
+        <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
+        <span class="glyphicon glyphicon-pause" aria-hidden="true" onclick="DZ.player.pause();return false;"></span>
+        <span aria-hidden="true" >
+            <ul id="h_volume" style>
+                <li id="h_100" style="opacity: 0;">
+                     <a href="javascript:void(0)" onclick="playercontrol.doAction('mute'); return false;" class="glyphicons glyphicons-volume-up"></a>
+                 </li>
+                 <li id="h_50" style="opacity: 0.5;">
+                    <a href="javascript:void(0)" onclick="playercontrol.doAction('mute'); return false;" class="glyphicons glyphicons-volume-down"></a>
+                </li>
+                <!-- <li id="h_0" style="opacity: 1;">
+                    <a href="javascript:void(0)" onclick="playercontrol.toggleMute(); return false;" class="glyphicons glyphicons-mute"></a>
+                </li>
+                <li id="mute" style="display: none;">
+                    <a href="javascript:void(0)" onclick="playercontrol.doAction('mute'); return false;" class="glyphicons glyphicons-mute"></a>
+                </li>-->
+            </ul>
+            <span id="volume" style="display: none;" class="block absolute sprite_widget"><!-- activer ou désactiver avec none la barre de volume -->
+								<div style="overflow:hidden;width:60px;" class="lvl-volume absolute block">
+                                    <div id="volumeSlider" class="lvl-slider relative block" style="width: 50%;"></div>
+                                </div>
+								<div id="volumeHelper" class="lvl-volume absolute block">
+                                    <div id="volumeCursor" class="lvl-cursor absolute block sprite_widget ui-draggable ui-draggable-handle" style="left: 50%;"></div>
+                                </div>
+            </span>
+        </span>
+        <!--<span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>-->
     </section>
     <!--END player custom-->
 
-    <section ng-controller="TabController as tab">
+    <section ng-controller="TabController as tab" class="col-md-10 col-md-offset-1 col-xs-12">
         <ul class="nav nav-pills">
             <li ng-class="{ active:tab.isSet(1) }">
                 <a href ng-click="tab.setTab(1)">Playlist</a>
@@ -128,6 +154,12 @@
         });
     </script>
     <script>
+        // /!\A VOIR http://developers.deezer.com/inapp/player/methods pour les méthodes de controle du player
+        function Player(){
+            DZ.player.playTracks([3135554, 60200381], 0, function(response){
+                console.log("track list", response.tracks);
+            });
+        }
         function MusicPlayerRestClient(){
 
             var CURRENT_TRACK_URI   = 'http://localhost:3000/projetweb/tracks/currentTrack';
@@ -181,6 +213,7 @@
                 return response;
 
             }; // method
+
 
         } // class
     </script>

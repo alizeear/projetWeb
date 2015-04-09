@@ -14,7 +14,7 @@
 .glyphicon-play, .glyphicon-forward{
     color: #000000;
 }
-.glyphicon-play:hover, .glyphicon-forward:hover{
+.glyphicon-play:hover, .glyphicon-forward:hover, .glyphicon-pause:hover, .glyphicon-download:hover{
     color: #c9302c;
     cursor: pointer;
 }
