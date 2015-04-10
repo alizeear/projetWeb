@@ -11,12 +11,11 @@
         <div id="dz-root"></div>
         <div id="dz-player" style="width:100%;" align="center"></div>
         <!--END player deezer-->
+
         <!--Player custom-->
         <section id="player">
-            <span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>
             <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
             <span class="glyphicon glyphicon-pause" aria-hidden="true" onclick="DZ.player.pause();return false;"></span>
-            <!--<span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>-->
         </section>
         <!--END player custom-->
 
@@ -117,13 +116,41 @@
             }]);
             app.controller('MusicPlayerController', function($scope){
                 this.musicPlayer = new MusicPlayerRestClient();
+
+                this.myMusicPlayer = myMusicPlayer;
+                //this.player = new Player();
+
                 // récupération de la playlist dans la BDD
                 this.tracks = [];
                 this.tracks = this.musicPlayer.getAllTrack();
                 this.tracks = JSON.parse(this.tracks);
                 this.tracks = this.tracks.data;
                 // end
+
+                this.tracksid = [];
+                console.log(this.tracks.length);
+                for (i = 0; i < this.tracks.length; i++) {
+                    this.tracksid[i] = this.tracks[i].id;
+                }
+
+                this.myMusicPlayer.tracks = this.tracksid;
+
+                this.myMusicPlayer.play();
+
+
+
             });
+
+            function MusicPlayer() {
+
+                this.tracks = [];
+                this.play = function(){
+                    DZ.player.playTracks(this.tracks, 0,function(response){
+                        console.log("track list", response.tracks);
+                    });
+                }
+            }
+
             app.controller('SearchController', ['$http', function($http) {
                 var that = this;
                 that.search_text = "";
@@ -135,6 +162,7 @@
                     });
                 }
             }]);
+
             app.controller('ConnectionController', function(){
 
             })
@@ -147,17 +175,14 @@
                 player: {
                     container: 'dz-player',
                     width : 700,
-                    height : 80
+                    height : 80,
+                    onload : function(){
+                        myMusicPlayer.play();
+                    }
                 }
             });
         </script>
         <script>
-            // /!\A VOIR http://developers.deezer.com/inapp/player/methods pour les méthodes de controle du player
-            function Player(){
-                DZ.player.playTracks([3135554, 60200381], 0, function(response){
-                    console.log("track list", response.tracks);
-                });
-            }
             function MusicPlayerRestClient(){
                 var CURRENT_TRACK_URI   = 'http://localhost:3000/projetweb/tracks/currentTrack';
                 var ALL_TRACKS_URI      = 'http://localhost:3000/projetweb/tracks/allTracks';
@@ -201,6 +226,9 @@
                     return response;
                 }; // method
             } // class
+
+            var myMusicPlayer = new MusicPlayer();
+
         </script>
     </body>
 </html>
