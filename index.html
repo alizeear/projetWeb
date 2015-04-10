@@ -60,6 +60,16 @@
             <!--  Catalogue  -->
             <div ng-show="tab.isSet(2)" align="center">
                 <h4>Catalogue</h4>
+                <table class="table">
+                    <tr>
+                        <th>Cover</th>
+                        <th>Album</th>
+                        <th>Morceau</th>
+                        <th>Artiste</th>
+                        <th>Durée</th>
+                        <th></th>
+                    </tr>
+                </table>
             </div>
 
             <!-- Search -->
@@ -73,7 +83,7 @@
                         <th>Album</th>
                         <th>Morceau</th>
                         <th>Artiste</th>
-                        <th></th>
+                        <th>Ajouter au catalogue</th>
                     </tr>
                     <tr ng-repeat="data in searchCtrl.datas.data">
                         <td><img ng-src="{{data.album.cover}}"></td>
