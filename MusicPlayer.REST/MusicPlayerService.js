@@ -3,6 +3,7 @@ var express    = require('express');
 var bodyParser = require('body-parser');
 var cors       = require('cors');
 var http       = require('http');
+var DZ         = require('node-deezer');
 
 var httpClient = require('./HttpClient');
 
@@ -80,6 +81,7 @@ app.get('/artist/:id', function (request, response) {
 var server = app.listen(3000, function () {
     console.log('Listening at http://localhost:%s', server.address().port);
 });
+
 
 
 
