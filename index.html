@@ -28,31 +28,13 @@
                 <li ng-class="{ active:tab.isSet(2) }">
                     <a href ng-click="tab.setTab(2)">Catalogue</a>
                 </li>
+                <li ng-class="{ active:tab.isSet(3) }">
+                    <a href ng-click="tab.setTab(3)">Search</a>
+                </li>
             </ul>
-            <!--  Description Tab's Content  -->
+            <!--  Playlist  -->
             <div ng-show="tab.isSet(1)" align="center">
                 <h4>Playlist</h4>
-                <!--<table class="table">
-                    <tr>
-                        <th>Cover</th>
-                        <th>Album</th>
-                        <th>Morceau</th>
-                        <th>Artiste</th>
-                        <th>Durée</th>
-                        <th>Vote</th>
-                        <th></th>
-                    </tr>
-                    <tr ng-repeat="track in tab.tracks">
-                        <td>{{track.cover}}</td>
-                        <td>{{track.album}}</td>
-                        <td>{{track.morceau}}</td>
-                        <td>{{track.artiste}}</td>
-                        <td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>
-                        <td>{{track.vote}}</td>
-                        <td></td>
-                    </tr>
-                </table>-->
-
                 <table class="table">
                     <tr>
                         <th>Cover</th>
@@ -75,15 +57,32 @@
                 </table>
             </div>
 
-            <!--  Spec Tab's Content  -->
-            <div ng-show="tab.isSet(2)" ng-controller="SearchController as searchCtrl" align="center">
+            <!--  Catalogue  -->
+            <div ng-show="tab.isSet(2)" align="center">
                 <h4>Catalogue</h4>
+            </div>
+
+            <!-- Search -->
+            <div ng-show="tab.isSet(3)" ng-controller="SearchController as searchCtrl" align="center">
                 <fieldset class="form-group">
                     <input ng-model="searchCtrl.search_text" ng-change="searchCtrl.search(search_text)" class="form-control" placeholder="Search for a song..." title="Search"></input>
                 </fieldset>
-                <fieldset class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Search" />
-                </fieldset>
+                <table class="table">
+                    <tr>
+                        <th>Cover</th>
+                        <th>Album</th>
+                        <th>Morceau</th>
+                        <th>Artiste</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="data in searchCtrl.datas.data">
+                        <td><img ng-src="{{data.album.cover}}"></td>
+                        <td>{{data.album.title}}</td>
+                        <td>{{data.title}}</td>
+                        <td>{{data.artist.name}}</td>
+                        <td></td>
+                    </tr>
+                </table>
             </div>
         </section>
         <script type="text/javascript" src="angular.min.js"></script>
@@ -101,9 +100,6 @@
                 playlist.setTab = function(setTab) {
                     this.tab = setTab;
                 };
-                /*$http.get('test.json').success(function(data){
-                 playlist.tracks = data;
-                 });*/
             }]);
             app.controller('MusicPlayerController', function($scope){
                 this.musicPlayer = new MusicPlayerRestClient();
@@ -115,22 +111,19 @@
                 // end
             });
             app.controller('SearchController', ['$http', function($http) {
-                this.search_text = "";
-
-                this.search = function () {
-                    var url = "http://api.deezer.com/search?q=" + this.search_text;
-                    $.ajax({
-                        type: 'GET',
-                        url: url,
-                        async: false,
-                        contentType: "application/json",
-                        dataType: "jsonp",
-                        success: function (data) {
-                            console.log(data);
-                        }
+                var that = this;
+                that.search_text = "";
+                that.datas = {};
+                that.search = function () {
+                    DZ.api('/search?q=' + this.search_text, function(response){
+                        that.datas = response;
+                        console.log(that.datas.data);
                     });
                 }
-            }])
+            }]);
+            app.controller('ConnectionController', function(){
+
+            })
         </script>
         <script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
         <script>
@@ -194,11 +187,6 @@
                     return response;
                 }; // method
             } // class
-        </script>
-        <script>
-            function JSON_CALLBACK(val){
-                alert(val.data);
-            }
         </script>
     </body>
 </html>
