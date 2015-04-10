@@ -3,7 +3,6 @@ var express    = require('express');
 var bodyParser = require('body-parser');
 var cors       = require('cors');
 var http       = require('http');
-var DZ         = require('node-deezer');
 
 var httpClient = require('./HttpClient');
 
