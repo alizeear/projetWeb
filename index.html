@@ -66,9 +66,9 @@
                     <th></th>
                 </tr>
                 <tr ng-repeat="track in mpCtrl.tracks">
-                    <td>{{track.cover}}</td>
+                    <td><img ng-src="{{track.cover}}" /></td>
                     <td>{{track.album}}</td>
-                    <td>{{track.morceau}}</td>
+                    <td><a href="#" ng-click="Player({{track.id}});return false;">{{track.morceau}}</a></td>
                     <td>{{track.artiste}}</td>
                     <td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>
                     <td>{{track.vote}}</td>
@@ -131,9 +131,10 @@
     </script>
     <script>
         // /!\A VOIR http://developers.deezer.com/inapp/player/methods pour les méthodes de controle du player
-        function Player(){
-            DZ.player.playTracks([3135554, 60200381], 0, function(response){
+        function Player(id){
+            DZ.player.playTracks([id], 0, function(response){
                 console.log("track list", response.tracks);
+                console.log(id);
             });
         }
         function MusicPlayerRestClient(){
