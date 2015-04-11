@@ -8,7 +8,7 @@ var httpClient = require('./HttpClient');
 
 var app = express();
 app.use(bodyParser.json());
-app.use( cors() );
+app.use(cors());
 
 
 var currentTrack   = null;
@@ -80,6 +80,7 @@ app.get('/artist/:id', function (request, response) {
 var server = app.listen(3000, function () {
     console.log('Listening at http://localhost:%s', server.address().port);
 });
+
 
 
 
