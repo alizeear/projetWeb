@@ -45,7 +45,7 @@
                         <th></th>
                     </tr>
                     <tr ng-repeat="track in mpCtrl.tracks">
-                        <td>{{track.cover}}</td>
+                        <td><img ng-src="{{track.cover}}" /></td>
                         <td>{{track.album}}</td>
                         <td>{{track.morceau}}</td>
                         <td>{{track.artiste}}</td>
@@ -128,7 +128,6 @@
                 // end
 
                 this.tracksid = [];
-                console.log(this.tracks.length);
                 for (i = 0; i < this.tracks.length; i++) {
                     this.tracksid[i] = this.tracks[i].id;
                 }
@@ -137,18 +136,19 @@
 
                 this.myMusicPlayer.play();
 
-
-
             });
 
             function MusicPlayer() {
 
                 this.tracks = [];
+                this.current = [];
+
                 this.play = function(){
                     DZ.player.playTracks(this.tracks, 0,function(response){
                         console.log("track list", response.tracks);
-                    });
+                    })
                 }
+
             }
 
             app.controller('SearchController', ['$http', function($http) {
