@@ -19,7 +19,51 @@
     cursor: pointer;
 }
 
+
+
 .nav-pills > li{
     float: none;
     display: inline-block;
+
+}
+
+.table{
+    border-collapse: collapse;
+    border-width : 1px;
+}
+
+th:hover{
+    background-color:#C1CDCD;
+}
+
+td:hover{
+    background-color:#EBECE4;
+}
+
+header{
+    height : 75px;
+    letter-spacing : 15px;
+    text-emphasis: filled;
+    vertical-align: text-bottom;
+    text-align : center;
+    color : white;
+    background-image: url('header.jpg');
+    background-position : center;
+    font-family : Arial, Verdana, sans-serif;
+    line-height : 90px;
+
+}
+
+#player{
+    background-color: #204d74;
+    padding: 10px;
+    width : 200px ;
+    border:1px solid #DDD;
+    margin : auto;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+
+
+
 }

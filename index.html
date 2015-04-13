@@ -7,20 +7,24 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
 </head>
     <body ng-controller="MusicPlayerController as mpCtrl">
+    <header>
+        <h1>BIENVENUE</h1>
+    </header>
         <!--Le player graphique de deezer-->
         <div id="dz-root"></div>
         <div id="dz-player" style="width:100%;" align="center"></div>
         <!--END player deezer-->
 
         <!--Player custom-->
-        <section id="player">
+        <section id="player" class="col-">
             <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
             <span class="glyphicon glyphicon-pause" aria-hidden="true" onclick="DZ.player.pause();return false;"></span>
         </section>
         <!--END player custom-->
 
         <section ng-controller="TabController as tab">
-            <ul class="nav nav-pills">
+            <div class="row">
+            <ul class="nav nav-pills ">
                 <li ng-class="{ active:tab.isSet(1) }">
                     <a href ng-click="tab.setTab(1)">Playlist</a>
                 </li>
@@ -31,6 +35,7 @@
                     <a href ng-click="tab.setTab(3)">Search</a>
                 </li>
             </ul>
+            </div>
             <!--  Playlist  -->
             <div ng-show="tab.isSet(1)" align="center">
                 <h4>Playlist</h4>
@@ -74,7 +79,7 @@
             <!-- Search -->
             <div ng-show="tab.isSet(3)" ng-controller="SearchController as searchCtrl" align="center">
                 <fieldset class="form-group">
-                    <input ng-model="searchCtrl.search_text" ng-change="searchCtrl.search(search_text)" class="form-control" placeholder="Search for a song..." title="Search"></input>
+                    <input ng-model="searchCtrl.search_text" ng-change="searchCtrl.search(search_text)" class="form-control" placeholder="Search for a song..." title="Search">
                 </fieldset>
                 <table class="table">
                     <tr>
