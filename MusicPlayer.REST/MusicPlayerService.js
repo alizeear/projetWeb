@@ -15,7 +15,7 @@ var id_cat = "";
 var rev_cat = "";
 var songs_cat = [ ];
 
-app.get('/projetweb/tracks/allTracks', function(request, response){
+/*app.get('/projetweb/tracks/allTracks', function(request, response){
     http.get("http://localhost:5984/projetweb/tracks", function(res) {
         var data = "";
         res.setEncoding('utf8');
@@ -27,10 +27,21 @@ app.get('/projetweb/tracks/allTracks', function(request, response){
             response.json(data);
         });
     });
+});*/
+
+app.get('/projetweb/tracks/allTracks', function(request, response){
+    http.get("http://localhost:5984/projetweb/tracksIds", function(res) {
+        var data = "";
+        res.setEncoding('utf8');
+
+        res.on("data", function (chunk) {
+            data += chunk;
+        });
+        res.on('end', function () {
+            response.json(data);
+        });
+    });
 });
-
-
-
 
 app.get('/projetweb/tracks/catalogueTracks', function(request, response){
     http.get('http://localhost:5984/projetweb/catalogue', function(res){

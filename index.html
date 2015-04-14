@@ -49,11 +49,11 @@
                         <th></th>
                     </tr>
                     <tr ng-repeat="track in mpCtrl.tracks">
-                        <td><img ng-src="{{track.cover}}" /></td>
-                        <td>{{track.album}}</td>
-                        <td>{{track.morceau}}</td>
-                        <td>{{track.artiste}}</td>
-                        <td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>
+                        <td><img ng-src="{{track.album.cover}}" /></td>
+                        <td>{{track.album.title}}</td>
+                        <td>{{track.title}}</td>
+                        <td>{{track.artist.name}}</td>
+                        <td>{{track.duration/60 | number:0}}:{{track.duration%60}}</td>
                         <td>{{track.vote}}</td>
                         <td></td>
                     </tr>
@@ -119,24 +119,43 @@
                 };
             }]);
             app.controller('MusicPlayerController', function($scope){
-                this.musicPlayer = new MusicPlayerRestClient();
 
-                this.myMusicPlayer = myMusicPlayer;
+                var that = this;
+
+                that.musicPlayer = new MusicPlayerRestClient();
+
+                that.myMusicPlayer = myMusicPlayer;
                 // récupération de la playlist dans la BDD
-                this.tracks = [];
-                this.tracks = this.musicPlayer.getAllTrack();
-                this.tracks = JSON.parse(this.tracks);
-                this.tracks = this.tracks.data;
+                that.tracks = [];
+                that.tracks = that.musicPlayer.getAllTrack();
+                that.tracks = JSON.parse(that.tracks);
+                that.tracks = that.tracks.data;
                 // end
 
-                this.tracksid = [];
-                for (i = 0; i < this.tracks.length; i++) {
-                    this.tracksid[i] = this.tracks[i].id;
+                that.tracksid = [];
+                that.datas = {};
+
+                for (i = 0; i < that.tracks.length; i++) {
+                    that.tracksid[i] = that.tracks[i].id;
+
+                    DZ.api('/track/' + that.tracksid[i], function (track) {
+                        that.datas = track;
+                        this.trackName  = track.title;
+                        //this.artist = track.artist.name;
+                        //this.cover = track.album.cover;
+                        //this.albumTitle = track.album.title;
+                        //this.duree = track.duration;
+                    });
+
+                    console.log(this.trackName);
                 }
 
-                this.myMusicPlayer.tracks = this.tracksid;
 
-                this.myMusicPlayer.play();
+                that.myMusicPlayer.tracks = that.tracksid;
+
+                that.myMusicPlayer.play();
+
+
 
             });
 
@@ -147,7 +166,7 @@
 
                 this.play = function(){
                     DZ.player.playTracks(this.tracks, 0,function(response){
-                        console.log("track list", response.tracks);
+//                        console.log("track list", response.tracks);
                     })
                 }
 
@@ -161,6 +180,7 @@
                     DZ.api('/search?q=' + this.search_text, function(response){
                         that.datas = response;
                     });
+                    console.log('tototot : '+that.datas);
                 }
                 that.add = function(index){
                     $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
@@ -208,7 +228,7 @@
                 };
                 this.getAllTrack = function(){
                     var allTracks = this.doRequest('GET', ALL_TRACKS_URI, null);
-        //                console.log(allTracks);
+                        //console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu"+allTracks);
                     return allTracks;
                 };
                 this.getProposedTracks = function (){
