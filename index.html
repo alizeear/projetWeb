@@ -7,13 +7,16 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
 </head>
     <body ng-controller="MusicPlayerController as mpCtrl">
+    <header>
+        <h1>BIENVENUE</h1>
+    </header>
         <!--Le player graphique de deezer-->
         <div id="dz-root"></div>
         <div id="dz-player" style="width:100%;" align="center"></div>
         <!--END player deezer-->
+
         <!--Player custom-->
         <section id="player">
-            <span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>
             <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
             <span class="glyphicon glyphicon-pause" aria-hidden="true" onclick="DZ.player.pause();return false;"></span>
             <!--<span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>-->
@@ -75,7 +78,7 @@
             <!-- Search -->
             <div ng-show="tab.isSet(3)" ng-controller="SearchController as searchCtrl" align="center">
                 <fieldset class="form-group">
-                    <input ng-model="searchCtrl.search_text" ng-change="searchCtrl.search(search_text)" class="form-control" placeholder="Search for a song..." title="Search"></input>
+                    <input ng-model="searchCtrl.search_text" ng-change="searchCtrl.search(search_text)" class="form-control" placeholder="Search for a song..." title="Search">
                 </fieldset>
                 <table class="table">
                     <tr>
