@@ -7,10 +7,14 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
 </head>
     <body ng-controller="MusicPlayerController as mpCtrl">
+    <header>
+        <h1>BIENVENUE</h1>
+    </header>
         <!--Le player graphique de deezer-->
         <div id="dz-root"></div>
         <div id="dz-player" style="width:100%;" align="center"></div>
         <!--END player deezer-->
+
         <!--Player custom-->
         <section id="player">
             <span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>
@@ -26,7 +30,7 @@
                     <a href ng-click="tab.setTab(1)">Playlist</a>
                 </li>
                 <li ng-class="{ active:tab.isSet(2) }">
-                    <a href ng-click="tab.setTab(2) ">Catalogue</a>
+                    <a href ng-click="tab.setTab(2)">Catalogue</a>
                 </li>
                 <li ng-class="{ active:tab.isSet(3) }">
                     <a href ng-click="tab.setTab(3)">Search</a>
@@ -132,34 +136,40 @@
             }]);
             app.controller('MusicPlayerController', function($scope){
                 this.musicPlayer = new MusicPlayerRestClient();
-                //this.myMusicPlayer = musicPlayer;
+
+                this.myMusicPlayer = myMusicPlayer;
                 // récupération de la playlist dans la BDD
                 this.tracks = [];
                 this.tracks = this.musicPlayer.getAllTrack();
                 this.tracks = JSON.parse(this.tracks);
                 this.tracks = this.tracks.data;
                 // end
-//                this.tracksid = [];
-//                console.log(this.tracks.length);
-//                for (i = 0; i < this.tracks.length; i++) {
-//                    this.tracksid[i] = this.tracks[i].id;
-//                }
-//
-//                this.myMusicPlayer.tracks = this.tracksid;
-//
-//                this.myMusicPlayer.play();
-            });
-//            function MusicPlayer() {
-//
-//                this.tracks = [];
-//                this.play = function(){
-//                    DZ.player.playTracks(this.tracks, 0,function(response){
-//                        console.log("track list", response.tracks);
-//                    });
-//                }
-//            }
 
-            app.controller('CatalogueController', ['$http', '$scope', function($http, $scope) {
+                this.tracksid = [];
+                console.log(this.tracks.length);
+                for (i = 0; i < this.tracks.length; i++) {
+                    this.tracksid[i] = this.tracks[i].id;
+                }
+
+                this.myMusicPlayer.tracks = this.tracksid;
+
+                this.myMusicPlayer.play();
+
+
+
+            });
+
+            function MusicPlayer() {
+
+                this.tracks = [];
+                this.play = function(){
+                    DZ.player.playTracks(this.tracks, 0,function(response){
+                        console.log("track list", response.tracks);
+                    });
+                }
+            }
+
+            app.controller('SearchController', ['$http', function($http) {
                 var that = this;
                 that.search_text = "";
                 that.datas = {};
@@ -214,9 +224,9 @@
                     container: 'dz-player',
                     width : 700,
                     height : 80,
-//                    onload : function(){
-//                        myMusicPlayer.play();
-//                    }
+                    onload : function(){
+                        myMusicPlayer.play();
+                    }
                 }
             });
         </script>
@@ -267,7 +277,7 @@
                 }; // method
             } // class
 
-            //var myMusicPlayer = new MusicPlayer();
+            var myMusicPlayer = new MusicPlayer();
 
         </script>
     </body>
