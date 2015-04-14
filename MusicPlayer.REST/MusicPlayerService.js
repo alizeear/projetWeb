@@ -15,22 +15,8 @@ var id_cat = "";
 var rev_cat = "";
 var songs_cat = [ ];
 
-/*app.get('/projetweb/tracks/allTracks', function(request, response){
-    http.get("http://localhost:5984/projetweb/tracks", function(res) {
-        var data = "";
-        res.setEncoding('utf8');
-
-        res.on("data", function (chunk) {
-            data += chunk;
-        });
-        res.on('end', function () {
-            response.json(data);
-        });
-    });
-});*/
-
 app.get('/projetweb/tracks/allTracks', function(request, response){
-    http.get("http://localhost:5984/projetweb/tracksIds", function(res) {
+    http.get("http://localhost:5984/projetweb/tracks", function(res) {
         var data = "";
         res.setEncoding('utf8');
 
@@ -54,26 +40,33 @@ app.get('/projetweb/tracks/catalogueTracks', function(request, response){
             rev_cat = data._rev;
             songs_cat = data.data;
         });
-        res.on('end', function () {
-            response.json(data);
+        res.on('end', function(){
+            response.json(songs_cat);
         });
     });
 });
 
 app.put('/projetweb/tracks/catalogueTracks', function(request, response){
     var song = request.body.data;
-    console.log("Ajout de " + song);
-    console.log(id_cat);
-    console.log(rev_cat);
-    console.log(songs_cat);
-    songs_cat.push(song);
-    console.log(songs_cat);
-
-    db.insert({_id: id_cat, _rev: rev_cat, data: songs_cat}, function(err, body){
-        if(!err)
-            console.log(body);
-    });
-    response.json(song);
+    var alreadyIn = false;
+    for(i = 0; i < songs_cat.length; i++){
+        if(song == songs_cat[i])
+            alreadyIn = true;
+    }
+    if(alreadyIn){
+        db.insert({_id: id_cat, _rev: rev_cat, data: songs_cat}, function(err, body){
+            if(!err)
+                console.log("{\n\tid: " + id_cat + "\n\t_rev: " + rev_cat + "\n\tdata:[" + songs_cat + "](Inchangé)\n}");
+        });
+    }
+    else{
+        songs_cat.push(song);
+        db.insert({_id: id_cat, _rev: rev_cat, data: songs_cat}, function(err, body){
+            if(!err)
+                console.log("{\n\tid: " + id_cat + "\n\t_rev: " + rev_cat + "\n\tdata:[" + songs_cat + "]\n}");
+        });
+    }
+    response.json(songs_cat);
 });
 
 
