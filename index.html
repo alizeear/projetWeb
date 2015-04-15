@@ -49,15 +49,15 @@
                         <th>Vote</th>
                         <th></th>
                     </tr>
-                    <!--<tr ng-repeat="track in mpCtrl.tracks">-->
-                        <!--<td>{{track.cover}}</td>-->
-                        <!--<td>{{track.album}}</td>-->
-                        <!--<td>{{track.morceau}}</td>-->
-                        <!--<td>{{track.artiste}}</td>-->
-                        <!--<td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>-->
-                        <!--<td>{{track.vote}}</td>-->
-                        <!--<td></td>-->
-                    <!--</tr>-->
+                    <tr ng-repeat="track in playlistDatas">
+                        <td><img ng-src="{{track.album.cover}}"></td>
+                        <td>{{track.album.title}}</td>
+                        <td>{{track.title}}</td>
+                        <td>{{track.artist.name}}</td>
+                        <td>{{track.duration/60 | number:0}}:{{track.duration%60}}</td>
+                        <td>{{track.vote}}</td>
+                        <td></td>
+                    </tr>
                 </table>
             </div>
 
@@ -136,37 +136,41 @@
             }]);
             app.controller('MusicPlayerController', function($scope){
                 this.musicPlayer = new MusicPlayerRestClient();
+                var that = this;
 
-//                this.myMusicPlayer = myMusicPlayer;
+                this.myMusicPlayer = myMusicPlayer;
                 // récupération de la playlist dans la BDD
                 this.tracks = [];
-                this.tracks = this.musicPlayer.getAllTrack();
+                $scope.playlistDatas = [];
+
+                this.tracks = that.musicPlayer.getAllTrack();
                 this.tracks = JSON.parse(this.tracks);
                 this.tracks = this.tracks.data;
                 // end
 
-//                this.tracksid = [];
-//                console.log(this.tracks.length);
-//                for (i = 0; i < this.tracks.length; i++) {
-//                    this.tracksid[i] = this.tracks[i].id;
-//                }
-//
-//                this.myMusicPlayer.tracks = this.tracksid;
-//
-//                this.myMusicPlayer.play();
+                this.tracksid = [];
+                for (i = 0; i < that.tracks.length; i++) {
+                    this.tracksid[i] = that.tracks[i].id;
+                    DZ.api('/track/' + this.tracksid[i], function (track) {
+                        $scope.playlistDatas.push(track);
+                        console.log($scope.playlistDatas);
+                    })
+                }
 
+                that.myMusicPlayer.tracks = this.tracksid;
 
+                that.myMusicPlayer.play();
 
             });
 
-//            function MusicPlayer() {
-//                this.tracks = [];
-//                this.play = function(){
-//                    DZ.player.playTracks(this.tracks, 0,function(response){
-//                        console.log("track list", response.tracks);
-//                    });
-//                }
-//            }
+            function MusicPlayer() {
+                this.tracks = [];
+                this.play = function(){
+                    DZ.player.playTracks(this.tracks, 0,function(response){
+                        console.log("track list", response.tracks);
+                    });
+                }
+            }
 
             app.controller('CatalogueController', ['$http', '$scope', function($http, $scope) {
                 var that = this;
@@ -221,10 +225,10 @@
                 player: {
                     container: 'dz-player',
                     width : 700,
-                    height : 80
-//                    onload : function(){
-//                        myMusicPlayer.play();
-//                    }
+                    height : 80,
+                    onload : function(){
+                        myMusicPlayer.play();
+                    }
                 }
             });
         </script>
@@ -275,7 +279,7 @@
                 }; // method
             } // class
 
-//            var myMusicPlayer = new MusicPlayer();
+            var myMusicPlayer = new MusicPlayer();
 
         </script>
     </body>
