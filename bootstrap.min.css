@@ -4158,7 +4158,10 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
 .nav {
     padding-left: 0;
     margin-bottom: 0;
-    list-style: none
+    list-style: none;
+    background-color: #204d74;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .nav > li {
