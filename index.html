@@ -172,7 +172,7 @@
                 var that = this;
                 that.search_text = "";
                 that.datas = {};
-                $scope.catDatas = [ ];
+                that.catDatas = [ ];
                 that.search = function(){
                     DZ.api('/search?q=' + this.search_text, function(response){
                         that.datas = response;
@@ -181,6 +181,12 @@
                 that.add = function(index){
                     $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
                             success(function(resp){
+                                that.catDatas = [ ];
+                                for(i = 0; i < resp.length; i++){
+                                    DZ.api('/track/' + resp[i], function(response){
+                                        $scope.catDatas.push(response);
+                                    })
+                                }
                                 console.log("GET successful : " + resp + " (add)");
                             }).
                             error(function(){
@@ -197,20 +203,21 @@
                                 console.log("PUT failed");
                             });
                 };
-                $scope.loadCat = function(){
-                    $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
-                            success(function(resp){
-                                for(i = 0; i < resp.length; i++){
-                                    DZ.api('/track/' + resp[i], function(response){
-                                        $scope.catDatas.push(response);
-                                    })
-                                }
-                                console.log("GET successful(loadCat)");
-                            }).
-                            error(function(){
-                                console.log("GET failed(loadCat)");
-                            });
-                };
+//                $scope.loadCat = function(){
+//                    $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
+//                            success(function(resp){
+//                                $scope.catDatas = [ ];
+//                                for(i = 0; i < resp.length; i++){
+//                                    DZ.api('/track/' + resp[i], function(response){
+//                                        $scope.catDatas.push(response);
+//                                    })
+//                                }
+//                                console.log("GET successful(loadCat)");
+//                            }).
+//                            error(function(){
+//                                console.log("GET failed(loadCat)");
+//                            });
+//                };
             }]);
         </script>
         <script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
