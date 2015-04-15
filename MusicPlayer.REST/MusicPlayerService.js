@@ -66,7 +66,7 @@ app.put('/projetweb/tracks/catalogueTracks', function(request, response){
                 console.log("{\n\tid: " + id_cat + "\n\t_rev: " + rev_cat + "\n\tdata:[" + songs_cat + "]\n}");
         });
     }
-    response.json(songs_cat);
+    response.json(song);
 });
 
 
