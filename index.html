@@ -49,15 +49,15 @@
                         <th>Vote</th>
                         <th></th>
                     </tr>
-                    <tr ng-repeat="track in mpCtrl.tracks">
-                        <td>{{track.cover}}</td>
-                        <td>{{track.album}}</td>
-                        <td>{{track.morceau}}</td>
-                        <td>{{track.artiste}}</td>
-                        <td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>
-                        <td>{{track.vote}}</td>
-                        <td></td>
-                    </tr>
+                    <!--<tr ng-repeat="track in mpCtrl.tracks">-->
+                        <!--<td>{{track.cover}}</td>-->
+                        <!--<td>{{track.album}}</td>-->
+                        <!--<td>{{track.morceau}}</td>-->
+                        <!--<td>{{track.artiste}}</td>-->
+                        <!--<td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>-->
+                        <!--<td>{{track.vote}}</td>-->
+                        <!--<td></td>-->
+                    <!--</tr>-->
                 </table>
             </div>
 
@@ -137,7 +137,7 @@
             app.controller('MusicPlayerController', function($scope){
                 this.musicPlayer = new MusicPlayerRestClient();
 
-                this.myMusicPlayer = myMusicPlayer;
+//                this.myMusicPlayer = myMusicPlayer;
                 // récupération de la playlist dans la BDD
                 this.tracks = [];
                 this.tracks = this.musicPlayer.getAllTrack();
@@ -145,31 +145,30 @@
                 this.tracks = this.tracks.data;
                 // end
 
-                this.tracksid = [];
-                console.log(this.tracks.length);
-                for (i = 0; i < this.tracks.length; i++) {
-                    this.tracksid[i] = this.tracks[i].id;
-                }
-
-                this.myMusicPlayer.tracks = this.tracksid;
-
-                this.myMusicPlayer.play();
+//                this.tracksid = [];
+//                console.log(this.tracks.length);
+//                for (i = 0; i < this.tracks.length; i++) {
+//                    this.tracksid[i] = this.tracks[i].id;
+//                }
+//
+//                this.myMusicPlayer.tracks = this.tracksid;
+//
+//                this.myMusicPlayer.play();
 
 
 
             });
 
-            function MusicPlayer() {
+//            function MusicPlayer() {
+//                this.tracks = [];
+//                this.play = function(){
+//                    DZ.player.playTracks(this.tracks, 0,function(response){
+//                        console.log("track list", response.tracks);
+//                    });
+//                }
+//            }
 
-                this.tracks = [];
-                this.play = function(){
-                    DZ.player.playTracks(this.tracks, 0,function(response){
-                        console.log("track list", response.tracks);
-                    });
-                }
-            }
-
-            app.controller('SearchController', ['$http', function($http) {
+            app.controller('CatalogueController', ['$http', '$scope', function($http, $scope) {
                 var that = this;
                 that.search_text = "";
                 that.datas = {};
@@ -199,7 +198,6 @@
                             });
                 };
                 $scope.loadCat = function(){
-                    console.log("loading");
                     $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
                             success(function(resp){
                                 for(i = 0; i < resp.length; i++){
@@ -223,10 +221,10 @@
                 player: {
                     container: 'dz-player',
                     width : 700,
-                    height : 80,
-                    onload : function(){
-                        myMusicPlayer.play();
-                    }
+                    height : 80
+//                    onload : function(){
+//                        myMusicPlayer.play();
+//                    }
                 }
             });
         </script>
@@ -277,7 +275,7 @@
                 }; // method
             } // class
 
-            var myMusicPlayer = new MusicPlayer();
+//            var myMusicPlayer = new MusicPlayer();
 
         </script>
     </body>
