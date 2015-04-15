@@ -17,7 +17,7 @@
 
         <!--Player custom-->
         <section id="player">
-            <span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>
+            <!--<span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>-->
             <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
             <span class="glyphicon glyphicon-pause" aria-hidden="true" onclick="DZ.player.pause();return false;"></span>
             <!--<span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>-->
@@ -49,75 +49,75 @@
                         <th>Vote</th>
                         <th></th>
                     </tr>
-                    <tr ng-repeat="track in mpCtrl.tracks">
-                        <td>{{track.cover}}</td>
-                        <td>{{track.album}}</td>
-                        <td>{{track.morceau}}</td>
-                        <td>{{track.artiste}}</td>
-                        <td>{{track.duree/60 | number:0}}:{{track.duree%60}}</td>
+                    <tr ng-repeat="track in playlistDatas">
+                        <td><img ng-src="{{track.album.cover}}"></td>
+                        <td>{{track.album.title}}</td>
+                        <td>{{track.title}}</td>
+                        <td>{{track.artist.name}}</td>
+                        <td>{{track.duration/60 | number:0}}:{{track.duration%60}}</td>
                         <td>{{track.vote}}</td>
                         <td></td>
                     </tr>
                 </table>
             </div>
 
-
-            <section ng-controller="CatalogueController as catCtrl">
+            <!--<section ng-controller="CatalogueController as catCtrl">-->
                 <!--  Catalogue  -->
-                <div ng-show="tab.isSet(2)" ng-init="loadCat()" align="center">
-                    <h4>Catalogue</h4>
-                    <table class="table">
-                        <tr>
-                            <th>Cover</th>
-                            <th>Album</th>
-                            <th>Morceau</th>
-                            <th>Artiste</th>
-                            <th>Durée</th>
-                            <th>Ajouter à la playlist</th>
-                        </tr>
-                        <tr ng-repeat="data in catDatas" ng-init="index_song=$index">
-                            <td><img ng-src="{{data.album.cover}}"></td>
-                            <td>{{data.album.title}}</td>
-                            <td>{{data.title}}</td>
-                            <td>{{data.artist.name}}</td>
-                            <td>{{data.duration}}</td>
-                            <td>
-                                <fieldset class="form-group">
-                                    <input type="submit" class="btn btn-primary" ng-click="" value="Ajouter" />
-                                </fieldset>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+            <div ng-show="tab.isSet(2)" ng-controller="SearchController as searchCtrl" ng-init="loadCat()" align="center">
+                <h4>Catalogue</h4>
+                <table class="table">
+                    <tr>
+                        <th>Cover</th>
+                        <th>Album</th>
+                        <th>Morceau</th>
+                        <th>Artiste</th>
+                        <th>Durée</th>
+                        <th>Ajouter à la playlist</th>
+                    </tr>
+                    <tr ng-repeat="data in catCtrl.datas.data" ng-init="index_song=$index">
+                        <td><img ng-src="{{data.album.cover}}"></td>
+                        <td>{{data.album.title}}</td>
+                        <td>{{data.title}}</td>
+                        <td>{{data.artist.name}}</td>
+                        <td>{{data.duration}}</td>
+                        <td>
+                            <fieldset class="form-group">
+                                <input type="submit" class="btn btn-primary" ng-click="catCtrl.add(index_song);loadCat()" value="Ajouter" />
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
                 <!-- Search -->
-                <div ng-show="tab.isSet(3)" align="center">
-                    <fieldset class="form-group">
-                        <input ng-model="catCtrl.search_text" ng-change="catCtrl.search(search_text)" class="form-control" placeholder="Search for a song..." title="Search"/>
-                    </fieldset>
-                    <table class="table">
-                        <tr>
-                            <th>Cover</th>
-                            <th>Album</th>
-                            <th>Morceau</th>
-                            <th>Artiste</th>
-                            <th>Ajouter au catalogue</th>
-                        </tr>
-                        <tr ng-repeat="data in catCtrl.datas.data" ng-init="index_song=$index">
-                            <td><img ng-src="{{data.album.cover}}"></td>
-                            <td>{{data.album.title}}</td>
-                            <td>{{data.title}}</td>
-                            <td>{{data.artist.name}}</td>
-                            <td>
-                                <fieldset class="form-group">
-                                    <input type="submit" class="btn btn-primary" ng-click="catCtrl.add(index_song);loadCat()" value="Ajouter" />
-                                </fieldset>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </section>
+            <div ng-show="tab.isSet(3)" ng-controller="SearchController as searchCtrl" align="center">
+                <fieldset class="form-group">
+                    <input ng-model="searchCtrl.search_text" ng-change="searchCtrl.search(search_text)" class="form-control" placeholder="Search for a song..." title="Search"></input>
+                </fieldset>
+                <table class="table">
+                    <tr>
+                        <th>Cover</th>
+                        <th>Album</th>
+                        <th>Morceau</th>
+                        <th>Artiste</th>
+                        <th>Ajouter au catalogue</th>
+                    </tr>
+                    <tr ng-repeat="data in searchCtrl.datas.data" ng-init="index_song=$index">
+                        <td><img ng-src="{{data.album.cover}}"></td>
+                        <td>{{data.album.title}}</td>
+                        <td>{{data.title}}</td>
+                        <td>{{data.artist.name}}</td>
+                        <td>
+                            <fieldset class="form-group">
+                                <input type="submit" class="btn btn-primary" ng-click="searchCtrl.add(index_song)" value="Ajouter" />
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--</section>-->
         </section>
+
         <script type="text/javascript" src="angular.min.js"></script>
         <script type="text/javascript" src="jquery.min.js"></script>
         <script type="text/javascript" src="app.js"></script>
@@ -136,26 +136,33 @@
             }]);
             app.controller('MusicPlayerController', function($scope){
                 this.musicPlayer = new MusicPlayerRestClient();
+                var that = this;
 
                 this.myMusicPlayer = myMusicPlayer;
                 // récupération de la playlist dans la BDD
                 this.tracks = [];
-                this.tracks = this.musicPlayer.getAllTrack();
-                this.tracks = JSON.parse(this.tracks);
-                this.tracks = this.tracks.data;
-                // end
-
-                this.tracksid = [];
-                console.log(this.tracks.length);
-                for (i = 0; i < this.tracks.length; i++) {
-                    this.tracksid[i] = this.tracks[i].id;
-                }
-
-                this.myMusicPlayer.tracks = this.tracksid;
-
-                this.myMusicPlayer.play();
+                $scope.playlistDatas = [];
 
 
+                    console.log('titi');
+                    console.log('chargement');
+                    this.tracks = that.musicPlayer.getAllTrack();
+                    this.tracks = JSON.parse(this.tracks);
+                    this.tracks = this.tracks.data;
+                    // end
+
+                    this.tracksid = [];
+                    for (i = 0; i < that.tracks.length; i++) {
+                        this.tracksid[i] = that.tracks[i].id;
+
+                        DZ.api('/track/' + this.tracksid[i], function (track) {
+                            $scope.playlistDatas.push(track);
+                            console.log($scope.playlistDatas);
+                        })
+                    }
+                    that.myMusicPlayer.tracks = this.tracksid;
+
+                    that.myMusicPlayer.play();
 
             });
 
@@ -173,7 +180,7 @@
                 var that = this;
                 that.search_text = "";
                 that.datas = {};
-                $scope.catDatas = [ ];
+                $http.catDatas = [];
                 that.search = function(){
                     DZ.api('/search?q=' + this.search_text, function(response){
                         that.datas = response;
@@ -198,13 +205,13 @@
                                 console.log("PUT failed");
                             });
                 };
-                $scope.loadCat = function(){
+                $http.loadCat = function(){
                     console.log("loading");
                     $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
                             success(function(resp){
                                 for(i = 0; i < resp.length; i++){
                                     DZ.api('/track/' + resp[i], function(response){
-                                        $scope.catDatas.push(response);
+                                        $http.catDatas.push(response);
                                     })
                                 }
                                 console.log("GET successful(loadCat)");
