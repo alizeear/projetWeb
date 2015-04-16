@@ -1389,7 +1389,8 @@ figure {
 }
 
 img {
-    vertical-align: middle
+    vertical-align: middle;
+    width: 75%;
 }
 
 .carousel-inner > .item > a > img, .carousel-inner > .item > img, .img-responsive, .thumbnail a > img, .thumbnail > img {
