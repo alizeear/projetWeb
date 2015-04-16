@@ -250,6 +250,8 @@
                             success(function(resp){
                                 DZ.api('/track/' + resp.id, function(response){
                                     $scope.playlistDatas.push(response);
+                                    // on ajoute maintenant la track à la liste en cours de lecture
+                                    DZ.player.addToQueue([resp.id]);
                                 });
                                 //console.log("PUT successful : " + resp + " (addPlay)");
                             }).
