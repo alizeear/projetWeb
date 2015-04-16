@@ -40,7 +40,7 @@
         </section>
         <!--END player custom-->
 
-        <section ng-controller="TabController as tab">
+        <section ng-controller="TabController as tab" ng-init="load()">
             <ul class="nav nav-pills">
                 <li ng-class="{ active:tab.isSet(1) }">
                     <a href ng-click="tab.setTab(1)">Playlist</a>
@@ -76,63 +76,59 @@
                     </tr>
                 </table>
             </div>
+            <!--  Catalogue  -->
+            <div ng-show="tab.isSet(2)" align="center">
+                <h4>Catalogue</h4>
+                <table class="table">
+                    <tr>
+                        <th>Cover</th>
+                        <th>Album</th>
+                        <th>Morceau</th>
+                        <th>Artiste</th>
+                        <th>Durée</th>
+                        <th>Ajouter à la playlist</th>
+                    </tr>
+                    <tr ng-repeat="data in catDatas" ng-init="index_song=$index">
+                        <td><img ng-src="{{data.album.cover}}"></td>
+                        <td>{{data.album.title}}</td>
+                        <td>{{data.title}}</td>
+                        <td>{{data.artist.name}}</td>
+                        <td>{{data.duration/60 | number:0}}:{{data.duration%60}}</td>
+                        <td>
+                            <fieldset class="form-group">
+                                <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-
-            <section ng-controller="CatalogueController as catCtrl">
-                <!--  Catalogue  -->
-                <div ng-show="tab.isSet(2)" ng-init="loadCat()" align="center">
-                    <h4>Catalogue</h4>
-                    <table class="table">
-                        <tr>
-                            <th>Cover</th>
-                            <th>Album</th>
-                            <th>Morceau</th>
-                            <th>Artiste</th>
-                            <th>Durée</th>
-                            <th>Ajouter à la playlist</th>
-                        </tr>
-                        <tr ng-repeat="data in catDatas" ng-init="index_song=$index">
-                            <td><img ng-src="{{data.album.cover}}"></td>
-                            <td>{{data.album.title}}</td>
-                            <td>{{data.title}}</td>
-                            <td>{{data.artist.name}}</td>
-                            <td>{{data.duration}}</td>
-                            <td>
-                                <fieldset class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="Ajouter" />
-                                </fieldset>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- Search -->
-                <div ng-show="tab.isSet(3)" align="center">
-                    <fieldset class="form-group">
-                        <input ng-model="catCtrl.search_text" ng-change="catCtrl.search(search_text)" class="form-control" placeholder="Search for a song..." title="Search"/>
-                    </fieldset>
-                    <table class="table">
-                        <tr>
-                            <th>Cover</th>
-                            <th>Album</th>
-                            <th>Morceau</th>
-                            <th>Artiste</th>
-                            <th>Ajouter au catalogue</th>
-                        </tr>
-                        <tr ng-repeat="data in catCtrl.datas.data" ng-init="index_song=$index">
-                            <td><img ng-src="{{data.album.cover}}"></td>
-                            <td>{{data.album.title}}</td>
-                            <td>{{data.title}}</td>
-                            <td>{{data.artist.name}}</td>
-                            <td>
-                                <fieldset class="form-group">
-                                    <input type="submit" class="btn btn-primary" ng-click="catCtrl.add(index_song)" value="Ajouter" />
-                                </fieldset>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </section>
+            <!-- Search -->
+            <div ng-show="tab.isSet(3)" align="center">
+                <fieldset class="form-group">
+                    <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control" placeholder="Search for a song..." title="Search"/>
+                </fieldset>
+                <table class="table">
+                    <tr>
+                        <th>Cover</th>
+                        <th>Album</th>
+                        <th>Morceau</th>
+                        <th>Artiste</th>
+                        <th>Ajouter au catalogue</th>
+                    </tr>
+                    <tr ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
+                        <td><img ng-src="{{data.album.cover}}"></td>
+                        <td>{{data.album.title}}</td>
+                        <td>{{data.title}}</td>
+                        <td>{{data.artist.name}}</td>
+                        <td>
+                            <fieldset class="form-group">
+                                <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter" />
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </section>
         <script type="text/javascript" src="angular.min.js"></script>
         <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
@@ -202,10 +198,81 @@
                     this.tab = setTab;
                 };
             }]);
-            app.controller('MusicPlayerController', function($scope){
+            app.controller('MusicPlayerController',['$http', '$scope', function($http, $scope){
                 this.musicPlayer = new MusicPlayerRestClient();
                 var that = this;
                 DZ.player.setVolume(30);
+
+                that.search_text = "";
+                that.datas = { };
+                //Fonction de recherche
+                that.search = function(){
+                    DZ.api('/search?q=' + this.search_text, function(response){
+                        that.datas = response;
+                    });
+                };
+
+                $scope.catDatas = [ ];
+                //Fonction d'ajout de la recherche vers le catalogue
+                that.addCat = function(index){
+                    $http.put('http://localhost:3000/projetweb/tracks/catalogueTracks',
+                            JSON.stringify({data: that.datas.data[index].id}),
+                            {headers: { 'Content-Type': 'application/json'}}).
+                            success(function(resp){
+                                console.log(that.datas.data[index].id);
+                                DZ.api('/track/' + resp, function(response){
+                                    $scope.catDatas.push(response);
+                                })
+                                //console.log("PUT successful : " + resp + " (addCat)");
+                            }).
+                            error(function(){
+                                console.log("PUT failed");
+                            });
+                };
+
+                that.catSongs = [ ];
+                $scope.playlistDatas = [ ];
+                //Fonction d'ajout du catalogue vers la playlist
+                that.addPlay = function(index){
+                    $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
+                            success(function(resp){
+                                that.catSongs = resp;
+                                //console.log("GET successful : " + that.catSongs + " (addPlay)");
+                            }).
+                            error(function(){
+                                console.log("GET failed");
+                            });
+
+                    $http.put('http://localhost:3000/projetweb/tracks/allTracks',
+                            {data: that.catSongs[index]},
+                            {headers: { 'Content-Type': 'application/json'}}).
+                            success(function(resp){
+                                console.log(that.catSongs[index]);
+                                DZ.api('/track/' + resp.id, function(response){
+                                    $scope.playlistDatas.push(response);
+                                })
+                                //console.log("PUT successful : " + resp + " (addPlay)");
+                            }).
+                            error(function(){
+                                console.log("PUT failed");
+                            });
+                };
+                //Fonction de chargement du catalogue au démmarage
+                $scope.load = function(){
+                    $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
+                            success(function(resp){
+                                for(i = 0; i < resp.length; i++){
+                                    DZ.api('/track/' + resp[i], function(response){
+                                        $scope.catDatas.push(response);
+                                    })
+                                    that.catSongs.push(resp[i]);
+                                }
+                                console.log("GET successful(load)");
+                            }).
+                            error(function(){
+                                console.log("GET failed");
+                            });
+                };
 
                 // Gestion de la progress bar
                 DZ.Event.subscribe('player_position', function(arg) {
@@ -249,7 +316,7 @@
 
                 // récupération de la playlist dans la BDD
                 this.tracks = [];
-                $scope.playlistDatas = [];
+
 
                 this.tracks = that.musicPlayer.getAllTrack();
                 this.tracks = JSON.parse(this.tracks);
@@ -268,7 +335,7 @@
 
                 that.myMusicPlayer.play();
 
-            });
+            }]);
 
             function MusicPlayer() {
                 this.tracks = [];
@@ -278,54 +345,6 @@
                     });
                 }
             }
-
-            app.controller('CatalogueController', ['$http', '$scope', function($http, $scope) {
-                var that = this;
-                that.search_text = "";
-                that.datas = {};
-                $scope.catDatas = [ ];
-                that.search = function(){
-                    DZ.api('/search?q=' + this.search_text, function(response){
-                        that.datas = response;
-                    });
-                };
-                that.add = function(index){
-                    $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
-                            success(function(resp){
-                                console.log("GET successful : " + resp + " (add)");
-                            }).
-                            error(function(){
-                                console.log("GET failed");
-                            });
-
-                    $http.put('http://localhost:3000/projetweb/tracks/catalogueTracks',
-                            JSON.stringify({data: that.datas.data[index].id}),
-                            {headers: { 'Content-Type': 'application/json'}}).
-                            success(function(resp){
-                                DZ.api('/track/' + resp, function(response){
-                                    $scope.catDatas.push(response);
-                                })
-                                console.log("PUT successful : " + resp + " (add)");
-                            }).
-                            error(function(){
-                                console.log("PUT failed");
-                            });
-                };
-                $scope.loadCat = function(){
-                    $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
-                            success(function(resp){
-                                for(i = 0; i < resp.length; i++){
-                                    DZ.api('/track/' + resp[i], function(response){
-                                        $scope.catDatas.push(response);
-                                    })
-                                }
-                                console.log("GET successful(loadCat)");
-                            }).
-                            error(function(){
-                                console.log("GET failed(loadCat)");
-                            });
-                };
-            }]);
         </script>
         <script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
         <script>
