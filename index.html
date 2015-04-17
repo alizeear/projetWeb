@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html ng-app="MusicPlayer" xmlns="http://www.w3.org/1999/html">
-<head>
+<header>
     <title>Music player</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
-</head>
+</header>
     <body ng-controller="MusicPlayerController as mpCtrl">
     <header>
         <h1>Lecteur de musique collaboratif</h1>
         <h2>Langages et Technologies du Web 2</h2>
-        <h3>Master IC²A WIC1 - UPMF Grenoble</h3>
-    </header>
+        <br/>
+        <h3>Master IC²A WIC1/DCISS - UPMF Grenoble</h3>
+    </header >
         <!--Le player graphique de deezer-->
         <div id="dz-root"></div>
         <div id="dz-player" style="width:100%; display: none" align="center"></div>
@@ -31,8 +32,9 @@
             <div id="slider"></div> <!-- the Slider -->
             <span class="volume"></span> <!-- Volume -->
             </div>
-            <div id="current_track_artist" class="current_track"></div>
             <div id="current_track_title" class="current_track"></div>
+            <div id="current_track_artist" class="current_artist"></div>
+            
             <div ng-repeat="track in currentTrack" >
                 <img ng-src="{{track.album.cover}}">
             </div>

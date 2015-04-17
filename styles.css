@@ -6,16 +6,81 @@
 li{
     list-style: none;
 }
-h1, h2, h3{
-    color: #080808;
+h1{
+    position:relative;
+    margin-left: 120px;
+    padding: 10px;
+
+    width: 350px;
+    color: black;
+    font-weight: 600;
+    text-align: right;
+    border:10px solid #ffb55e;
 }
+
+h2  {
+    position:relative;
+    margin-top: -170px;
+    margin-right: 0px;
+    clear: both;
+    float: right;
+    width:400px;
+    font-size:large;
+    background-color:mediumspringgreen ;
+    color: white;
+    text-align: right;
+    padding: 15px;
+    padding-left: 100px;
+
+}
+
+h3  {
+    position:relative;
+    margin-top: -90px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    clear: both;
+    float: right;
+    width:300px;
+    font-size:medium;
+    background-color: mediumspringgreen ;
+    color: white;
+    text-align: right;
+    padding: 15px;
+
+}
+
+header{
+    float: right;
+    margin-right: 0px;
+    position: relative;
+    width: 100%;
+    background-color:#c8ecff ;
+    letter-spacing : 5px;
+    text-emphasis: filled;
+    vertical-align: text-bottom;
+    text-align : right;
+    font-family : Arial, Verdana, sans-serif;
+    line-height : 10px;
+}
+
 #player{
+    clear:both;
     display: block;
     position: relative;
     text-align: center;
     font-size: 40px;
     margin-top: 50px;
     margin-bottom: 50px;
+
+    background-color:#ffc666;
+    padding: 10px;
+    width : 100% ;
+    border:1px solid #DDD;
+    margin : 0 auto 50px auto;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
 }
 .glyphicon{
     position: absolute;
@@ -50,7 +115,7 @@ td:hover{
     background-color:#EBECE4;
 }
 
-header{
+/*header{
     letter-spacing : 8px;
     text-emphasis: filled;
     vertical-align: text-bottom;
@@ -59,27 +124,31 @@ header{
     background-image: url('header.jpg');
     background-position : center;
     font-family : Arial, Verdana, sans-serif;
-    line-height : 90px;
+    line-height : 10px;
 
-}
+}*/
 
-#player{
+/*#player{
+
     background-color: #204d74;
     padding: 10px;
-    width : 400px ;
+    width : 700px ;
     border:1px solid #DDD;
     margin : 0 auto 50px auto;
-
     border-radius:5px;
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
 
-
-
-}
+}*/
 .current_track{
     color: white;
-    font-size: 18px;
+    font-size: 40px;
+}
+
+.current_artist{
+    color: white;
+    font-size: 20px;
+
 }
 .progress{
     margin-top: 90px;
