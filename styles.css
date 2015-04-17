@@ -3,19 +3,29 @@
     src: url('fonts/glyphicons-halflings-regular.eot');
     src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('fonts/glyphicons-halflings-regular.woff') format('woff'), url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
+body{
+    background-color: #15141A;
+}
 li{
     list-style: none;
 }
 h1, h2, h3{
     color: #080808;
 }
+.nav{
+    background-color: #D93829;
+}
+.progress{
+    margin-left: 5px;
+    margin-right: 5px;
+}
 #player{
     display: block;
     position: relative;
     text-align: center;
     font-size: 40px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    /*margin-top: 50px;*/
+    /*margin-bottom: 50px;*/
 }
 .glyphicon{
     position: absolute;
@@ -61,21 +71,24 @@ header{
 }
 
 h1{
-    color: #d58512;
+    color: #D93829;
     text-shadow: #080808;
 }
-
+.cover_current {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.playliste{
+    margin-right: 20px;
+}
 #player{
-    background-color: #204d74;
+    background-color: #D93829;
     padding: auto;
     border:1px solid #DDD;
-    margin-left : 50px ;
-    margin-right : 40px;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
-    position: fixed;
-    top : 60px;
+    margin-left: 20px;
+    margin-right: 20px;
+    position: relative;
+    /*top : 60px;*/
 }
 
 .nav-pills{
@@ -146,7 +159,7 @@ h1{
     cursor: pointer;
     background: url('images/handle.png') no-repeat 50% 50%;
     font-weight: bold;
-    color: #1C94C4;
+    color: #D93829;
     outline: none;
     top: -7px;
     margin-left: -12px;
