@@ -18,6 +18,8 @@ var id_play = "";
 var rev_play = "";
 var songs_play = [ ];
 
+
+
 app.get('/projetweb/tracks/allTracks', function(request, response){
     http.get("http://localhost:5984/projetweb/tracks", function(res) {
         var data = "";
@@ -121,7 +123,6 @@ app.get('/artist/:id', function (request, response) {
 var server = app.listen(3000, function () {
     console.log('Listening at http://localhost:%s', server.address().port);
 });
-
 
 
 
