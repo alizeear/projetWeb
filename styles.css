@@ -8,9 +8,8 @@ li{
 }
 h1{
     position:relative;
-    margin-left: 120px;
+    margin-left: 10%;
     padding: 10px;
-
     width: 350px;
     color: black;
     font-weight: 600;
@@ -55,7 +54,7 @@ header{
     margin-right: 0px;
     position: relative;
     width: 100%;
-    background-color:#c8ecff ;
+    background-color:floralwhite;
     letter-spacing : 5px;
     text-emphasis: filled;
     vertical-align: text-bottom;
@@ -72,9 +71,12 @@ header{
     font-size: 40px;
     margin-top: 50px;
     margin-bottom: 50px;
+    padding-left:10%;
+    padding-right:10%;
+    padding-top:6%;
+    background-image: url('images/sea-background01-o.jpg');
+    background-size:70%;
 
-    background-color:#ffc666;
-    padding: 10px;
     width : 100% ;
     border:1px solid #DDD;
     margin : 0 auto 50px auto;
@@ -83,9 +85,9 @@ header{
     -moz-border-radius:5px;
 }
 .glyphicon{
-    position: absolute;
-    top: 34px;
-    left: 43%;
+   position: relative;
+    /*top: 34px;
+   left: 43%;*/
 }
 .glyphicon-play, .glyphicon-forward, .glyphicon-pause{
     color: #ffffff;
