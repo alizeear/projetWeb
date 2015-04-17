@@ -20,24 +20,52 @@
 
         <!--Player custom-->
         <section id="player">
-            <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
-            <span class="glyphicon glyphicon-pause" aria-hidden="true" style="display: none;" onclick="DZ.player.pause();return false;"></span>
-            <div class="progress">
-                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                </div>
-            </div>
-            <!--<span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>-->
-            <div>
-            <span class="tooltip"></span> <!-- Tooltip -->
-            <div id="slider"></div> <!-- the Slider -->
-            <span class="volume"></span> <!-- Volume -->
-            </div>
-            <div id="current_track_title" class="current_track"></div>
-            <div id="current_track_artist" class="current_artist"></div>
+            <table>
+                <tr>
+                    <td rowspan="2"><div ng-repeat="track in currentTrack" >
+                        <img ng-src="{{track.album.cover}}">
+                    </div></td>
+                    <td colspan="2"> <div id="current_track_title" class="current_track"></div>
+                </tr>
+                <tr>
+                    <td> <div id="current_track_artist" class="current_artist"></div></td>
+
+                </tr>
+                <tr>
+                    <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
+                    <span class="glyphicon glyphicon-pause" aria-hidden="true" style="display: none;" onclick="DZ.player.pause();return false;"></span>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                        </div>
+                    </div>
+                    <!--<span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>-->
+                    <div>
+                        <span class="tooltip"></span> <!-- Tooltip -->
+                        <div id="slider"></div> <!-- the Slider -->
+                        <span class="volume"></span> <!-- Volume -->
+                    </div>
+                </tr>
+            </table>
+
+            <!-- <div ng-repeat="track in currentTrack" >
+                  <img ng-src="{{track.album.cover}}">
+              </div>
+              <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
+              <span class="glyphicon glyphicon-pause" aria-hidden="true" style="display: none;" onclick="DZ.player.pause();return false;"></span>
+              <div class="progress">
+                  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                  </div>
+              </div>
+              <!--<span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>-->
+            <!-- <div>
+             <span class="tooltip"></span> <!-- Tooltip -->
+            <!-- <div id="slider"></div> <!-- the Slider -->
+            <!-- <span class="volume"></span> <!-- Volume -->
+            <!--  </div>
+             <div id="current_track_title" class="current_track"></div>
+             <div id="current_track_artist" class="current_artist"></div>-->
             
-            <div ng-repeat="track in currentTrack" >
-                <img ng-src="{{track.album.cover}}">
-            </div>
+
             <!--<span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>-->
         </section>
         <!--END player custom-->
