@@ -50,7 +50,8 @@ app.put('/projetweb/tracks/allTracks', function(request, response){
         songs_play.push(song);
     db.insert({_id: id_play, _rev: rev_play, data: songs_play}, function(err, body){
         if(!err)
-            console.log("{\n\tid: " + id_play + "\n\t_rev: " + rev_play + "\n\tdata:[" + songs_play + "]\n}");
+            //console.log("{\n\tid: " + id_play + "\n\t_rev: " + rev_play + "\n\tdata:[" + songs_play + "]\n}");
+        console.log(".");
     });
 
     response.json(song);

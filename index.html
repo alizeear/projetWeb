@@ -237,15 +237,16 @@
                         console.log("GET failed");
                     });
             $http.put('http://localhost:3000/projetweb/tracks/allTracks',
-                    JSON.stringify({data: that.catSongs[index]}),
+                    JSON.stringify({id: that.catSongs[index], vote: 0}),
                     {headers: { 'Content-Type': 'application/json'}}).
                     success(function(resp){
                         DZ.api('/track/' + resp.id, function(response){
-                            $scope.playlistDatas.push(response);
+                            var song = {id: response.id, cover: response.album.cover, album: response.album.title,
+                                title: response.title, artist: response.artist.name, duration: response.duration, vote: resp.vote};
+                            $scope.playlistDatas.push(song);
                             // on ajoute maintenant la track à la liste en cours de lecture
                             DZ.player.addToQueue([resp.id]);
                         });
-                        //console.log("PUT successful : " + resp + " (addPlay)");
                     }).
                     error(function(){
                         console.log("PUT failed");
@@ -277,11 +278,11 @@
         $scope.load = function(){
             $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
                     success(function(resp){
-                        for(i = 0; i < resp.length; i++){
-                            DZ.api('/track/' + resp[i], function(response){
+                        for(k = 0; k < resp.length; k++){
+                            DZ.api('/track/' + resp[k], function(response){
                                 $scope.catDatas.push(response);
                             })
-                            that.catSongs.push(resp[i]);
+                            that.catSongs.push(resp[k]);
                         }
                         console.log("GET successful(load)");
                     }).
@@ -332,8 +333,8 @@
             that.tracksid[i] = that.tracks[i].id;
             that.voteNB[i] = that.tracks[i].vote;
             DZ.api('/track/' + that.tracksid[i], function (track) {
-                var song = {id: that.tracksid[i], cover: track.album.cover, album: track.album.title,
-                    title: track.title, artist: track.artist.name, duration: track.duration, vote: that.voteNB[i]};
+                var song = {id: that.tracksid[i-that.tracks.length], cover: track.album.cover, album: track.album.title,
+                    title: track.title, artist: track.artist.name, duration: track.duration, vote: that.voteNB[i-that.tracks.length]};
                 i++;
                 $scope.playlistDatas.push(song);
             })
@@ -346,7 +347,7 @@
         this.tracks = [];
         this.play = function(){
             DZ.player.playTracks(this.tracks, 0,function(response){
-                console.log("track list", response.tracks);
+                //console.log("track list", response.tracks);
             });
         }
     }
