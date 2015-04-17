@@ -6,89 +6,21 @@
 li{
     list-style: none;
 }
-h1{
-    position:relative;
-    margin-left: 10%;
-    padding: 10px;
-    width: 350px;
-    color: black;
-    font-weight: 600;
-    text-align: right;
-    border:10px solid #ffb55e;
+h1, h2, h3{
+    color: #080808;
 }
-
-h2  {
-    position:relative;
-    margin-top: -170px;
-    margin-right: 0px;
-    clear: both;
-    float: right;
-    width:400px;
-    font-size:large;
-    background-color:mediumspringgreen ;
-    color: white;
-    text-align: right;
-    padding: 15px;
-    padding-left: 100px;
-
-}
-
-h3  {
-    position:relative;
-    margin-top: -90px;
-    margin-right: 0px;
-    margin-bottom: 0px;
-    clear: both;
-    float: right;
-    width:300px;
-    font-size:medium;
-    background-color: mediumspringgreen ;
-    color: white;
-    text-align: right;
-    padding: 15px;
-
-}
-
-header{
-    float: right;
-    margin-right: 0px;
-    position: relative;
-    width: 100%;
-    background-color:floralwhite;
-    letter-spacing : 5px;
-    text-emphasis: filled;
-    vertical-align: text-bottom;
-    text-align : right;
-    font-family : Arial, Verdana, sans-serif;
-    line-height : 10px;
-}
-
 #player{
-    clear:both;
     display: block;
     position: relative;
     text-align: center;
     font-size: 40px;
     margin-top: 50px;
     margin-bottom: 50px;
-    padding-left:10%;
-    padding-right:10%;
-    padding-top:6%;
-    background-image: url('images/sea-background01-o.jpg');
-    background-size:70%;
-
-    width : 100% ;
-    border:1px solid #DDD;
-    margin : 0 auto 50px auto;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
 }
 .glyphicon{
-   position: relative;
-    margin: 10px;
-    /*top: 34px;
-   left: 43%;*/
+    position: absolute;
+    top: 34px;
+    left: 43%;
 }
 .glyphicon-play, .glyphicon-forward, .glyphicon-pause{
     color: #ffffff;
@@ -102,12 +34,11 @@ header{
 .nav-pills > li{
     float: none;
     display: inline-block;
-
 }
 
 .table{
     border-collapse: collapse;
-    border-width : 1px;
+
 }
 
 th:hover{
@@ -118,45 +49,45 @@ td:hover{
     background-color:#EBECE4;
 }
 
-/*header{
+header{
     letter-spacing : 8px;
     text-emphasis: filled;
-    vertical-align: text-bottom;
     text-align : center;
     margin-bottom: 50px;
     background-image: url('header.jpg');
     background-position : center;
     font-family : Arial, Verdana, sans-serif;
-    line-height : 10px;
+    line-height : 90px;
+}
 
-}*/
+h1{
+    color: #d58512;
+    text-shadow: #080808;
+}
 
-/*#player{
-
+#player{
     background-color: #204d74;
-    padding: 10px;
-    width : 700px ;
+    padding: auto;
     border:1px solid #DDD;
-    margin : 0 auto 50px auto;
+    margin-left : 50px ;
+    margin-right : 40px;
     border-radius:5px;
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
+    position: fixed;
+    top : 60px;
+}
 
-}*/
+.nav-pills{
+    text-align: center;
+}
+
 .current_track{
     color: white;
-    font-size: 40px;
-}
-
-.current_artist{
-    color: white;
-    font-size: 30px;
-
-
+    font-size: 18px;
 }
 .progress{
-    position:relative;
-    margin-top:20px;
+    margin-top: 90px;
 }
 
 /* Bouton volume */
@@ -234,4 +165,14 @@ td:hover{
     top: 0;
     height: 100%;
     border-radius: 25px;
+}
+
+.image:hover{
+    width : 150%;
+    vertical-align: top;
+    -webkit-transform: scale(1.5,1.5);
+    -moz-transform:scale(1.5,1.5);
+    opacity: 1;
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
 }
