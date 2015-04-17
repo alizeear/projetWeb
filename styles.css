@@ -4,13 +4,15 @@
     src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('fonts/glyphicons-halflings-regular.woff') format('woff'), url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 body{
-    background-color: #15141A;
+    background-color: #202020;
+    color: #ffffff;
+    width: 100%;
 }
 li{
     list-style: none;
 }
 h1, h2, h3{
-    color: #080808;
+    color: #202020;
 }
 .nav{
     background-color: #D93829;
@@ -27,6 +29,11 @@ h1, h2, h3{
     /*margin-top: 50px;*/
     /*margin-bottom: 50px;*/
 }
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    border-top: none;
+    padding-left: 0;
+    padding-right: 0;
+}
 .glyphicon{
     position: absolute;
     top: 34px;
@@ -38,7 +45,10 @@ h1, h2, h3{
 .glyphicon-play:hover, .glyphicon-forward:hover, .glyphicon-pause:hover, .glyphicon-download:hover{
     cursor: pointer;
 }
-
+.search{
+    width: 50%;
+    margin-top: 20px;
+}
 
 
 .nav-pills > li{
@@ -84,11 +94,34 @@ h1{
 #player{
     background-color: #D93829;
     padding: auto;
-    border:1px solid #DDD;
+    border:1px solid #D93829;
     margin-left: 20px;
     margin-right: 20px;
     position: relative;
     /*top : 60px;*/
+}
+td:hover, th:hover {
+    background-color: #202020;
+}
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    color: #fff;
+    background-color: #F27329;
+    border-radius: 0;
+}
+a{
+    color: #ffffff;
+}
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: #F27329;
+    border-radius: 0;
+    color: white;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #F27329;
+    border-color: #F27329;
+    border-radius: 0;
 }
 
 .nav-pills{
@@ -180,7 +213,7 @@ h1{
     border-radius: 25px;
 }
 
-.image:hover{
+/*.image:hover{
     width : 150%;
     vertical-align: top;
     -webkit-transform: scale(1.5,1.5);
@@ -188,4 +221,43 @@ h1{
     opacity: 1;
     -webkit-opacity: 1;
     -moz-opacity: 1;
+}*/
+
+/* RESPONSIVE DESIGN */
+/* ==== Media Queries ==== */
+
+/* Wide Screen */
+@media (min-width : 1200px) {
+}
+
+/* Default Screen */
+@media (min-width : 992px) and (max-width : 1199px) {
+}
+
+/* Tablet Screen Big */
+@media (min-width : 768px) and (max-width : 991px) {
+    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
+    img{width: 49%}
+    .playliste {margin-right: 0px;}
+}
+
+/* Tablet Screen Small */
+@media (min-width : 640px) and (max-width : 767px) {
+    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
+    img{width: 49%}
+    .playliste {margin-right: 0px;}
+}
+
+/* Mobile Screen Wide */
+@media (min-width : 420px) and (max-width : 640px) {
+    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
+    img{width: 49%}
+    .playliste {margin-right: 0px;}
+}
+
+/* Mobile portrait */
+@media (max-width : 420px) {
+    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
+    img{width: 49%}
+    .playliste {margin-right: 0px;}
 }
