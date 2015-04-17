@@ -37,6 +37,7 @@ app.get('/projetweb/tracks/allTracks', function(request, response){
 
 app.put('/projetweb/tracks/allTracks', function(request, response){
     var song = {id: request.body.data, vote: 0};
+
     var alreadyIn = false;
     for(i = 0; i < songs_play.length; i++){
         if(song == songs_play[i].id)
