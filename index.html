@@ -64,14 +64,18 @@
                         <th>Vote</th>
                         <th></th>
                     </tr>
-                    <tr ng-repeat="track in playlistDatas">
-                        <td><img ng-src="{{track.album.cover}}" class="image"></td>
-                        <td>{{track.album.title}}</td>
+                    <tr ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="id_song=$index">
+                        <td><img ng-src="{{track.cover}}" class="image"></td>
+                        <td>{{track.album}}</td>
                         <td>{{track.title}}</td>
-                        <td>{{track.artist.name}}</td>
+                        <td>{{track.artist}}</td>
                         <td>{{track.duration/60 | number:0}}:{{track.duration%60}}</td>
+                        <td>
+                            <fieldset class="form-group">
+                                <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
+                            </fieldset>
+                        </td>
                         <td>{{track.vote}}</td>
-                        <td></td>
                     </tr>
                 </table>
             </div>
@@ -87,7 +91,7 @@
                         <th>Durée</th>
                         <th>Ajouter à la playlist</th>
                     </tr>
-                    <tr ng-repeat="data in catDatas" ng-init="index_song=$index">
+                    <tr ng-repeat="data in catDatas track by data.id">
                         <td><img ng-src="{{data.album.cover}}" class="image"></td>
                         <td>{{data.album.title}}</td>
                         <td>{{data.title}}</td>
@@ -95,7 +99,7 @@
                         <td>{{data.duration/60 | number:0}}:{{data.duration%60}}</td>
                         <td>
                             <fieldset class="form-group">
-                                <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
+                                <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay($index)" value="Ajouter" />
                             </fieldset>
                         </td>
                     </tr>
@@ -116,14 +120,14 @@
                         <th>Artiste</th>
                         <th>Ajouter au catalogue</th>
                     </tr>
-                    <tr ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
+                    <tr ng-repeat="data in mpCtrl.datas.data">
                         <td><img ng-src="{{data.album.cover}}" class="image"></td>
                         <td>{{data.album.title}}</td>
                         <td>{{data.title}}</td>
                         <td>{{data.artist.name}}</td>
                         <td>
                             <fieldset class="form-group">
-                                <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter" />
+                                <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat($index)" value="Ajouter" />
                             </fieldset>
                         </td>
                     </tr>
@@ -209,7 +213,7 @@
                 that.datas = { };
                 //Fonction de recherche
                 that.search = function(){
-                    DZ.api('/search?q=' + this.search_text, function(response){
+                    DZ.api('/search?q=' + that.search_text, function(response){
                         that.datas = response;
                     });
                 };
@@ -247,11 +251,13 @@
                             });
 
                     $http.put('http://localhost:3000/projetweb/tracks/allTracks',
-                            JSON.stringify({data: that.catSongs[index]}),
+                            JSON.stringify({id: that.catSongs[index], vote: 0}),
                             {headers: { 'Content-Type': 'application/json'}}).
                             success(function(resp){
                                 DZ.api('/track/' + resp.id, function(response){
-                                    $scope.playlistDatas.push(response);
+                                    var song = {id: response.id, cover: response.album.cover, album: response.album.title,
+                                        title: response.title, artist: response.artist.name, duration: response.duration, vote: 0};
+                                    $scope.playlistDatas.push(song);
                                     // on ajoute maintenant la track à la liste en cours de lecture
                                     DZ.player.addToQueue([resp.id]);
                                 });
@@ -271,10 +277,30 @@
                                     })
                                     that.catSongs.push(resp[i]);
                                 }
-                                console.log("GET successful(load)");
                             }).
                             error(function(){
                                 console.log("GET failed");
+                            });
+                };
+
+                //Fonction de vote
+                $scope.vote = function(id, vote){
+                    $http.get('http://localhost:3000/projetweb/tracks/allTracks').
+                            success(function(resp){
+                                //console.log(resp);
+                            }).
+                            error(function(){
+                                console.log("GET failed");
+                            });
+                    $http.put('http://localhost:3000/projetweb/tracks/allTracks',
+                            JSON.stringify({id: id, vote: vote+1}),
+                            {headers: { 'Content-Type': 'application/json'}}).
+                            success(function(resp){
+                                for(j = 0; j < $scope.playlistDatas.length; j++){
+                                    if($scope.playlistDatas[j].id == id){
+                                        $scope.playlistDatas[j].vote = vote+1;
+                                    }
+                                }
                             });
                 };
 
@@ -319,7 +345,7 @@
                 this.myMusicPlayer = myMusicPlayer;
 
                 // récupération de la playlist dans la BDD
-                this.tracks = [];
+                this.tracks = [ ];
 
 
                 this.tracks = that.musicPlayer.getAllTrack();
@@ -327,14 +353,19 @@
                 this.tracks = this.tracks.data;
                 // end
 
-                this.tracksid = [];
+                that.tracksid = [ ];
+                that.voteNB = [ ];
                 for (i = 0; i < that.tracks.length; i++) {
-                    this.tracksid[i] = that.tracks[i].id;
-                    DZ.api('/track/' + this.tracksid[i], function (track) {
-                        $scope.playlistDatas.push(track);
+                    that.tracksid[i] = that.tracks[i].id;
+                    that.voteNB[i] = that.tracks[i].vote;
+                    DZ.api('/track/' + that.tracksid[i], function (track) {
+                        var song = {id: that.tracksid[i], cover: track.album.cover, album: track.album.title,
+                            title: track.title, artist: track.artist.name, duration: track.duration, vote: that.voteNB[i]};
+                        i++;
+                        $scope.playlistDatas.push(song);
                     })
-                }
 
+                }
                 that.myMusicPlayer.tracks = this.tracksid;
 
                 that.myMusicPlayer.play();
@@ -345,7 +376,7 @@
                 this.tracks = [];
                 this.play = function(){
                     DZ.player.playTracks(this.tracks, 0,function(response){
-                        console.log("track list", response.tracks);
+                        //console.log("track list", response.tracks);
                     });
                 }
             }
@@ -367,30 +398,11 @@
         </script>
         <script>
             function MusicPlayerRestClient(){
-                var CURRENT_TRACK_URI   = 'http://localhost:3000/projetweb/tracks/currentTrack';
                 var ALL_TRACKS_URI      = 'http://localhost:3000/projetweb/tracks/allTracks';
-                var PROPOSED_TRACKS_URI = 'http://localhost:3000/projetweb/tracks/proposedTracks';
-                var PREVIOUS_TRACKS_URI = 'http://localhost:3000/projetweb/tracks/previousTracks';
-                var NEXT_TRACK_URI      = 'http://localhost:3000/projetweb/tracks/nextTrack';
-                this.getCurrentTrack = function(){
-                    var currentTrack = this.doRequest('GET', CURRENT_TRACK_URI, null);
-                    return currentTrack;
-                };
+
                 this.getAllTrack = function(){
                     var allTracks = this.doRequest('GET', ALL_TRACKS_URI, null);
                     return allTracks;
-                };
-                this.getProposedTracks = function (){
-                    var proposedTracks = this.doRequest('GET', PROPOSED_TRACKS_URI, null);
-                    return proposedTracks;
-                };
-                this.getPreviousTracks = function(){
-                    var previousTracks = this.doRequest('GET', PREVIOUS_TRACKS_URI, null);
-                    return previousTracks;
-                };
-                this.setNextTrack = function(){
-                    var nextTrack = this.doRequest('POST', NEXT_TRACK_URI, null);
-                    return nextTrack;
                 };
 
                 this.doRequest = function(verb, url, data){
