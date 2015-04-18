@@ -58,7 +58,7 @@ h1, h2, h3{
 
 .table{
     border-collapse: collapse;
-
+    margin : 10px;
 }
 
 th:hover{
@@ -97,7 +97,8 @@ h1{
     border:1px solid #D93829;
     margin-left: 20px;
     margin-right: 20px;
-    position: relative;
+    width : inherit;
+    position: fixed;
     /*top : 60px;*/
 }
 td:hover, th:hover {
@@ -213,15 +214,15 @@ a{
     border-radius: 25px;
 }
 
-/*.image:hover{
-    width : 150%;
+.image:hover{
+    width : 90%;
     vertical-align: top;
     -webkit-transform: scale(1.5,1.5);
     -moz-transform:scale(1.5,1.5);
     opacity: 1;
     -webkit-opacity: 1;
     -moz-opacity: 1;
-}*/
+}
 
 /* RESPONSIVE DESIGN */
 /* ==== Media Queries ==== */
@@ -260,4 +261,19 @@ a{
     #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
     img{width: 49%}
     .playliste {margin-right: 0px;}
+}
+
+#grille{
+    display : none;
+}
+
+.thumbnail{
+    height : 220px;
+    overflow : auto;
+    margin-top : 10px;
+}
+
+.row{
+    margin-left:10px;
+    margin-right: 10px;
 }
