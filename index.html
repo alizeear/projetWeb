@@ -270,7 +270,18 @@
                                 $scope.playlistDatas[j].vote = vote+1;
                             }
                         }
+                        $scope.playlistDatas.sort(function(a, b){
+                            return a.vote - b.vote;
+                        });
+                        $scope.playlistDatas.reverse();
                     });
+            var newPlayList = [ ];
+            for(m = 0; m < $scope.playlistDatas.length; m++){
+                if(DZ.player.getCurrentTrack().id != $scope.playlistDatas[m].id)
+                    newPlayList.push($scope.playlistDatas[m].id);
+            }
+            console.log(newPlayList);
+            DZ.player.changeTrackOrder(newPlayList);
         };
         //Fonction de chargement du catalogue au démmarage
         $scope.load = function(){
@@ -318,13 +329,18 @@
             $('.glyphicon-pause').hide();
             $('.glyphicon-play').show();
         })
-        this.myMusicPlayer = myMusicPlayer;
+        that.myMusicPlayer = myMusicPlayer;
         // récupération de la playlist dans la BDD
-        this.tracks = [];
-        this.tracks = that.musicPlayer.getAllTrack();
-        this.tracks = JSON.parse(this.tracks);
-        this.tracks = this.tracks.data;
+        that.tracks = [];
+        that.tracks = that.musicPlayer.getAllTrack();
+        that.tracks = JSON.parse(this.tracks);
+        that.tracks = that.tracks.data;
         // end
+        console.log(that.tracks);
+        that.tracks.sort(function(a, b){
+            return a.vote - b.vote;
+        });
+        console.log(that.tracks);
         that.tracksid = [ ];
         that.voteNB = [ ];
         for (i = 0; i < that.tracks.length; i++) {
@@ -337,14 +353,15 @@
                 $scope.playlistDatas.push(song);
             })
         }
-        that.myMusicPlayer.tracks = this.tracksid;
+
+        that.myMusicPlayer.tracks = that.tracksid;
         that.myMusicPlayer.play();
     }]);
     function MusicPlayer() {
         this.tracks = [];
         this.play = function(){
             DZ.player.playTracks(this.tracks, 0,function(response){
-                //console.log("track list", response.tracks);
+               // console.log("track list", response.tracks);
             });
         }
     }
