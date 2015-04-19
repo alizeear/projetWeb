@@ -201,7 +201,7 @@
                 <!-- Recherche-->
                 <div ng-show="tab.isSet(3)" align="center">
                     <fieldset class="form-group">
-                        <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control search" placeholder="Search for a song..." title="Search"/>"
+                        <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control search" placeholder="Search for a song..." title="Search"/>
                     </fieldset>
                     <div class="row">
                         <div ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
@@ -358,18 +358,7 @@
                                 $scope.playlistDatas[j].vote = vote+1;
                             }
                         }
-                        $scope.playlistDatas.sort(function(a, b){
-                            return a.vote - b.vote;
-                        });
-                        $scope.playlistDatas.reverse();
                     });
-            var newPlayList = [ ];
-            for(m = 0; m < $scope.playlistDatas.length; m++){
-                if(DZ.player.getCurrentTrack().id != $scope.playlistDatas[m].id)
-                    newPlayList.push($scope.playlistDatas[m].id);
-            }
-            console.log(newPlayList);
-            DZ.player.changeTrackOrder(newPlayList);
         };
         //Fonction de chargement du catalogue au démmarage
         $scope.load = function(){
@@ -424,11 +413,10 @@
         that.tracks = JSON.parse(this.tracks);
         that.tracks = that.tracks.data;
         // end
-        console.log(that.tracks);
         that.tracks.sort(function(a, b){
             return a.vote - b.vote;
         });
-        console.log(that.tracks);
+        that.tracks.reverse();
         that.tracksid = [ ];
         that.voteNB = [ ];
         for (i = 0; i < that.tracks.length; i++) {
@@ -441,7 +429,6 @@
                 $scope.playlistDatas.push(song);
             })
         }
-
         that.myMusicPlayer.tracks = that.tracksid;
         that.myMusicPlayer.play();
     }]);
