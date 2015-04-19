@@ -7,9 +7,9 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 <body ng-controller="MusicPlayerController as mpCtrl">
-<header>
+<!--<header>
     <h1>Lecteur de musique collaboratif</h1>
-</header>
+</header>-->
 <!--Le player graphique de deezer-->
 <div id="dz-root"></div>
 <div id="dz-player" style="width:100%; display: none" align="center"></div>
@@ -63,9 +63,7 @@
                 <li ng-class="{ active:tab.isSet(3) }">
                     <a href ng-click="tab.setTab(3)">Rechercher</a>
                 </li>
-                <li id="choix" onclick="table()">
-                    <a>Changer l'apparence</a>
-                </li>
+                <input type="submit" id="choix" onclick="table()" value="Changer l'apparence">
             </ul>
 
             <div id="tableau">
@@ -162,21 +160,28 @@
                         <div class="row">
                             <div ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="index_song=$index">
 
-                            <div class="col-sm-6 col-md-4">
+                            <div class="col-sm-12 col-md-6">
                                 <div class="thumbnail">
-                                    <img ng-src={{track.cover}} class="gril-pic">
-                                    <div class="caption">
+                                    <div class="row">
+                                        <div class="gril-pic col-md-3">
+                                    <img ng-src={{track.cover}}>
+                                   <div class="caption">
                                         <fieldset class="form-group">
                                             <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
                                         </fieldset>
+                                            </div>
+                                            </div>
+                                        <div class="col-md-offset-1 col-md-7">
                                         <p><b>{{track.title}}</b></p>
                                         <p>{{track.album}}<br/>{{track.artist}}<br/>{{track.duration/60 | number:0}}:{{track.duration%60}}<br/>{{track.vote}} vote(s)<br/></p>
                                     </div>
                                 </div>
                             </div>
                             </div>
-                    </div>
+                                </div>
+                            </div>
                 </div>
+
                 <!-- Catalogue-->
                 <div ng-show="tab.isSet(2)" align="center">
                     <div class="row">
