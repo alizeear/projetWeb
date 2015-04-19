@@ -3,92 +3,41 @@
     src: url('fonts/glyphicons-halflings-regular.eot');
     src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('fonts/glyphicons-halflings-regular.woff') format('woff'), url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
+body{
+    background-color: #202020;
+    color: #ffffff;
+    width: 100%;
+}
 li{
     list-style: none;
 }
-h1{
-    position:relative;
-    margin-left: 10%;
-    padding: 10px;
-    width: 350px;
-    color: black;
-    font-weight: 600;
-    text-align: right;
-    border:10px solid #ffb55e;
+h1, h2, h3{
+    color: #202020;
 }
-
-h2  {
-    position:relative;
-    margin-top: -170px;
-    margin-right: 0px;
-    clear: both;
-    float: right;
-    width:400px;
-    font-size:large;
-    background-color:mediumspringgreen ;
-    color: white;
-    text-align: right;
-    padding: 15px;
-    padding-left: 100px;
-
+.nav{
+    background-color: #D93829;
 }
-
-h3  {
-    position:relative;
-    margin-top: -90px;
-    margin-right: 0px;
-    margin-bottom: 0px;
-    clear: both;
-    float: right;
-    width:300px;
-    font-size:medium;
-    background-color: mediumspringgreen ;
-    color: white;
-    text-align: right;
-    padding: 15px;
-
+.progress{
+    margin-left: 5px;
+    margin-right: 5px;
 }
-
-header{
-    float: right;
-    margin-right: 0px;
-    position: relative;
-    width: 100%;
-    background-color:floralwhite;
-    letter-spacing : 5px;
-    text-emphasis: filled;
-    vertical-align: text-bottom;
-    text-align : right;
-    font-family : Arial, Verdana, sans-serif;
-    line-height : 10px;
-}
-
 #player{
-    clear:both;
     display: block;
     position: relative;
     text-align: center;
     font-size: 40px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    padding-left:10%;
-    padding-right:10%;
-    padding-top:6%;
-    background-image: url('images/sea-background01-o.jpg');
-    background-size:70%;
-
-    width : 100% ;
-    border:1px solid #DDD;
-    margin : 0 auto 50px auto;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
+    /*margin-top: 50px;*/
+    /*margin-bottom: 50px;*/
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    border-top: none;
+    padding-left: 0;
+    padding-right: 0;
 }
 .glyphicon{
-   position: relative;
-    margin: 10px;
-    /*top: 34px;
-   left: 43%;*/
+    position: absolute;
+    top: 34px;
+    left: 43%;
 }
 .glyphicon-play, .glyphicon-forward, .glyphicon-pause{
     color: #ffffff;
@@ -96,18 +45,20 @@ header{
 .glyphicon-play:hover, .glyphicon-forward:hover, .glyphicon-pause:hover, .glyphicon-download:hover{
     cursor: pointer;
 }
-
+.search{
+    width: 50%;
+    margin-top: 20px;
+}
 
 
 .nav-pills > li{
     float: none;
     display: inline-block;
-
 }
 
 .table{
     border-collapse: collapse;
-    border-width : 1px;
+    margin : 10px;
 }
 
 th:hover{
@@ -118,45 +69,72 @@ td:hover{
     background-color:#EBECE4;
 }
 
-/*header{
+header{
     letter-spacing : 8px;
     text-emphasis: filled;
-    vertical-align: text-bottom;
     text-align : center;
     margin-bottom: 50px;
     background-image: url('header.jpg');
     background-position : center;
     font-family : Arial, Verdana, sans-serif;
-    line-height : 10px;
+    line-height : 90px;
+}
 
-}*/
+h1{
+    color: #D93829;
+    text-shadow: #080808;
+}
+.cover_current {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.playliste{
+    margin-right: 20px;
+}
+#player{
+    background-color: #D93829;
+    padding: auto;
+    border:1px solid #D93829;
+    margin-left: 20px;
+    margin-right: 20px;
+    width : inherit;
+    position: fixed;
+    /*top : 60px;*/
+}
+td:hover, th:hover {
+    background-color: #202020;
+}
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    color: #fff;
+    background-color: #F27329;
+    border-radius: 0;
+}
+a{
+    color: #ffffff;
+}
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: #F27329;
+    border-radius: 0;
+    color: white;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #F27329;
+    border-color: #F27329;
+    border-radius: 0;
+}
 
-/*#player{
+.nav-pills{
+    text-align: center;
+}
 
-    background-color: #204d74;
-    padding: 10px;
-    width : 700px ;
-    border:1px solid #DDD;
-    margin : 0 auto 50px auto;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
-
-}*/
 .current_track{
     color: white;
-    font-size: 40px;
-}
-
-.current_artist{
-    color: white;
-    font-size: 30px;
-
-
+    font-size: 18px;
 }
 .progress{
-    position:relative;
-    margin-top:20px;
+    margin-top: 90px;
 }
 
 /* Bouton volume */
@@ -215,7 +193,7 @@ td:hover{
     cursor: pointer;
     background: url('images/handle.png') no-repeat 50% 50%;
     font-weight: bold;
-    color: #1C94C4;
+    color: #D93829;
     outline: none;
     top: -7px;
     margin-left: -12px;
@@ -234,4 +212,68 @@ td:hover{
     top: 0;
     height: 100%;
     border-radius: 25px;
+}
+
+.image:hover{
+    width : 90%;
+    vertical-align: top;
+    -webkit-transform: scale(1.5,1.5);
+    -moz-transform:scale(1.5,1.5);
+    opacity: 1;
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+}
+
+/* RESPONSIVE DESIGN */
+/* ==== Media Queries ==== */
+
+/* Wide Screen */
+@media (min-width : 1200px) {
+}
+
+/* Default Screen */
+@media (min-width : 992px) and (max-width : 1199px) {
+}
+
+/* Tablet Screen Big */
+@media (min-width : 768px) and (max-width : 991px) {
+    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
+    img{width: 49%}
+    .playliste {margin-right: 0px;}
+}
+
+/* Tablet Screen Small */
+@media (min-width : 640px) and (max-width : 767px) {
+    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
+    img{width: 49%}
+    .playliste {margin-right: 0px;}
+}
+
+/* Mobile Screen Wide */
+@media (min-width : 420px) and (max-width : 640px) {
+    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
+    img{width: 49%}
+    .playliste {margin-right: 0px;}
+}
+
+/* Mobile portrait */
+@media (max-width : 420px) {
+    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
+    img{width: 49%}
+    .playliste {margin-right: 0px;}
+}
+
+#grille{
+    display : none;
+}
+
+.thumbnail{
+    height : 220px;
+    overflow : auto;
+    margin-top : 10px;
+}
+
+.row{
+    margin-left:10px;
+    margin-right: 10px;
 }

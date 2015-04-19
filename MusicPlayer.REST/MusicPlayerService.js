@@ -18,6 +18,8 @@ var id_play = "";
 var rev_play = "";
 var songs_play = [ ];
 
+
+
 app.get('/projetweb/tracks/allTracks', function(request, response){
     http.get("http://localhost:5984/projetweb/tracks", function(res) {
         var data = "";
@@ -36,26 +38,24 @@ app.get('/projetweb/tracks/allTracks', function(request, response){
 });
 
 app.put('/projetweb/tracks/allTracks', function(request, response){
-    var song = {id: request.body.data, vote: 0};
-
-    var alreadyIn = false;
+    var song = {id: request.body.id, vote: request.body.vote};
+    var update = true;
     for(i = 0; i < songs_play.length; i++){
-        if(song == songs_play[i].id)
-            alreadyIn = true;
+        if(songs_play[i].id == song.id){
+            update = false;
+            if(songs_play[i].vote != song.vote){
+                songs_play[i].vote = song.vote
+            }
+        }
     }
-    if(alreadyIn){
-        db.insert({_id: id_play, _rev: rev_play, data: songs_play}, function(err, body){
-            if(!err)
-                console.log("{\n\tid: " + id_play + "\n\t_rev: " + rev_play + "\n\tdata:[" + songs_play + "](Inchangé)\n}");
-        });
-    }
-    else{
+    if(update)
         songs_play.push(song);
-        db.insert({_id: id_play, _rev: rev_play, data: songs_play}, function(err, body){
-            if(!err)
-                console.log("{\n\tid: " + id_play + "\n\t_rev: " + rev_play + "\n\tdata:[" + songs_play + "]\n}");
-        });
-    }
+    db.insert({_id: id_play, _rev: rev_play, data: songs_play}, function(err, body){
+        if(!err)
+            //console.log("{\n\tid: " + id_play + "\n\t_rev: " + rev_play + "\n\tdata:[" + songs_play + "]\n}");
+        console.log(".");
+    });
+
     response.json(song);
 });
 
@@ -121,7 +121,6 @@ app.get('/artist/:id', function (request, response) {
 var server = app.listen(3000, function () {
     console.log('Listening at http://localhost:%s', server.address().port);
 });
-
 
 
 
