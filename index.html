@@ -171,9 +171,11 @@
                                                                         </fieldset>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-offset-1 col-md-8">
-                                                                    <p><b>{{track.title}}</b></p>
-                                                                    <p>{{track.album}}<br/>{{track.artist}}<br/>{{track.duration/60
+                                                                <div class="description col-md-8">
+                                                                    <p>{{track.artist}}</p>
+                                                                    <p class="titreChanson"><b>{{track.title}}</b></p>
+                                                                    <p class="nomAlbum">{{track.album}}<br/></p>
+                                                                    <p>{{track.duration/60
                                                                         | number:0}}:{{track.duration%60}}<br/>{{track.vote}}
                                                                         vote(s)<br/></p>
                                                                 </div>
@@ -190,17 +192,25 @@
                     <div class="row">
                         <div ng-repeat="data in catDatas" ng-init="id_song=$index" >
 
-                            <div class="col-sm-6 col-md-4">
+                            <div class="col-sm-6 col-md-6">
                                 <div class="thumbnail">
+                                    <div class="row">
+                                        <div class="col-md-3">
                                     <img ng-src="{{data.album.cover}}" class="gril-pic">
                                     <div class="caption">
                                         <fieldset class="form-group">
                                             <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
                                         </fieldset>
-                                        <p><b>{{data.title}}</b></p>
-                                        <p>{{data.album.title}}<br/>{{data.artist.name}}<br/>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                        </div>
+                                            </div>
+                                        <div class="description col-md-8">
+                                            <p>{{data.artist.name}}</p>
+                                        <p class="titreChanson"><b>{{data.title}}</b></p>
+                                            <p class="nomAlbum">{{data.album.title}}<br/></p>
+                                        <p>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
                                     </div>
                                 </div>
+                                    </div>
                             </div>
                         </div>
 
@@ -213,16 +223,24 @@
                     </fieldset>
                     <div class="row">
                         <div ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
-                            <div class="col-sm-6 col-md-4">
+                            <div class="col-sm-6 col-md-6">
                                 <div class="thumbnail">
+                                    <div class="row">
+                                        <div class="col-md-3">
                                     <img ng-src="{{data.album.cover}}" class="gril-pic">
                                     <div class="caption">
                                         <fieldset class="form-group">
                                             <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter"/>
                                         </fieldset>
-                                        <p><b>{{data.title}}</b></p>
-                                        <p>{{data.album.title}}<br/>{{data.artist.name}}<br/>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                        </div>
+                                            </div>
+                                        <div class="description col-md-8">
+                                            <p>{{data.artist.name}}</p>
+                                        <p class="titreChanson"><b>{{data.title}}</b></p>
+                                            <p class="nomAlbum">{{data.album.title}}<br/></p>
+                                        <p>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
                                     </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
