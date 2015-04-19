@@ -142,7 +142,7 @@
                     </tr>-->
                     <tr ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
                         <div class="row">
-                        <td class="col-md-1"><img ng-src="{{track.cover}}" class="image"></td>
+                        <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image"></td>
                         <td class="col-md-2">{{data.album.title}}</td>
                         <td class="col-md-2">{{data.title}}</td>
                         <td class="col-md-2">{{data.artist.name}}</td>
@@ -160,11 +160,11 @@
                 <!--Playlist-->
                 <div ng-show="tab.isSet(1)" align="center">
                         <div class="row">
-                            <div ng-repeat="track in playlistDatas" ng-init="index_song=$index">
+                            <div ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="index_song=$index">
 
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                    <img ng-src={{track.cover}}>
+                                    <img ng-src={{track.cover}} class="gril-pic">
                                     <div class="caption">
                                         <fieldset class="form-group">
                                             <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
@@ -180,11 +180,11 @@
                 <!-- Catalogue-->
                 <div ng-show="tab.isSet(2)" align="center">
                     <div class="row">
-                        <div ng-repeat="data in catDatas | orderBy: '-vote'" ng-init="id_song=$index" >
+                        <div ng-repeat="data in catDatas" ng-init="id_song=$index" >
 
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                    <img ng-src="{{data.album.cover}}">
+                                    <img ng-src="{{data.album.cover}}" class="gril-pic">
                                     <div class="caption">
                                         <fieldset class="form-group">
                                             <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
@@ -198,6 +198,28 @@
 
             </div>
             </div>
+                <!-- Recherche-->
+                <div ng-show="tab.isSet(3)" align="center">
+                    <fieldset class="form-group">
+                        <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control search" placeholder="Search for a song..." title="Search"/>"
+                    </fieldset>
+                    <div class="row">
+                        <div ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <img ng-src="{{data.album.cover}}" class="gril-pic">
+                                    <div class="caption">
+                                        <fieldset class="form-group">
+                                            <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter"/>
+                                        </fieldset>
+                                        <p><b>{{data.title}}</b></p>
+                                        <p>{{data.album.title}}<br/>{{data.artist.name}}<br/>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
         </section>
     </div>

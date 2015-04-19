@@ -271,9 +271,14 @@ a{
     height : 220px;
     overflow : auto;
     margin-top : 10px;
+    background-color: #e4c652;
 }
 
 .row{
     margin-left:10px;
     margin-right: 10px;
+}
+
+.gril-pic{
+    width : inherit;
 }
