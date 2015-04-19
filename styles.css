@@ -268,9 +268,7 @@ a{
 }
 
 .thumbnail{
-    height : 220px;
-    overflow : auto;
-    margin-top : 10px;
+    height : 150px;
     background-color: #e4c652;
 }
 
@@ -280,5 +278,19 @@ a{
 }
 
 .gril-pic{
-    width : inherit;
+    width : 40px;
+    margin-bottom: auto;
+    float : left;
+}
+
+#choix{
+    float : right;
+    height : 40px;
+    background-color: #F27329;
+    border-collapse: collapse;
+    border-color: #111111 ;
+}
+
+#choix:hover{
+    background-color: #337ab7;
 }
