@@ -7,9 +7,9 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 <body ng-controller="MusicPlayerController as mpCtrl">
-<header>
+<!--<header>
     <h1>Lecteur de musique collaboratif</h1>
-</header>
+</header>-->
 <!--Le player graphique de deezer-->
 <div id="dz-root"></div>
 <div id="dz-player" style="width:100%; display: none" align="center"></div>
@@ -63,9 +63,7 @@
                 <li ng-class="{ active:tab.isSet(3) }">
                     <a href ng-click="tab.setTab(3)">Rechercher</a>
                 </li>
-                <li id="choix" onclick="table()">
-                    <a>Changer l'apparence</a>
-                </li>
+                <input type="submit" id="choix" onclick="table()" value="Changer l'apparence">
             </ul>
 
             <div id="tableau">
@@ -165,39 +163,59 @@
                 <!--Playlist-->
                 <div ng-show="tab.isSet(1)" align="center">
                         <div class="row">
-                            <div ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="index_song=$index">
+                                        <div ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="index_song=$index">
 
-                            <div class="col-sm-6 col-md-4">
-                                <div class="thumbnail">
-                                    <img ng-src={{track.cover}} class="gril-pic">
-                                    <div class="caption">
-                                        <fieldset class="form-group">
-                                            <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
-                                        </fieldset>
-                                        <p><b>{{track.title}}</b></p>
-                                        <p>{{track.album}}<br/>{{track.artist}}<br/>{{track.duration/60 | number:0}}:{{track.duration%60}}<br/>{{track.vote}} vote(s)<br/></p>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                    </div>
+                                                    <div class="col-sm-12 col-md-6">
+                                                        <div class="thumbnail">
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <img ng-src={{track.cover}} class="gril-pic">
+                                                                    <div class="caption">
+                                                                        <fieldset class="form-group">
+                                                                            <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
+                                                                        </fieldset>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="description col-md-8">
+                                                                    <p>{{track.artist}}</p>
+                                                                    <p class="titreChanson"><b>{{track.title}}</b></p>
+                                                                    <p class="nomAlbum">{{track.album}}<br/></p>
+                                                                    <p>{{track.duration/60
+                                                                        | number:0}}:{{track.duration%60}}<br/>{{track.vote}}
+                                                                        vote(s)<br/></p>
+                                                                </div>
+                                                            </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                        </div>
                 </div>
+
                 <!-- Catalogue-->
                 <div ng-show="tab.isSet(2)" align="center">
                     <div class="row">
                         <div ng-repeat="data in catDatas" ng-init="id_song=$index" >
 
-                            <div class="col-sm-6 col-md-4">
+                            <div class="col-sm-6 col-md-6">
                                 <div class="thumbnail">
+                                    <div class="row">
+                                        <div class="col-md-3">
                                     <img ng-src="{{data.album.cover}}" class="gril-pic">
                                     <div class="caption">
                                         <fieldset class="form-group">
                                             <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
                                         </fieldset>
-                                        <p><b>{{data.title}}</b></p>
-                                        <p>{{data.album.title}}<br/>{{data.artist.name}}<br/>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                        </div>
+                                            </div>
+                                        <div class="description col-md-8">
+                                            <p>{{data.artist.name}}</p>
+                                        <p class="titreChanson"><b>{{data.title}}</b></p>
+                                            <p class="nomAlbum">{{data.album.title}}<br/></p>
+                                        <p>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
                                     </div>
                                 </div>
+                                    </div>
                             </div>
                         </div>
 
@@ -210,16 +228,24 @@
                     </fieldset>
                     <div class="row">
                         <div ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
-                            <div class="col-sm-6 col-md-4">
+                            <div class="col-sm-6 col-md-6">
                                 <div class="thumbnail">
+                                    <div class="row">
+                                        <div class="col-md-3">
                                     <img ng-src="{{data.album.cover}}" class="gril-pic">
                                     <div class="caption">
                                         <fieldset class="form-group">
                                             <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter"/>
                                         </fieldset>
-                                        <p><b>{{data.title}}</b></p>
-                                        <p>{{data.album.title}}<br/>{{data.artist.name}}<br/>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                        </div>
+                                            </div>
+                                        <div class="description col-md-8">
+                                            <p>{{data.artist.name}}</p>
+                                        <p class="titreChanson"><b>{{data.title}}</b></p>
+                                            <p class="nomAlbum">{{data.album.title}}<br/></p>
+                                        <p>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
                                     </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
@@ -452,42 +478,46 @@
         DZ.Event.subscribe('player_play', function(arg) {
             that.isPlaying = true;
             console.log('play ! '+that.isPlaying);
-                $('.glyphicon-pause').show();
-                $('.glyphicon-play').hide();
-            })
-            DZ.Event.subscribe('player_paused', function(arg) {
-                that.isPlaying = false;
-                console.log('pause ! '+that.isPlaying);
-                $('.glyphicon-pause').hide();
-                $('.glyphicon-play').show();
-            })
-            this.myMusicPlayer = myMusicPlayer;
-            // récupération de la playlist dans la BDD
-            this.tracks = [];
-            this.tracks = that.musicPlayer.getAllTrack();
-            this.tracks = JSON.parse(this.tracks);
-            this.tracks = this.tracks.data;
-            // end
-            that.tracksid = [ ];
-            that.voteNB = [ ];
-            for (i = 0; i < that.tracks.length; i++) {
-                that.tracksid[i] = that.tracks[i].id;
-                that.voteNB[i] = that.tracks[i].vote;
-                DZ.api('/track/' + that.tracksid[i], function (track) {
-                    var song = {id: that.tracksid[i-that.tracks.length], cover: track.album.cover, album: track.album.title,
+            $('.glyphicon-pause').show();
+            $('.glyphicon-play').hide();
+        })
+        DZ.Event.subscribe('player_paused', function(arg) {
+            that.isPlaying = false;
+            console.log('pause ! '+that.isPlaying);
+            $('.glyphicon-pause').hide();
+            $('.glyphicon-play').show();
+        })
+        that.myMusicPlayer = myMusicPlayer;
+        // récupération de la playlist dans la BDD
+        that.tracks = [];
+        that.tracks = that.musicPlayer.getAllTrack();
+        that.tracks = JSON.parse(this.tracks);
+        that.tracks = that.tracks.data;
+        // end
+        that.tracks.sort(function(a, b){
+            return a.vote - b.vote;
+        });
+        that.tracks.reverse();
+        that.tracksid = [ ];
+        that.voteNB = [ ];
+        for (i = 0; i < that.tracks.length; i++) {
+            that.tracksid[i] = that.tracks[i].id;
+            that.voteNB[i] = that.tracks[i].vote;
+            DZ.api('/track/' + that.tracksid[i], function (track) {
+                var song = {id: that.tracksid[i-that.tracks.length], cover: track.album.cover, album: track.album.title,
                     title: track.title, artist: track.artist.name, duration: track.duration, vote: that.voteNB[i-that.tracks.length]};
                 i++;
                 $scope.playlistDatas.push(song);
             })
         }
-        that.myMusicPlayer.tracks = this.tracksid;
+        that.myMusicPlayer.tracks = that.tracksid;
         that.myMusicPlayer.play();
     }]);
     function MusicPlayer() {
         this.tracks = [];
         this.play = function(){
             DZ.player.playTracks(this.tracks, 0,function(response){
-                //console.log("track list", response.tracks);
+               // console.log("track list", response.tracks);
             });
         }
     }

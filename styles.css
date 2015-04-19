@@ -268,17 +268,53 @@ a{
 }
 
 .thumbnail{
-    height : 220px;
-    overflow : auto;
-    margin-top : 10px;
+    height : 160px;
     background-color: #e4c652;
 }
 
-.row{
+.thumbnail.row{
     margin-left:10px;
     margin-right: 10px;
 }
 
+.caption > fieldset{
+    float : left;
+    padding-top : 8px;
+    padding-left : 0;
+    font-family: fantasy;
+}
+
+.description > p{
+  font-family: Arial ;
+}
+
 .gril-pic{
-    width : inherit;
+    width : 85px;
+    float : left;
+    padding-left : 0px;
+}
+
+#choix{
+    float : right;
+    height : 40px;
+    background-color: #F27329;
+    border-collapse: collapse;
+    border-color: #111111 ;
+}
+
+#choix:hover{
+    background-color: #337ab7;
+}
+
+.description{
+    text-align: left;
+    margin-left: 5px;
+}
+
+.nomAlbum{
+    font-style: italic;
+}
+
+.titreChanson{
+    color : black;
 }
