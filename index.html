@@ -121,6 +121,11 @@
                                 <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
                             </fieldset>
                         </td>
+                        <td class="col-md-1">
+                            <fieldset class="form-group">
+                                <input type="submit" class="btn btn-primary" ng-click="mpCtrl.deletePlay(index_song)" value="-" />
+                            </fieldset>
+                        </td>
                         </div>
                     </tr>
                 </table>
@@ -201,7 +206,7 @@
                 <!-- Recherche-->
                 <div ng-show="tab.isSet(3)" align="center">
                     <fieldset class="form-group">
-                        <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control search" placeholder="Search for a song..." title="Search"/>"
+                        <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control search" placeholder="Search for a song..." title="Search"/>
                     </fieldset>
                     <div class="row">
                         <div ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
@@ -340,6 +345,56 @@
                         console.log("PUT failed");
                     });
         };
+
+        //Fonction de suppression
+        that.deletePlay = function(index){
+
+            $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
+                    success(function(resp){
+                        that.catSongs = resp;
+                        console.log("GET successful : " + that.catSongs + " (deletePlay)");
+                    }).
+                    error(function(){
+                        console.log("GET failed");
+                    });
+            console.log('dans la fonction : '+that.catSongs[index]);
+
+            /*$http.delete('http://localhost:3000/projetweb/catalogueTracks/delete',
+                    JSON.stringify({data: that.datas.data[index].id}),
+                    {headers: { 'Content-Type': 'application/json'}}).
+                    success(function(resp){
+                        console.log(that.datas.data[index].id);
+                        DZ.api('/track/' + resp, function(response){
+                            //$scope.catDatas.destroy(response);
+                            console.log('destroy : '+$scope.catDatas.destroy(response));
+                        });
+                        //that.catSongs.push(resp);
+                        console.log('push : '+that.catSongs.push(resp));
+                        console.log("DELETE successful : " + resp + " (addCat)");
+                    }).
+                    error(function(){
+                        console.log("DELETE failed");
+                    });*/
+            $http.delete('http://localhost:3000/projetweb/catalogueTracks/delete/'+that.catSongs[index]).
+                    success(function(resp){
+                        that.catSongs = resp;
+                        console.log("DELETE successful : " + that.catSongs + " (deletePlay)");
+                        DZ.api('/track/' + that.catSongs[index].id, function(response){
+                            //$scope.catDatas.push(response);
+                            $scope.catDatas.remove = function(response) {
+                                var index = $scope.catDatas.indexOf(response);
+                                $scope.catDatas.splice(index, 1);
+                            }
+
+                        });
+                        //that.catSongs.push(resp);
+                    }).
+                    error(function(){
+                        console.log("DELETE failed");
+                    });
+
+        };
+
         //Fonction de vote
         $scope.vote = function(id, vote){
             $http.get('http://localhost:3000/projetweb/tracks/allTracks').
