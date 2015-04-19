@@ -272,15 +272,21 @@ a{
     background-color: #e4c652;
 }
 
-.row{
+.thumbnail.row{
     margin-left:10px;
     margin-right: 10px;
 }
 
-.gril-pic{
-    width : 40px;
-    margin-bottom: auto;
+.caption > fieldset{
     float : left;
+    padding-top : 8px;
+    padding-left : 0;
+}
+
+.gril-pic{
+    width : 85px;
+    float : left;
+    padding-left : 0px;
 }
 
 #choix{

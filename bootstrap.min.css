@@ -5276,6 +5276,7 @@ a.badge:focus, a.badge:hover {
     display: block;
     padding: 4px;
     margin-bottom: 20px;
+    margin-top : 17px;
     line-height: 1.42857143;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -5295,7 +5296,7 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
 }
 
 .thumbnail .caption {
-    padding: 9px;
+    padding: 6px;
     color: #333
 }
 

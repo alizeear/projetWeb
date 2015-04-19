@@ -158,28 +158,31 @@
                 <!--Playlist-->
                 <div ng-show="tab.isSet(1)" align="center">
                         <div class="row">
-                            <div ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="index_song=$index">
+                                        <div ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="index_song=$index">
 
-                            <div class="col-sm-12 col-md-6">
-                                <div class="thumbnail">
-                                    <div class="row">
-                                        <div class="gril-pic col-md-3">
-                                    <img ng-src={{track.cover}}>
-                                   <div class="caption">
-                                        <fieldset class="form-group">
-                                            <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
-                                        </fieldset>
+                                                    <div class="col-sm-12 col-md-6">
+                                                        <div class="thumbnail">
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <img ng-src={{track.cover}} class="gril-pic">
+                                                                    <div class="caption">
+                                                                        <fieldset class="form-group">
+                                                                            <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
+                                                                        </fieldset>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-offset-1 col-md-8">
+                                                                    <p><b>{{track.title}}</b></p>
+                                                                    <p>{{track.album}}<br/>{{track.artist}}<br/>{{track.duration/60
+                                                                        | number:0}}:{{track.duration%60}}<br/>{{track.vote}}
+                                                                        vote(s)<br/></p>
+                                                                </div>
+                                                            </div>
+                                                </div>
+
                                             </div>
-                                            </div>
-                                        <div class="col-md-offset-1 col-md-7">
-                                        <p><b>{{track.title}}</b></p>
-                                        <p>{{track.album}}<br/>{{track.artist}}<br/>{{track.duration/60 | number:0}}:{{track.duration%60}}<br/>{{track.vote}} vote(s)<br/></p>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                                </div>
-                            </div>
+                                        </div>
+                        </div>
                 </div>
 
                 <!-- Catalogue-->
