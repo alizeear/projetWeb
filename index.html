@@ -18,7 +18,7 @@
 <!--Player custom-->
 <div>
     <div class="col-xs-12 col-sm-12 col-md-3">
-    <section id="player" class="">
+    <section id="player">
         <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
         <span class="glyphicon glyphicon-pause" aria-hidden="true" style="display: none;" onclick="DZ.player.pause();return false;"></span>
         <div class="progress">
@@ -40,7 +40,18 @@
     </section>
         </div>
     <!--END player custom-->
-    <div class="col-xs-12 col-sm-12 col-md-9">
+    <script>
+        function table(){
+            if(tableau.style.display !== 'none'){
+                tableau.style.display = 'none';
+                grille.style.display = 'block';
+            }else{
+                tableau.style.display = 'block';
+                grille.style.display = 'none';
+            }
+        }
+    </script>
+    <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-8">
         <section ng-controller="TabController as tab" ng-init="load()" class="playliste">
             <ul class="nav nav-pills">
                 <li ng-class="{ active:tab.isSet(1) }">
@@ -50,9 +61,14 @@
                     <a href ng-click="tab.setTab(2)">Catalogue</a>
                 </li>
                 <li ng-class="{ active:tab.isSet(3) }">
-                    <a href ng-click="tab.setTab(3)">Search</a>
+                    <a href ng-click="tab.setTab(3)">Rechercher</a>
+                </li>
+                <li id="choix" onclick="table()">
+                    <a>Changer l'apparence</a>
                 </li>
             </ul>
+
+            <div id="tableau">
             <!--  Playlist  -->
             <div ng-show="tab.isSet(1)" align="center">
                 <table class="table">
@@ -66,17 +82,19 @@
                         <th></th>
                     </tr>-->
                     <tr ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="id_song=$index">
-                        <td><img ng-src="{{track.cover}}" class="image"></td>
-                        <td>{{track.album}}</td>
-                        <td>{{track.title}}</td>
-                        <td>{{track.artist}}</td>
-                        <td>{{track.duration/60 | number:0}}:{{track.duration%60}}</td>
-                        <td>{{track.vote}} vote(s)</td>
-                        <td>
+                        <div class="row">
+                        <td class="col-md-1"><img ng-src="{{track.cover}}" class="image"></td>
+                        <td class="col-md-2">{{track.album}} </td>
+                        <td class="col-md-2">{{track.title}} </td>
+                        <td class="col-md-2">{{track.artist}}</td>
+                        <td class="col-md-1">{{track.duration/60 | number:0}}:{{track.duration%60}}</td>
+                        <td class="col-md-1">{{track.vote}} vote(s)</td>
+                        <td class="col-md-offset-1 col-md-1">
                             <fieldset class="form-group">
                                 <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
                             </fieldset>
                         </td>
+                        </div>
                     </tr>
                 </table>
             </div>
@@ -92,16 +110,18 @@
                         <th>Ajouter à la playlist</th>
                     </tr>-->
                     <tr ng-repeat="data in catDatas" ng-init="index_song=$index">
-                        <td><img ng-src="{{data.album.cover}}" class="image"></td>
-                        <td>{{data.album.title}}</td>
-                        <td>{{data.title}}</td>
-                        <td>{{data.artist.name}}</td>
-                        <td>{{data.duration/60 | number:0}}:{{data.duration%60}}</td>
-                        <td>
+                        <div class="row">
+                        <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image"></td>
+                        <td class="col-md-2">{{data.album.title}}</td>
+                        <td class="col-md-2">{{data.title}}</td>
+                        <td class="col-md-2">{{data.artist.name}}</td>
+                        <td class="col-md-1">{{data.duration/60 | number:0}}:{{data.duration%60}}</td>
+                        <td class="col-md-1">
                             <fieldset class="form-group">
                                 <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
                             </fieldset>
                         </td>
+                        </div>
                     </tr>
                 </table>
             </div>
@@ -121,18 +141,86 @@
                         <th>Ajouter au catalogue</th>
                     </tr>-->
                     <tr ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
-                        <td><img ng-src="{{data.album.cover}}" class="image"></td>
-                        <td>{{data.album.title}}</td>
-                        <td>{{data.title}}</td>
-                        <td>{{data.artist.name}}</td>
-                        <td>
+                        <div class="row">
+                        <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image"></td>
+                        <td class="col-md-2">{{data.album.title}}</td>
+                        <td class="col-md-2">{{data.title}}</td>
+                        <td class="col-md-2">{{data.artist.name}}</td>
+                        <td class="col-md-1">
                             <fieldset class="form-group">
                                 <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter" />
                             </fieldset>
                         </td>
+                        </div>
                     </tr>
                 </table>
             </div>
+            </div>
+            <div id="grille">
+                <!--Playlist-->
+                <div ng-show="tab.isSet(1)" align="center">
+                        <div class="row">
+                            <div ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="index_song=$index">
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <img ng-src={{track.cover}} class="gril-pic">
+                                    <div class="caption">
+                                        <fieldset class="form-group">
+                                            <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
+                                        </fieldset>
+                                        <p><b>{{track.title}}</b></p>
+                                        <p>{{track.album}}<br/>{{track.artist}}<br/>{{track.duration/60 | number:0}}:{{track.duration%60}}<br/>{{track.vote}} vote(s)<br/></p>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+                <!-- Catalogue-->
+                <div ng-show="tab.isSet(2)" align="center">
+                    <div class="row">
+                        <div ng-repeat="data in catDatas" ng-init="id_song=$index" >
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <img ng-src="{{data.album.cover}}" class="gril-pic">
+                                    <div class="caption">
+                                        <fieldset class="form-group">
+                                            <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
+                                        </fieldset>
+                                        <p><b>{{data.title}}</b></p>
+                                        <p>{{data.album.title}}<br/>{{data.artist.name}}<br/>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+            </div>
+                <!-- Recherche-->
+                <div ng-show="tab.isSet(3)" align="center">
+                    <fieldset class="form-group">
+                        <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control search" placeholder="Search for a song..." title="Search"/>"
+                    </fieldset>
+                    <div class="row">
+                        <div ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <img ng-src="{{data.album.cover}}" class="gril-pic">
+                                    <div class="caption">
+                                        <fieldset class="form-group">
+                                            <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter"/>
+                                        </fieldset>
+                                        <p><b>{{data.title}}</b></p>
+                                        <p>{{data.album.title}}<br/>{{data.artist.name}}<br/>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
         </section>
     </div>
 </div>
