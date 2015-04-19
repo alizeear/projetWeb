@@ -1,77 +1,58 @@
 <!DOCTYPE html>
 <html ng-app="MusicPlayer" xmlns="http://www.w3.org/1999/html">
-<header>
+<head>
     <title>Music player</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
-</header>
-    <body ng-controller="MusicPlayerController as mpCtrl">
-    <header>
-        <h1>Lecteur de musique collaboratif</h1>
-        <h2>Langages et Technologies du Web 2</h2>
-        <br/>
-        <h3>Master IC²A WIC1/DCISS - UPMF Grenoble</h3>
-    </header >
-        <!--Le player graphique de deezer-->
-        <div id="dz-root"></div>
-        <div id="dz-player" style="width:100%; display: none" align="center"></div>
-        <!--END player deezer-->
+</head>
+<body ng-controller="MusicPlayerController as mpCtrl">
+<!--<header>
+    <h1>Lecteur de musique collaboratif</h1>
+</header>-->
+<!--Le player graphique de deezer-->
+<div id="dz-root"></div>
+<div id="dz-player" style="width:100%; display: none" align="center"></div>
+<!--END player deezer-->
 
-        <!--Player custom-->
-        <section id="player">
-            <table>
-                <tr>
-                    <td rowspan="2"><div ng-repeat="track in currentTrack" >
-                        <img ng-src="{{track.album.cover}}">
-                    </div></td>
-                    <td colspan="2"> <div id="current_track_title" class="current_track"></div>
-                </tr>
-                <tr>
-                    <td><div id="current_track_artist" class="current_artist"></div></td>
-
-                </tr>
-            </table>
-
-                    <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
-                    <span class="glyphicon glyphicon-pause" aria-hidden="true" style="display: none;" onclick="DZ.player.pause();return false;"></span>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                        </div>
-                    </div>
-                    <!--<span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>-->
-                    <div>
-                        <span class="tooltip"></span> <!-- Tooltip -->
-                        <div id="slider"></div> <!-- the Slider -->
-                        <span class="volume"></span> <!-- Volume -->
-                    </div>
-
-
-
-            <!-- <div ng-repeat="track in currentTrack" >
-                  <img ng-src="{{track.album.cover}}">
-              </div>
-              <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
-              <span class="glyphicon glyphicon-pause" aria-hidden="true" style="display: none;" onclick="DZ.player.pause();return false;"></span>
-              <div class="progress">
-                  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                  </div>
-              </div>
-              <!--<span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>-->
-            <!-- <div>
-             <span class="tooltip"></span> <!-- Tooltip -->
-            <!-- <div id="slider"></div> <!-- the Slider -->
-            <!-- <span class="volume"></span> <!-- Volume -->
-            <!--  </div>
-             <div id="current_track_title" class="current_track"></div>
-             <div id="current_track_artist" class="current_artist"></div>-->
-            
-
-            <!--<span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>-->
-        </section>
-        <!--END player custom-->
-
-        <section ng-controller="TabController as tab" ng-init="load()">
+<!--Player custom-->
+<div>
+    <div class="col-xs-12 col-sm-12 col-md-3">
+    <section id="player">
+        <span class="glyphicon glyphicon-play" aria-hidden="true" onclick="DZ.player.play();return false;"></span>
+        <span class="glyphicon glyphicon-pause" aria-hidden="true" style="display: none;" onclick="DZ.player.pause();return false;"></span>
+        <div class="progress">
+            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+            </div>
+        </div>
+        <!--<span class="glyphicon glyphicon-download" aria-hidden="true" onclick="Player();return false;"></span>-->
+        <div>
+            <span class="tooltip"></span> <!-- Tooltip -->
+            <div id="slider"></div> <!-- the Slider -->
+            <span class="volume"></span> <!-- Volume -->
+        </div>
+        <div id="current_track_artist" class="current_track"></div>
+        <div id="current_track_title" class="current_track"></div>
+        <div ng-repeat="track in currentTrack" class="cover_current">
+            <img ng-src="{{track.album.cover}}">
+        </div>
+        <!--<span class="glyphicon glyphicon-forward" aria-hidden="true" onclick="widget.playAction();" ng-click="musicPlayer.playNextTrack();"></span>-->
+    </section>
+        </div>
+    <!--END player custom-->
+    <script>
+        function table(){
+            if(tableau.style.display !== 'none'){
+                tableau.style.display = 'none';
+                grille.style.display = 'block';
+            }else{
+                tableau.style.display = 'block';
+                grille.style.display = 'none';
+            }
+        }
+    </script>
+    <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-8">
+        <section ng-controller="TabController as tab" ng-init="load()" class="playliste">
             <ul class="nav nav-pills">
                 <li ng-class="{ active:tab.isSet(1) }">
                     <a href ng-click="tab.setTab(1)">Playlist</a>
@@ -80,14 +61,16 @@
                     <a href ng-click="tab.setTab(2)">Catalogue</a>
                 </li>
                 <li ng-class="{ active:tab.isSet(3) }">
-                    <a href ng-click="tab.setTab(3)">Search</a>
+                    <a href ng-click="tab.setTab(3)">Rechercher</a>
                 </li>
+                <input type="submit" id="choix" onclick="table()" value="Changer l'apparence">
             </ul>
+
+            <div id="tableau">
             <!--  Playlist  -->
             <div ng-show="tab.isSet(1)" align="center">
-                <h4>Playlist</h4>
                 <table class="table">
-                    <tr>
+                    <!--<tr>
                         <th>Cover</th>
                         <th>Album</th>
                         <th>Morceau</th>
@@ -95,351 +78,434 @@
                         <th>Durée</th>
                         <th>Vote</th>
                         <th></th>
-                    </tr>
-                    <tr ng-repeat="track in playlistDatas">
-                        <td><img ng-src="{{track.album.cover}}"></td>
-                        <td>{{track.album.title}}</td>
-                        <td>{{track.title}}</td>
-                        <td>{{track.artist.name}}</td>
-                        <td>{{track.duration/60 | number:0}}:{{track.duration%60}}</td>
-                        <td>{{track.vote}}</td>
-                        <td></td>
+                    </tr>-->
+                    <tr ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="id_song=$index">
+                        <div class="row">
+                        <td class="col-md-1"><img ng-src="{{track.cover}}" class="image"></td>
+                        <td class="col-md-2">{{track.album}} </td>
+                        <td class="col-md-2">{{track.title}} </td>
+                        <td class="col-md-2">{{track.artist}}</td>
+                        <td class="col-md-1">{{track.duration/60 | number:0}}:{{track.duration%60}}</td>
+                        <td class="col-md-1">{{track.vote}} vote(s)</td>
+                        <td class="col-md-offset-1 col-md-1">
+                            <fieldset class="form-group">
+                                <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
+                            </fieldset>
+                        </td>
+                        </div>
                     </tr>
                 </table>
             </div>
             <!--  Catalogue  -->
             <div ng-show="tab.isSet(2)" align="center">
-                <h4>Catalogue</h4>
                 <table class="table">
-                    <tr>
+                    <!--<tr>
                         <th>Cover</th>
                         <th>Album</th>
                         <th>Morceau</th>
                         <th>Artiste</th>
                         <th>Durée</th>
                         <th>Ajouter à la playlist</th>
-                    </tr>
+                    </tr>-->
                     <tr ng-repeat="data in catDatas" ng-init="index_song=$index">
-                        <td><img ng-src="{{data.album.cover}}"></td>
-                        <td>{{data.album.title}}</td>
-                        <td>{{data.title}}</td>
-                        <td>{{data.artist.name}}</td>
-                        <td>{{data.duration/60 | number:0}}:{{data.duration%60}}</td>
-                        <td>
+                        <div class="row">
+                        <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image"></td>
+                        <td class="col-md-2">{{data.album.title}}</td>
+                        <td class="col-md-2">{{data.title}}</td>
+                        <td class="col-md-2">{{data.artist.name}}</td>
+                        <td class="col-md-1">{{data.duration/60 | number:0}}:{{data.duration%60}}</td>
+                        <td class="col-md-1">
                             <fieldset class="form-group">
                                 <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
                             </fieldset>
                         </td>
+                        </div>
                     </tr>
                 </table>
             </div>
 
+
             <!-- Search -->
             <div ng-show="tab.isSet(3)" align="center">
                 <fieldset class="form-group">
-                    <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control" placeholder="Search for a song..." title="Search"/>
+                    <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control search" placeholder="Search for a song..." title="Search"/>
                 </fieldset>
                 <table class="table">
-                    <tr>
+                    <!--<tr>
                         <th>Cover</th>
                         <th>Album</th>
                         <th>Morceau</th>
                         <th>Artiste</th>
                         <th>Ajouter au catalogue</th>
-                    </tr>
+                    </tr>-->
                     <tr ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
-                        <td><img ng-src="{{data.album.cover}}"></td>
-                        <td>{{data.album.title}}</td>
-                        <td>{{data.title}}</td>
-                        <td>{{data.artist.name}}</td>
-                        <td>
+                        <div class="row">
+                        <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image"></td>
+                        <td class="col-md-2">{{data.album.title}}</td>
+                        <td class="col-md-2">{{data.title}}</td>
+                        <td class="col-md-2">{{data.artist.name}}</td>
+                        <td class="col-md-1">
                             <fieldset class="form-group">
                                 <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter" />
                             </fieldset>
                         </td>
+                        </div>
                     </tr>
                 </table>
             </div>
+            </div>
+            <div id="grille">
+                <!--Playlist-->
+                <div ng-show="tab.isSet(1)" align="center">
+                        <div class="row">
+                            <div ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="index_song=$index">
+
+                            <div class="col-sm-12 col-md-6">
+                                <div class="thumbnail">
+                                    <div class="row">
+                                        <div class="gril-pic col-md-3">
+                                    <img ng-src={{track.cover}}>
+                                   <div class="caption">
+                                        <fieldset class="form-group">
+                                            <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
+                                        </fieldset>
+                                            </div>
+                                            </div>
+                                        <div class="col-md-offset-1 col-md-7">
+                                        <p><b>{{track.title}}</b></p>
+                                        <p>{{track.album}}<br/>{{track.artist}}<br/>{{track.duration/60 | number:0}}:{{track.duration%60}}<br/>{{track.vote}} vote(s)<br/></p>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                                </div>
+                            </div>
+                </div>
+
+                <!-- Catalogue-->
+                <div ng-show="tab.isSet(2)" align="center">
+                    <div class="row">
+                        <div ng-repeat="data in catDatas" ng-init="id_song=$index" >
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <img ng-src="{{data.album.cover}}" class="gril-pic">
+                                    <div class="caption">
+                                        <fieldset class="form-group">
+                                            <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
+                                        </fieldset>
+                                        <p><b>{{data.title}}</b></p>
+                                        <p>{{data.album.title}}<br/>{{data.artist.name}}<br/>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+            </div>
+                <!-- Recherche-->
+                <div ng-show="tab.isSet(3)" align="center">
+                    <fieldset class="form-group">
+                        <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control search" placeholder="Search for a song..." title="Search"/>
+                    </fieldset>
+                    <div class="row">
+                        <div ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <img ng-src="{{data.album.cover}}" class="gril-pic">
+                                    <div class="caption">
+                                        <fieldset class="form-group">
+                                            <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter"/>
+                                        </fieldset>
+                                        <p><b>{{data.title}}</b></p>
+                                        <p>{{data.album.title}}<br/>{{data.artist.name}}<br/>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
         </section>
-        <script type="text/javascript" src="angular.min.js"></script>
-        <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="jquery-ui-1.8.21.custom.min.js"></script>
-    <script>
-        $(function() {
-
-            //Store frequently elements in variables
-            var slider  = $('#slider'),
-                    tooltip = $('.tooltip');
-
-            //Hide the Tooltip at first
-            tooltip.hide();
-
-            //Call the Slider
-            slider.slider({
-                //Config
-                range: "min",
-                min: 1,
-                value: 35,
-
-                start: function(event,ui) {
-                    tooltip.fadeIn('fast');
-                },
-
-                //Slider Event
-                slide: function(event, ui) { //When the slider is sliding
-                    DZ.player.setVolume(ui.value);
-                    var value  = slider.slider('value'),
-                            volume = $('.volume');
-
-                    tooltip.css('left', value).text(ui.value);  //Adjust the tooltip accordingly
-
-                    if(value <= 5) {
-                        volume.css('background-position', '0 0');
-                    }
-                    else if (value <= 25) {
-                        volume.css('background-position', '0 -25px');
-                    }
-                    else if (value <= 75) {
-                        volume.css('background-position', '0 -50px');
-                    }
-                    else {
-                        volume.css('background-position', '0 -75px');
-                    };
-
-                },
-
-                stop: function(event,ui) {
-                    tooltip.fadeOut('fast');
+    </div>
+</div>
+<script type="text/javascript" src="angular.min.js"></script>
+<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.8.21.custom.min.js"></script>
+<script>
+    $(function() {
+        //Store frequently elements in variables
+        var slider  = $('#slider'),
+                tooltip = $('.tooltip');
+        //Hide the Tooltip at first
+        tooltip.hide();
+        //Call the Slider
+        slider.slider({
+            //Config
+            range: "min",
+            min: 1,
+            value: 35,
+            start: function(event,ui) {
+                tooltip.fadeIn('fast');
+            },
+            //Slider Event
+            slide: function(event, ui) { //When the slider is sliding
+                DZ.player.setVolume(ui.value);
+                var value  = slider.slider('value'),
+                        volume = $('.volume');
+                tooltip.css('left', value).text(ui.value);  //Adjust the tooltip accordingly
+                if(value <= 5) {
+                    volume.css('background-position', '0 0');
                 }
-            });
-
-        });
-    </script>
-        <script type="text/javascript" src="app.js"></script>
-        <script>
-            var app = angular.module("MusicPlayer", []);
-            app.controller('TabController', ['$http', function($http){
-                var playlist = this;
-                //playlist.tracks = [];
-                playlist.tab = 1;
-                playlist.isSet = function(checkTab) {
-                    return this.tab === checkTab;
+                else if (value <= 25) {
+                    volume.css('background-position', '0 -25px');
                 }
-                playlist.setTab = function(setTab) {
-                    this.tab = setTab;
-                };
-            }]);
-            app.controller('MusicPlayerController',['$http', '$scope', function($http, $scope){
-                this.musicPlayer = new MusicPlayerRestClient();
-                var that = this;
-                DZ.player.setVolume(30);
-
-                that.search_text = "";
-                that.datas = { };
-                //Fonction de recherche
-                that.search = function(){
-                    DZ.api('/search?q=' + this.search_text, function(response){
-                        that.datas = response;
-                    });
-                };
-
-                $scope.catDatas = [ ];
-                //Fonction d'ajout de la recherche vers le catalogue
-                that.addCat = function(index){
-                    $http.put('http://localhost:3000/projetweb/tracks/catalogueTracks',
-                            JSON.stringify({data: that.datas.data[index].id}),
-                            {headers: { 'Content-Type': 'application/json'}}).
-                            success(function(resp){
-                                console.log(that.datas.data[index].id);
-                                DZ.api('/track/' + resp, function(response){
-                                    $scope.catDatas.push(response);
-                                })
-                                //console.log("PUT successful : " + resp + " (addCat)");
-                            }).
-                            error(function(){
-                                console.log("PUT failed");
-                            });
-                };
-
-                that.catSongs = [ ];
-                $scope.playlistDatas = [ ];
-                //Fonction d'ajout du catalogue vers la playlist
-                that.addPlay = function(index){
-                    $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
-                            success(function(resp){
-                                that.catSongs = resp;
-                                //console.log("GET successful : " + that.catSongs + " (addPlay)");
-                            }).
-                            error(function(){
-                                console.log("GET failed");
-                            });
-
-                    $http.put('http://localhost:3000/projetweb/tracks/allTracks',
-                            {data: that.catSongs[index]},
-                            {headers: { 'Content-Type': 'application/json'}}).
-                            success(function(resp){
-                                console.log(that.catSongs[index]);
-                                DZ.api('/track/' + resp.id, function(response){
-                                    $scope.playlistDatas.push(response);
-                                })
-                                //console.log("PUT successful : " + resp + " (addPlay)");
-                            }).
-                            error(function(){
-                                console.log("PUT failed");
-                            });
-                };
-                //Fonction de chargement du catalogue au démmarage
-                $scope.load = function(){
-                    $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
-                            success(function(resp){
-                                for(i = 0; i < resp.length; i++){
-                                    DZ.api('/track/' + resp[i], function(response){
-                                        $scope.catDatas.push(response);
-                                    })
-                                    that.catSongs.push(resp[i]);
-                                }
-                                console.log("GET successful(load)");
-                            }).
-                            error(function(){
-                                console.log("GET failed");
-                            });
-                };
-
-                // Gestion de la progress bar
-                DZ.Event.subscribe('player_position', function(arg) {
-                    var pourcentage = (arg[0] / arg[1]) * 100;
-                    $(".progress-bar").css('width', pourcentage + '%');
-                })
-
-                $scope.currentTrack = [];
-                // Infos de la musique en cours de lecture
-                DZ.Event.subscribe('current_track', function(arg) {
-
-                    $("#current_track_title").text(arg.track.title);
-                    $("#current_track_artist").text(arg.track.artist.name);
-
-                    DZ.api('/track/' + arg.track.id, function (track) {
-                        $scope.currentTrack = [];
-                        $scope.currentTrack.push(track);
-                        $scope.$apply();
-                    })
-                })
-
-                // gestion de l'affichage des boutons play/pause
-                that.isPlaying = false;
-
-                DZ.Event.subscribe('player_play', function(arg) {
-                    that.isPlaying = true;
-                    console.log('play ! '+that.isPlaying);
-                    $('.glyphicon-pause').show();
-                    $('.glyphicon-play').hide();
-                })
-
-                DZ.Event.subscribe('player_paused', function(arg) {
-                    that.isPlaying = false;
-                    console.log('pause ! '+that.isPlaying);
-                    $('.glyphicon-pause').hide();
-                    $('.glyphicon-play').show();
-                })
-
-
-                this.myMusicPlayer = myMusicPlayer;
-
-                // récupération de la playlist dans la BDD
-                this.tracks = [];
-
-
-                this.tracks = that.musicPlayer.getAllTrack();
-                this.tracks = JSON.parse(this.tracks);
-                this.tracks = this.tracks.data;
-                // end
-
-                this.tracksid = [];
-                for (i = 0; i < that.tracks.length; i++) {
-                    this.tracksid[i] = that.tracks[i].id;
-                    DZ.api('/track/' + this.tracksid[i], function (track) {
-                        $scope.playlistDatas.push(track);
-                    })
+                else if (value <= 75) {
+                    volume.css('background-position', '0 -50px');
                 }
-
-                that.myMusicPlayer.tracks = this.tracksid;
-
-                that.myMusicPlayer.play();
-
-            }]);
-
-            function MusicPlayer() {
-                this.tracks = [];
-                this.play = function(){
-                    DZ.player.playTracks(this.tracks, 0,function(response){
-                        console.log("track list", response.tracks);
-                    });
-                }
+                else {
+                    volume.css('background-position', '0 -75px');
+                };
+            },
+            stop: function(event,ui) {
+                tooltip.fadeOut('fast');
             }
-        </script>
-        <script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
-        <script>
-            DZ.init({
-                appId  : 'YOUR_APP_ID',
-                channelUrl : 'http://YOUR_DOMAIN/channel.html',
-                player: {
-                    container: 'dz-player',
-                    width : 700,
-                    height : 80,
-                    onload : function(){
-                        myMusicPlayer.play();
-                    }
-                }
+        });
+    });
+</script>
+<script type="text/javascript" src="app.js"></script>
+<script>
+    var app = angular.module("MusicPlayer", []);
+    app.controller('TabController', ['$http', function($http){
+        var playlist = this;
+        //playlist.tracks = [];
+        playlist.tab = 1;
+        playlist.isSet = function(checkTab) {
+            return this.tab === checkTab;
+        }
+        playlist.setTab = function(setTab) {
+            this.tab = setTab;
+        };
+    }]);
+    app.controller('MusicPlayerController',['$http', '$scope', function($http, $scope){
+        this.musicPlayer = new MusicPlayerRestClient();
+        var that = this;
+        DZ.player.setVolume(30);
+        that.search_text = "";
+        that.datas = { };
+        //Fonction de recherche
+        that.search = function(){
+            DZ.api('/search?q=' + this.search_text, function(response){
+                that.datas = response;
             });
-        </script>
-        <script>
-            function MusicPlayerRestClient(){
-                var CURRENT_TRACK_URI   = 'http://localhost:3000/projetweb/tracks/currentTrack';
-                var ALL_TRACKS_URI      = 'http://localhost:3000/projetweb/tracks/allTracks';
-                var PROPOSED_TRACKS_URI = 'http://localhost:3000/projetweb/tracks/proposedTracks';
-                var PREVIOUS_TRACKS_URI = 'http://localhost:3000/projetweb/tracks/previousTracks';
-                var NEXT_TRACK_URI      = 'http://localhost:3000/projetweb/tracks/nextTrack';
-                this.getCurrentTrack = function(){
-                    var currentTrack = this.doRequest('GET', CURRENT_TRACK_URI, null);
-                    return currentTrack;
-                };
-                this.getAllTrack = function(){
-                    var allTracks = this.doRequest('GET', ALL_TRACKS_URI, null);
-                    return allTracks;
-                };
-                this.getProposedTracks = function (){
-                    var proposedTracks = this.doRequest('GET', PROPOSED_TRACKS_URI, null);
-                    return proposedTracks;
-                };
-                this.getPreviousTracks = function(){
-                    var previousTracks = this.doRequest('GET', PREVIOUS_TRACKS_URI, null);
-                    return previousTracks;
-                };
-                this.setNextTrack = function(){
-                    var nextTrack = this.doRequest('POST', NEXT_TRACK_URI, null);
-                    return nextTrack;
-                };
-
-                this.doRequest = function(verb, url, data){
-                    var response;
-                    $.ajax({
-                        url:  url,
-                        type: verb,
-                        data: data,
-                        async: false,
-                        success: function(resp) {
-                            response = resp;
-                        },
-                        error: function(xhr) {
-                            console.log("Error when " + verb + url);
+        };
+        $scope.catDatas = [ ];
+        //Fonction d'ajout de la recherche vers le catalogue
+        that.addCat = function(index){
+            $http.put('http://localhost:3000/projetweb/tracks/catalogueTracks',
+                    JSON.stringify({data: that.datas.data[index].id}),
+                    {headers: { 'Content-Type': 'application/json'}}).
+                    success(function(resp){
+                        console.log(that.datas.data[index].id);
+                        DZ.api('/track/' + resp, function(response){
+                            $scope.catDatas.push(response);
+                        });
+                        that.catSongs.push(resp);
+                        //console.log("PUT successful : " + resp + " (addCat)");
+                    }).
+                    error(function(){
+                        console.log("PUT failed");
+                    });
+        };
+        that.catSongs = [ ];
+        $scope.playlistDatas = [ ];
+        //Fonction d'ajout du catalogue vers la playlist
+        that.addPlay = function(index){
+            $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
+                    success(function(resp){
+                        that.catSongs = resp;
+                        //console.log("GET successful : " + that.catSongs + " (addPlay)");
+                    }).
+                    error(function(){
+                        console.log("GET failed");
+                    });
+            $http.put('http://localhost:3000/projetweb/tracks/allTracks',
+                    JSON.stringify({id: that.catSongs[index], vote: 0}),
+                    {headers: { 'Content-Type': 'application/json'}}).
+                    success(function(resp){
+                        DZ.api('/track/' + resp.id, function(response){
+                            var song = {id: response.id, cover: response.album.cover, album: response.album.title,
+                                title: response.title, artist: response.artist.name, duration: response.duration, vote: resp.vote};
+                            $scope.playlistDatas.push(song);
+                            // on ajoute maintenant la track à la liste en cours de lecture
+                            DZ.player.addToQueue([resp.id]);
+                        });
+                    }).
+                    error(function(){
+                        console.log("PUT failed");
+                    });
+        };
+        //Fonction de vote
+        $scope.vote = function(id, vote){
+            $http.get('http://localhost:3000/projetweb/tracks/allTracks').
+                    success(function(resp){
+                        //console.log(resp);
+                    }).
+                    error(function(){
+                        console.log("GET failed");
+                    });
+            $http.put('http://localhost:3000/projetweb/tracks/allTracks',
+                    JSON.stringify({id: id, vote: vote+1}),
+                    {headers: { 'Content-Type': 'application/json'}}).
+                    success(function(resp){
+                        for(j = 0; j < $scope.playlistDatas.length; j++){
+                            if($scope.playlistDatas[j].id == id){
+                                $scope.playlistDatas[j].vote = vote+1;
+                            }
                         }
                     });
-                    return response;
-                }; // method
-            } // class
-
-            var myMusicPlayer = new MusicPlayer();
-
-        </script>
-    </body>
+        };
+        //Fonction de chargement du catalogue au démmarage
+        $scope.load = function(){
+            $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
+                    success(function(resp){
+                        for(k = 0; k < resp.length; k++){
+                            DZ.api('/track/' + resp[k], function(response){
+                                $scope.catDatas.push(response);
+                            })
+                            that.catSongs.push(resp[k]);
+                        }
+                        console.log("GET successful(load)");
+                    }).
+                    error(function(){
+                        console.log("GET failed");
+                    });
+        };
+        // Gestion de la progress bar
+        DZ.Event.subscribe('player_position', function(arg) {
+            var pourcentage = (arg[0] / arg[1]) * 100;
+            $(".progress-bar").css('width', pourcentage + '%');
+        })
+        $scope.currentTrack = [];
+        // Infos de la musique en cours de lecture
+        DZ.Event.subscribe('current_track', function(arg) {
+            $("#current_track_title").text(arg.track.title);
+            $("#current_track_artist").text(arg.track.artist.name);
+            DZ.api('/track/' + arg.track.id, function (track) {
+                $scope.currentTrack = [];
+                $scope.currentTrack.push(track);
+                $scope.$apply();
+            })
+        })
+        // gestion de l'affichage des boutons play/pause
+        that.isPlaying = false;
+        DZ.Event.subscribe('player_play', function(arg) {
+            that.isPlaying = true;
+            console.log('play ! '+that.isPlaying);
+            $('.glyphicon-pause').show();
+            $('.glyphicon-play').hide();
+        })
+        DZ.Event.subscribe('player_paused', function(arg) {
+            that.isPlaying = false;
+            console.log('pause ! '+that.isPlaying);
+            $('.glyphicon-pause').hide();
+            $('.glyphicon-play').show();
+        })
+        that.myMusicPlayer = myMusicPlayer;
+        // récupération de la playlist dans la BDD
+        that.tracks = [];
+        that.tracks = that.musicPlayer.getAllTrack();
+        that.tracks = JSON.parse(this.tracks);
+        that.tracks = that.tracks.data;
+        // end
+        that.tracks.sort(function(a, b){
+            return a.vote - b.vote;
+        });
+        that.tracks.reverse();
+        that.tracksid = [ ];
+        that.voteNB = [ ];
+        for (i = 0; i < that.tracks.length; i++) {
+            that.tracksid[i] = that.tracks[i].id;
+            that.voteNB[i] = that.tracks[i].vote;
+            DZ.api('/track/' + that.tracksid[i], function (track) {
+                var song = {id: that.tracksid[i-that.tracks.length], cover: track.album.cover, album: track.album.title,
+                    title: track.title, artist: track.artist.name, duration: track.duration, vote: that.voteNB[i-that.tracks.length]};
+                i++;
+                $scope.playlistDatas.push(song);
+            })
+        }
+        that.myMusicPlayer.tracks = that.tracksid;
+        that.myMusicPlayer.play();
+    }]);
+    function MusicPlayer() {
+        this.tracks = [];
+        this.play = function(){
+            DZ.player.playTracks(this.tracks, 0,function(response){
+               // console.log("track list", response.tracks);
+            });
+        }
+    }
+</script>
+<script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
+<script>
+    DZ.init({
+        appId  : 'YOUR_APP_ID',
+        channelUrl : 'http://YOUR_DOMAIN/channel.html',
+        player: {
+            container: 'dz-player',
+            width : 700,
+            height : 80,
+            onload : function(){
+                myMusicPlayer.play();
+            }
+        }
+    });
+</script>
+<script>
+    function MusicPlayerRestClient(){
+        var CURRENT_TRACK_URI   = 'http://localhost:3000/projetweb/tracks/currentTrack';
+        var ALL_TRACKS_URI      = 'http://localhost:3000/projetweb/tracks/allTracks';
+        var PROPOSED_TRACKS_URI = 'http://localhost:3000/projetweb/tracks/proposedTracks';
+        var PREVIOUS_TRACKS_URI = 'http://localhost:3000/projetweb/tracks/previousTracks';
+        var NEXT_TRACK_URI      = 'http://localhost:3000/projetweb/tracks/nextTrack';
+        this.getCurrentTrack = function(){
+            var currentTrack = this.doRequest('GET', CURRENT_TRACK_URI, null);
+            return currentTrack;
+        };
+        this.getAllTrack = function(){
+            var allTracks = this.doRequest('GET', ALL_TRACKS_URI, null);
+            return allTracks;
+        };
+        this.getProposedTracks = function (){
+            var proposedTracks = this.doRequest('GET', PROPOSED_TRACKS_URI, null);
+            return proposedTracks;
+        };
+        this.getPreviousTracks = function(){
+            var previousTracks = this.doRequest('GET', PREVIOUS_TRACKS_URI, null);
+            return previousTracks;
+        };
+        this.setNextTrack = function(){
+            var nextTrack = this.doRequest('POST', NEXT_TRACK_URI, null);
+            return nextTrack;
+        };
+        this.doRequest = function(verb, url, data){
+            var response;
+            $.ajax({
+                url:  url,
+                type: verb,
+                data: data,
+                async: false,
+                success: function(resp) {
+                    response = resp;
+                },
+                error: function(xhr) {
+                    console.log("Error when " + verb + url);
+                }
+            });
+            return response;
+        }; // method
+    } // class
+    var myMusicPlayer = new MusicPlayer();
+</script>
+</body>
 </html>
