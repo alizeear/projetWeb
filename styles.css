@@ -125,6 +125,17 @@ a{
     border-radius: 0;
 }
 
+.btn-alt{
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #F27329;
+    border-radius: 0;
+}
+
+.btn-alt:hover{
+    background-color: #bb1920;
+}
+
 .nav-pills{
     text-align: center;
 }
@@ -268,9 +279,12 @@ a{
 }
 
 .thumbnail{
-    height : 160px;
-    background-color: #e4c652;
+    height : 170px;
+    background-color: #d87b1b;
+    /*overflow : hidden;
+    -o-text-overflow : ellipsis;*/
 }
+
 
 .thumbnail.row{
     margin-left:10px;
@@ -286,6 +300,10 @@ a{
 
 .description > p{
   font-family: Arial ;
+    max-height: 35px;
+    table-layout: fixed;
+    overflow : hidden;
+    -o-text-overflow : ellipsis;
 }
 
 .gril-pic{
@@ -308,7 +326,7 @@ a{
 
 .description{
     text-align: left;
-    margin-left: 5px;
+    margin-left: 15px;
 }
 
 .nomAlbum{
