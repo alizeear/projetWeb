@@ -1,4 +1,3 @@
-
 var express    = require('express');
 var bodyParser = require('body-parser');
 var cors       = require('cors');
@@ -17,8 +16,8 @@ var songs_cat = [ ];
 var id_play = "";
 var rev_play = "";
 var songs_play = [ ];
-
-
+var positionTrackPlaylist = 0;
+var trackPosition = 0;
 
 app.get('/projetweb/tracks/allTracks', function(request, response){
     http.get("http://localhost:5984/projetweb/tracks", function(res) {
@@ -57,8 +56,6 @@ app.put('/projetweb/tracks/allTracks', function(request, response){
 
     response.json(song);
 });
-
-
 
 app.get('/projetweb/tracks/catalogueTracks', function(request, response){
     http.get('http://localhost:5984/projetweb/catalogue', function(res){
@@ -100,81 +97,29 @@ app.put('/projetweb/tracks/catalogueTracks', function(request, response){
     response.json(song);
 });
 
-
-/*app.get('/artist/:id', function (request, response) {
-    var url = 'http://api.deezer.com/artist/'+request.params.id+'/albums';
-
-    var http = new httpClient();
-    http.GET(url, onResponse);
-
-    var infos = null;
-
-    function onResponse(resp){
-        var body = JSON.parse(resp.body);
-        var tab = body.data;
-
-        infos = body.data[0];
-        response.json(infos.title);
-        console.log(infos);
-    }
-});*/
-
-/*app.delete('/projetweb/catalogueTracks/delete/', function(req, response){
-    console.log('ok');
-    var song = request.body.data;
-    var alreadyIn = false;
-    for(i = 0; i < songs_cat.length; i++){
-        if(song == songs_cat[i])
-            alreadyIn = true;
-    }
-    if(alreadyIn){
-        db.insert({_id: id_cat, _rev: rev_cat, data: songs_cat}, function(err, body){
-            if(!err)
-                console.log("{\n\tid: " + id_cat + "\n\t_rev: " + rev_cat + "\n\tdata:[" + songs_cat + "](Inchangé)\n}");
-        });
-    }
-    else{
-        songs_cat.push(song);
-        db.insert({_id: id_cat, _rev: rev_cat, data: songs_cat}, function(err, body){
-            if(!err)
-                console.log("{\n\tid: " + id_cat + "\n\t_rev: " + rev_cat + "\n\tdata:[" + songs_cat + "]\n}");
-        });
-    }
-    response.json(song);
-});*/
-
 app.delete('/projetweb/catalogueTracks/delete/:id', function(request, response){
     var song = request.params['id'];
     console.log('song : '+song);
-    var alreadyIn = false;
-    console.log('songs_cat : '+songs_cat);
-    for(i = 0; i < songs_cat.length; i++){
-        if(song == songs_cat[i])
-            alreadyIn = true;
-    }
-    if(alreadyIn){
-        db.insert({_id: id_cat, _rev: rev_cat, data: songs_cat}, function(err, body){
-            if(!err)
-                console.log("{\n\tid: " + id_cat + "\n\t_rev: " + rev_cat + "\n\tdata:[" + songs_cat + "](Inchangé)\n}");
-        });
-    }
-    else{
-        songs_cat.push(song);
-        db.insert({_id: id_cat, _rev: rev_cat, data: songs_cat}, function(err, body){
-            if(!err)
-                console.log("{\n\tid: " + id_cat + "\n\t_rev: " + rev_cat + "\n\tdata:[" + songs_cat + "]\n}");
-        });
-    }
-    response.json(song);
 
+});
+
+app.post('/playlist/positionTrackPlaylist' , function (request, response) {
+    var data = request.body;
+    positionTrackPlaylist = data.position;
+    trackPosition = data.numTrack;
+    response.send("ok");
+});
+
+app.get('/playlist/getPositionTrackPlaylist', function (request, response) {
+    //console.log('positionTrackPlaylist : '+positionTrackPlaylist);
+    response.json(positionTrackPlaylist);
+});
+
+app.get('/playlist/numTrack', function (request, response) {
+    //console.log('trackPosition : '+trackPosition);
+    response.json(trackPosition);
 });
 
 var server = app.listen(3000, function () {
     console.log('Listening at http://localhost:%s', server.address().port);
 });
-
-
-
-
-
-
