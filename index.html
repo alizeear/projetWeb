@@ -132,6 +132,7 @@
                     </table>
                 </div>
             </div>
+
             <div id="grille">
                 <!--Playlist-->
                 <div ng-show="tab.isSet(1)" align="center">
@@ -144,35 +145,10 @@
                                             <img ng-src={{track.cover}} class="gril-pic">
                                             <div class="caption">
                                                 <fieldset class="form-group">
-                                                    <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
+                                                    <input type="submit" class="btn btn-alt" ng-click="vote(track.id, track.vote)" value="Voter" />
                                                 </fieldset>
-                        <div class="row">
-                                        <div ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="index_song=$index">
-
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <div class="thumbnail">
-                                                            <div class="row">
-                                                                <div class="col-md-3">
-                                                                    <img ng-src={{track.cover}} class="gril-pic">
-                                                                    <div class="caption">
-                                                                        <fieldset class="form-group">
-                                                                            <input type="submit" class="btn btn-alt" ng-click="vote(track.id, track.vote)" value="Voter" />
-                                                                        </fieldset>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="description col-md-8">
-                                                                    <p>{{track.artist}}</p>
-                                                                    <p class="titreChanson"><b>{{track.title}}</b></p>
-                                                                    <p class="nomAlbum">{{track.album}}<br/></p>
-                                                                    <p>{{track.duration/60
-                                                                        | number:0}}:{{track.duration%60}}<br/>{{track.vote}}
-                                                                        vote(s)<br/></p>
-                                                                </div>
-                                                            </div>
                                                 </div>
-
                                             </div>
-                                        </div>
                                         <div class="description col-md-8">
                                             <p>{{track.artist}}</p>
                                             <p class="titreChanson"><b>{{track.title}}</b></p>
@@ -183,12 +159,10 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Catalogue-->
                 <div ng-show="tab.isSet(2)" align="center">
                     <div class="row">
@@ -203,9 +177,9 @@
                                         <fieldset class="form-group">
                                             <input type="submit" class="btn btn-alt" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
                                         </fieldset>
+                                    </div>
                                         </div>
-                                            
-                                        </div>
+
                                         <div class="description col-md-8">
                                             <p>{{data.artist.name}}</p>
                                         <p class="titreChanson"><b>{{data.title}}</b></p>
@@ -216,9 +190,8 @@
                                 </div>
                             </div>
                         </div>
-
+                        </div>
                     </div>
-                </div>
                 <!-- Recherche-->
                 <div ng-show="tab.isSet(3)" align="center">
                     <fieldset class="form-group">
@@ -235,7 +208,7 @@
                                         <fieldset class="form-group">
                                             <input type="submit" class="btn btn-alt" ng-click="mpCtrl.addCat(index_song)" value="Ajouter"/>
                                         </fieldset>
-                                            </div>
+                                    </div>
                                         </div>
                                         <div class="description col-md-8">
                                             <p>{{data.artist.name}}</p>
@@ -249,10 +222,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-                </div>
-                </div>
+               </div>
         </section>
     </div>
 </div>
