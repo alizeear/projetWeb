@@ -3,18 +3,28 @@
     src: url('fonts/glyphicons-halflings-regular.eot');
     src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('fonts/glyphicons-halflings-regular.woff') format('woff'), url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
+html{
+    height: 100%;
+}
 body{
     background-color: #202020;
     color: #ffffff;
     width: 100%;
     font-size: 16px;
     font-family: 'Roboto Condensed', sans-serif;
+    height: 94%;
+}
+.wrap{
+    min-height: 94%;
 }
 li{
     list-style: none;
 }
 h1, h2, h3{
     color: #202020;
+}
+a:focus{
+    color: #F27329;
 }
 .nav{
     background-color: #202020;
@@ -43,6 +53,15 @@ h1, h2, h3{
     top: 2px;
     right: -4px;
 }
+.glyphicon-plus, .glyphicon-remove{
+    position: relative;
+    top: 0;
+    right: 0;
+ }
+.glyphicon-plus:hover, .glyphicon-remove:hover{
+    cursor: pointer;
+    color: #F27329;
+}
 .glyphicon-heart:hover{
     cursor: pointer;
     color: #F27329;
@@ -56,7 +75,7 @@ h1, h2, h3{
 .linkglyphicon{
     color: #ffffff;
 }
-.linkglyphicon:hover, .linkglyphicon:visited{
+.linkglyphicon:hover{
     color: #F27329;
 }
 .align-right{
@@ -68,6 +87,9 @@ h1, h2, h3{
 }
 .image{
     width: 100%;
+}
+.image_recherche{
+    width: 92%;
 }
 
 .nav-pills > li{
@@ -141,6 +163,9 @@ h1{
 }
 .cover_current img{
     width: auto;
+}
+.clearfix {
+    overflow: auto;
 }
 .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
     color: #fff;
@@ -373,4 +398,15 @@ a{
 
 .titreChanson{
     color : black;
+}
+
+footer{
+    position: relative;
+    clear:both;
+    margin-top: 0px;
+    height: 45px;
+    text-align: center;
+}
+footer p{
+    margin-bottom: 0;
 }
