@@ -350,7 +350,11 @@ a{
 
 .thumbnail{
     height : 160px;
-    background-color: #e4c652;
+    background-color: rgba(45, 45, 45, 0.98);
+    border-collapse: collapse;
+    border-color: #F27329;
+    border-width: thick;
+    border-radius: 0%;
 }
 
 .thumbnail.row{
@@ -394,10 +398,18 @@ a{
 
 .nomAlbum{
     font-style: italic;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .titreChanson{
     color : black;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 footer{
@@ -409,4 +421,15 @@ footer{
 }
 footer p{
     margin-bottom: 0;
+}
+
+.btn-alt{
+    color: #fff;
+    background-color: #d87b1b;
+    border-color: #F27329;
+    border-radius: 0;
+}
+
+.btn-alt:hover {
+    background-color: #438f43;
 }
