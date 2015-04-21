@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="styles-v2.css" />
 </head>
 <body ng-controller="MusicPlayerController as mpCtrl">
+<div class="wrap">
 <header>
     <h1><!--Lecteur de musique collaboratif--> <a href="" class="linkglyphicon" onclick="table()"><span class="glyphicon glyphicon-th-large"></span></a></h1>
 </header>
@@ -17,7 +18,7 @@
 <!--END player deezer-->
 
 <!--Player custom-->
-<div>
+
     <div class="col-xs-12 col-sm-12 col-md-12 ">
         <section id="player">
             <div ng-repeat="track in currentTrack" class="cover_current">
@@ -86,23 +87,25 @@
                     <fieldset class="form-group">
                         <input ng-model="filterExpr" class="form-control search" placeholder="Filtre..." title="Filtre"/>
                     </fieldset>
-                    <table class="table table-stripe">
+                    <table class="table table-striped">
                         <tr ng-repeat="data in filtered = (catDatas | filter:filterExpr)" ng-init="index_song=$index">
                             <div class="row">
                                 <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image"></td>
-                                <td class="col-md-2">{{data.album.title}}</td>
-                                <td class="col-md-2">{{data.title}}</td>
+                                <td class="col-md-3">{{data.album.title}}</td>
+                                <td class="col-md-3">{{data.title}}</td>
                                 <td class="col-md-2">{{data.artist.name}}</td>
                                 <td class="col-md-1">{{data.duration/60 | number:0}}:{{data.duration%60}}</td>
                                 <td class="col-md-1">
-                                    <fieldset class="form-group">
+                                    <span class="glyphicon glyphicon-plus" ng-click="mpCtrl.addPlay(index_song)"></span>
+                                    <!--<fieldset class="form-group">
                                         <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
-                                    </fieldset>
+                                    </fieldset>-->
                                 </td>
                                 <td class="col-md-1">
-                                    <fieldset class="form-group">
+                                    <span class="glyphicon glyphicon-remove" ng-click="mpCtrl.deletePlay(index_song)"></span>
+                                    <!--<fieldset class="form-group">
                                         <input type="submit" class="btn btn-primary" ng-click="mpCtrl.deletePlay(index_song)" value="-" />
-                                    </fieldset>
+                                    </fieldset>-->
                                 </td>
                             </div>
                         </tr>
@@ -114,17 +117,18 @@
                     <fieldset class="form-group">
                         <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control search" placeholder="Search for a song..." title="Search"/>
                     </fieldset>
-                    <table class="table table-stripe">
+                    <table class="table table-striped">
                         <tr ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
                             <div class="row">
-                                <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image"></td>
-                                <td class="col-md-2">{{data.album.title}}</td>
-                                <td class="col-md-2">{{data.title}}</td>
-                                <td class="col-md-2">{{data.artist.name}}</td>
+                                <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image_recherche"></td>
+                                <td class="col-md-3">{{data.album.title}}</td>
+                                <td class="col-md-3">{{data.title}}</td>
+                                <td class="col-md-3">{{data.artist.name}}</td>
                                 <td class="col-md-1">
-                                    <fieldset class="form-group">
+                                    <span class="glyphicon glyphicon-plus" ng-click="mpCtrl.addCat(index_song)"></span>
+                                    <!--<fieldset class="form-group">
                                         <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter" />
-                                    </fieldset>
+                                    </fieldset>-->
                                 </td>
                             </div>
                         </tr>
@@ -229,6 +233,11 @@
         </section>
     </div>
 </div>
+<div class="clearfix"></div>
+<footer>
+    <p>Projet LTW2 - Master IC²A</p>
+    <p>ARNAUD Alizée - COTE Guillaume - SIBE Mickaël - Qi</p>
+</footer>
 <script type="text/javascript" src="angular.min.js"></script>
 <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="jquery-ui-1.8.21.custom.min.js"></script>
