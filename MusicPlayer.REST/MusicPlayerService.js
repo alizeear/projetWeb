@@ -120,12 +120,12 @@ app.post('/playlist/positionTrackPlaylist' , function (request, response) {
 });
 
 app.get('/playlist/getPositionTrackPlaylist', function (request, response) {
-    //console.log('positionTrackPlaylist : '+positionTrackPlaylist);
+    console.log('positionTrackPlaylist : '+positionTrackPlaylist);
     response.json(positionTrackPlaylist);
 });
 
 app.get('/playlist/numTrack', function (request, response) {
-    //console.log('trackPosition : '+trackPosition);
+    console.log('trackPosition : '+trackPosition);
     response.json(trackPosition);
 });
 
