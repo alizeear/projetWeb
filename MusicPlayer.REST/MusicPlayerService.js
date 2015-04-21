@@ -109,7 +109,7 @@ app.delete('/projetweb/catalogueTracks/delete/:id', function(request, response){
         if(!err)
             console.log("{\n\tid: " + id_cat + "\n\t_rev: " + rev_cat + "\n\tdata:[" + songs_cat + "]\n}");
     });
-    response.json(songs_cat);
+    response.json(song);
 });
 
 app.post('/playlist/positionTrackPlaylist' , function (request, response) {
