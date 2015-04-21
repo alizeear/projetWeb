@@ -88,8 +88,11 @@
                 </div>
                 <!--  Catalogue  -->
                 <div ng-show="tab.isSet(2)" align="center">
+                    <fieldset class="form-group">
+                        <input ng-model="filterExpr" class="form-control" placeholder="Filtre..." title="Filtre"/>
+                    </fieldset>
                     <table class="table">
-                        <tr ng-repeat="data in catDatas" ng-init="index_song=$index">
+                        <tr ng-repeat="data in filtered = (catDatas | filter:filterExpr)" ng-init="index_song=$index">
                             <div class="row">
                                 <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image"></td>
                                 <td class="col-md-2">{{data.album.title}}</td>
@@ -133,6 +136,7 @@
                     </table>
                 </div>
             </div>
+
             <div id="grille">
                 <!--Playlist-->
                 <div ng-show="tab.isSet(1)" align="center">
@@ -145,7 +149,7 @@
                                             <img ng-src={{track.cover}} class="gril-pic">
                                             <div class="caption">
                                                 <fieldset class="form-group">
-                                                    <input type="submit" class="btn btn-primary" ng-click="vote(track.id, track.vote)" value="Voter" />
+                                                    <input type="submit" class="btn btn-alt" ng-click="vote(track.id, track.vote)" value="Voter" />
                                                 </fieldset>
                                             </div>
                                         </div>
@@ -159,17 +163,17 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Catalogue-->
                 <div ng-show="tab.isSet(2)" align="center">
+                    <fieldset class="form-group">
+                        <input ng-model="filterExpr" class="form-control" placeholder="Filtre..." title="Filtre"/>
+                    </fieldset>
                     <div class="row">
-                        <div ng-repeat="data in catDatas" ng-init="id_song=$index" >
-
+                        <div ng-repeat="data in filtered = (catDatas | filter:filterExpr)" ng-init="id_song=$index" >
                             <div class="col-sm-6 col-md-6">
                                 <div class="thumbnail">
                                     <div class="row">
@@ -177,13 +181,13 @@
                                             <img ng-src="{{data.album.cover}}" class="gril-pic">
                                             <div class="caption">
                                                 <fieldset class="form-group">
-                                                    <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
+                                                    <input type="submit" class="btn btn-alt" ng-click="mpCtrl.addPlay(index_song)" value="Ajouter" />
                                                 </fieldset>
                                             </div>
                                         </div>
                                         <div class="description col-md-8">
                                             <p>{{data.artist.name}}</p>
-                                            <p class="titreChanson"><b>{{data.title}}</b></p>
+                                        <p class="titreChanson"><b>{{data.title}}</b></p>
                                             <p class="nomAlbum">{{data.album.title}}<br/></p>
                                             <p>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
                                         </div>
@@ -191,7 +195,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <!-- Recherche-->
@@ -205,26 +208,26 @@
                                 <div class="thumbnail">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <img ng-src="{{data.album.cover}}" class="gril-pic">
-                                            <div class="caption">
-                                                <fieldset class="form-group">
-                                                    <input type="submit" class="btn btn-primary" ng-click="mpCtrl.addCat(index_song)" value="Ajouter"/>
-                                                </fieldset>
-                                            </div>
+                                    <img ng-src="{{data.album.cover}}" class="gril-pic">
+                                    <div class="caption">
+                                        <fieldset class="form-group">
+                                            <input type="submit" class="btn btn-alt" ng-click="mpCtrl.addCat(index_song)" value="Ajouter"/>
+                                        </fieldset>
+                                    </div>
                                         </div>
                                         <div class="description col-md-8">
                                             <p>{{data.artist.name}}</p>
-                                            <p class="titreChanson"><b>{{data.title}}</b></p>
+                                        <p class="titreChanson"><b>{{data.title}}</b></p>
                                             <p class="nomAlbum">{{data.album.title}}<br/></p>
-                                            <p>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                        <p>{{data.duration/60 | number:0}}:{{data.duration%60}}<br/></p>
+                                    </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+               </div>
         </section>
     </div>
 </div>
@@ -346,27 +349,18 @@
 
         //Fonction de suppression
         that.deletePlay = function(index){
-
             $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
                     success(function(resp){
-                        that.catSongs = resp;
-                        console.log("GET successful : " + that.catSongs + " (deletePlay)");
+                        console.log("GET successful : " + resp + " (deletePlay)");
                     }).
                     error(function(){
                         console.log("GET failed");
                     });
-
             $http.delete('http://localhost:3000/projetweb/catalogueTracks/delete/'+that.catSongs[index]).
                     success(function(resp){
-                        that.catSongs = resp;
-                        console.log("DELETE successful : " + that.catSongs + " (deletePlay)");
-                        DZ.api('/track/' + that.catSongs[index].id, function(response){
-                            //$scope.catDatas.push(response);
-                            $scope.catDatas.remove = function(response) {
-                                var index = $scope.catDatas.indexOf(response);
-                                $scope.catDatas.splice(index, 1);
-                            }
-
+                        $scope.catDatas = [];
+                        DZ.api('/track/' + resp, function(response){
+                            $scope.catDatas.push(response);
                         });
                     }).
                     error(function(){

@@ -99,8 +99,17 @@ app.put('/projetweb/tracks/catalogueTracks', function(request, response){
 
 app.delete('/projetweb/catalogueTracks/delete/:id', function(request, response){
     var song = request.params['id'];
-    console.log('song : '+song);
-
+    var newCat = [];
+    for(i = 0; i < songs_cat.length; i++){
+        if(songs_cat[i] != song)
+            newCat.push(songs_cat[i]);
+    }
+    songs_cat = newCat;
+    db.insert({_id: id_cat, _rev: rev_cat, data: songs_cat}, function(err, body){
+        if(!err)
+            console.log("{\n\tid: " + id_cat + "\n\t_rev: " + rev_cat + "\n\tdata:[" + songs_cat + "]\n}");
+    });
+    response.json(songs_cat);
 });
 
 app.post('/playlist/positionTrackPlaylist' , function (request, response) {
