@@ -68,7 +68,7 @@
             <div id="tableau">
                 <!--  Playlist  -->
                 <div ng-show="tab.isSet(1)" align="center">
-                    <table class="table">
+                    <table class="table-striped">
                         <tr ng-repeat="track in playlistDatas | orderBy: '-vote'" ng-init="id_song=$index">
                             <div class="row">
                                 <td class="col-md-1"><img ng-src="{{track.cover}}" class="image"></td>
@@ -91,7 +91,7 @@
                     <fieldset class="form-group">
                         <input ng-model="filterExpr" class="form-control" placeholder="Filtre..." title="Filtre"/>
                     </fieldset>
-                    <table class="table">
+                    <table class="table-striped">
                         <tr ng-repeat="data in filtered = (catDatas | filter:filterExpr)" ng-init="index_song=$index">
                             <div class="row">
                                 <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image"></td>
@@ -119,7 +119,7 @@
                     <fieldset class="form-group">
                         <input ng-model="mpCtrl.search_text" ng-change="mpCtrl.search(search_text)" class="form-control search" placeholder="Search for a song..." title="Search"/>
                     </fieldset>
-                    <table class="table">
+                    <table class="table-striped">
                         <tr ng-repeat="data in mpCtrl.datas.data" ng-init="index_song=$index">
                             <div class="row">
                                 <td class="col-md-1"><img ng-src="{{data.album.cover}}" class="image"></td>
