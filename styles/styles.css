@@ -309,7 +309,7 @@ a:focus{
     font-family: fantasy;
 }
 .gril-pic{
-    width : 100px;
+    width : 117px;
     float : left;
     padding-left : 0px;
 }
@@ -376,36 +376,34 @@ footer p{
 
 /* Default Screen */
 @media (min-width : 992px) and (max-width : 1199px) {
+    .description {
+        text-align: left;
+        margin-left: 31px;
+    }
 }
 
 /* Tablet Screen Big */
 @media (min-width : 768px) and (max-width : 991px) {
-    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
+    #player {width: 50%;margin: 0 auto;margin-bottom: 30px;}
     img{width: 49%}
-    .playliste {margin-right: 0px;}
     .description{float:right;}
-    .playliste {margin-right: 0px;}
-    .gril-pic{width:130%}
+    .gril-pic{width:117px}
 }
 
 /* Tablet Screen Small */
 @media (min-width : 640px) and (max-width : 767px) {
     #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
     img{width: 49%}
-    .playliste {margin-right: 0px;}
     .description{float:right;}
-    .playliste {margin-right: 0px;}
-    .gril-pic{width:130%}
+    .gril-pic{width:117px}
 }
 
 /* Mobile Screen Wide */
 @media (min-width : 420px) and (max-width : 640px) {
     #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
     img{width: 49%}
-    .playliste {margin-right: 0px;}
     .description{float:right;}
-    .playliste {margin-right: 0px;}
-    .gril-pic{width:130%}
+    .gril-pic{width:117px}
 }
 
 /* Mobile portrait */
@@ -413,5 +411,5 @@ footer p{
     #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
     img{width: 49%}
     .playliste {margin-right: 0px;}
-    .gril-pic{width:130%}
+    .gril-pic{width:117px}
 }
