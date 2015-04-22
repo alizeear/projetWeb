@@ -26,6 +26,7 @@ h1, h2, h3{
     position: relative;
     text-align: center;
     font-size: 40px;
+    border-radius: 3%;
     /*margin-top: 50px;*/
     /*margin-bottom: 50px;*/
 }
@@ -111,16 +112,6 @@ h1{
     position: fixed;
 
 }
-
-/*#player .col-xs{
-    background-color: #D93829;
-    padding: auto;
-    border:1px solid #D93829;
-    margin-left: 10px;
-    margin-right: 10px;
-    width : inherit;
-    /*position: fixed;
-}*/
 
 td:hover, th:hover {
     background-color: #202020;
@@ -273,30 +264,41 @@ a{
 
 /* Tablet Screen Big */
 @media (min-width : 768px) and (max-width : 991px) {
-    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;position:fixed;}
+    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;position:relative;}
     img{width: 75%}
+    .cover_current{display:none;}
+    .description{float:right;}
     .playliste {margin-right: 0px;}
 }
 
 /* Tablet Screen Small */
 @media (min-width : 640px) and (max-width : 767px) {
-    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;position:absolute;}
+    #player {width: 100%; margin: 0 auto;margin-bottom: 30px;position:relative;}
     img{width: 49%}
-    .playliste {margin-right: 0px;}
+    .cover_current{display:none;}
+    .description{float:right;}
+    .playliste {margin-right: 0px;top:700px;}
+    #choix{float:none;}
 }
 
 /* Mobile Screen Wide */
 @media (min-width : 420px) and (max-width : 640px) {
-    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;position:absolute;}
+    #player {width: 100%; margin: 0 auto;margin-bottom: 30px;position:relative;}
     img{width: 49%}
-    .playliste {margin-right: 0px;}
+    .cover_current{display:none;}
+    .description{float:right;}
+    .playliste {margin-right: 0px;top:700px;}
+    #choix{float:none;}
 }
 
 /* Mobile portrait */
 @media (max-width : 420px) {
-    #player {width: 50%; margin: 0 auto;margin-bottom: 30px;position:absolute;}
+    #player {width: 100%; margin: 0 auto;margin-bottom: 30px;position:relative;}
     img{width: 49%}
-    .playliste {margin-right: 0px;}
+    .cover_current{display:none;}
+    .description{float:right;}
+    .playliste {margin-right: 0px;top:700px;}
+    #choix{float:none;}
 }
 
 #grille{
@@ -304,7 +306,7 @@ a{
 }
 
 .thumbnail{
-    height : 170px;
+    height : 150px;
     background-color: #d87b1b;
 }
 
