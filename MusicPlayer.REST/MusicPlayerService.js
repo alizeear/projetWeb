@@ -19,8 +19,10 @@ var songs_play = [ ];
 var positionTrackPlaylist = 0;
 var trackPosition = 0;
 
-app.get('/projetweb/tracks/allTracks', function(request, response){
-    http.get("http://localhost:5984/projetweb/tracks", function(res) {
+// GET //////////////////////////////////
+
+app.get('/projetweb/tracks.txt/allTracks', function(request, response){
+    http.get("http://localhost:5984/projetweb/tracks.txt", function(res) {
         var data = "";
         res.setEncoding('utf8');
         res.on("data", function (chunk) {
@@ -36,7 +38,36 @@ app.get('/projetweb/tracks/allTracks', function(request, response){
     });
 });
 
-app.put('/projetweb/tracks/allTracks', function(request, response){
+app.get('/projetweb/tracks.txt/catalogueTracks', function(request, response){
+    http.get('http://localhost:5984/projetweb/catalogue.txt', function(res){
+        var data = "";
+        res.setEncoding('utf8');
+        res.on("data", function (chunk) {
+            data += chunk;
+            data = JSON.parse(data);
+            id_cat = data._id;
+            rev_cat = data._rev;
+            songs_cat = data.data;
+        });
+        res.on('end', function(){
+            response.json(songs_cat);
+        });
+    });
+});
+
+app.get('/playlist/getPositionTrackPlaylist', function (request, response) {
+    //console.log('positionTrackPlaylist : '+positionTrackPlaylist);
+    response.json(positionTrackPlaylist);
+});
+
+app.get('/playlist/numTrack', function (request, response) {
+    //console.log('trackPosition : '+trackPosition);
+    response.json(trackPosition);
+});
+
+// PUT //////////////////////////////////
+
+app.put('/projetweb/tracks.txt/allTracks', function(request, response){
     var song = {id: request.body.id, vote: request.body.vote};
     var update = true;
     for(i = 0; i < songs_play.length; i++){
@@ -57,24 +88,7 @@ app.put('/projetweb/tracks/allTracks', function(request, response){
     response.json(song);
 });
 
-app.get('/projetweb/tracks/catalogueTracks', function(request, response){
-    http.get('http://localhost:5984/projetweb/catalogue', function(res){
-        var data = "";
-        res.setEncoding('utf8');
-        res.on("data", function (chunk) {
-            data += chunk;
-            data = JSON.parse(data);
-            id_cat = data._id;
-            rev_cat = data._rev;
-            songs_cat = data.data;
-        });
-        res.on('end', function(){
-            response.json(songs_cat);
-        });
-    });
-});
-
-app.put('/projetweb/tracks/catalogueTracks', function(request, response){
+app.put('/projetweb/tracks.txt/catalogueTracks', function(request, response){
     var song = request.body.data;
     var alreadyIn = false;
     for(i = 0; i < songs_cat.length; i++){
@@ -97,6 +111,8 @@ app.put('/projetweb/tracks/catalogueTracks', function(request, response){
     response.json(song);
 });
 
+// DELETE //////////////////////////////////
+
 app.delete('/projetweb/catalogueTracks/delete/:id', function(request, response){
     var song = request.params['id'];
     var newCat = [];
@@ -112,6 +128,8 @@ app.delete('/projetweb/catalogueTracks/delete/:id', function(request, response){
     response.json(song);
 });
 
+// POST //////////////////////////////////
+
 app.post('/playlist/positionTrackPlaylist' , function (request, response) {
     var data = request.body;
     positionTrackPlaylist = data.position;
@@ -119,15 +137,7 @@ app.post('/playlist/positionTrackPlaylist' , function (request, response) {
     response.send("ok");
 });
 
-app.get('/playlist/getPositionTrackPlaylist', function (request, response) {
-    console.log('positionTrackPlaylist : '+positionTrackPlaylist);
-    response.json(positionTrackPlaylist);
-});
-
-app.get('/playlist/numTrack', function (request, response) {
-    console.log('trackPosition : '+trackPosition);
-    response.json(trackPosition);
-});
+// SERVEUR //////////////////////////////////
 
 var server = app.listen(3000, function () {
     console.log('Listening at http://localhost:%s', server.address().port);
