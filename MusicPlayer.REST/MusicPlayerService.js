@@ -21,8 +21,8 @@ var trackPosition = 0;
 
 // GET //////////////////////////////////
 
-app.get('/projetweb/tracks.txt/allTracks', function(request, response){
-    http.get("http://localhost:5984/projetweb/tracks.txt", function(res) {
+app.get('/projetweb/tracks/allTracks', function(request, response){
+    http.get("http://localhost:5984/projetweb/tracks", function(res) {
         var data = "";
         res.setEncoding('utf8');
         res.on("data", function (chunk) {
@@ -38,8 +38,8 @@ app.get('/projetweb/tracks.txt/allTracks', function(request, response){
     });
 });
 
-app.get('/projetweb/tracks.txt/catalogueTracks', function(request, response){
-    http.get('http://localhost:5984/projetweb/catalogue.txt', function(res){
+app.get('/projetweb/tracks/catalogueTracks', function(request, response){
+    http.get('http://localhost:5984/projetweb/catalogue', function(res){
         var data = "";
         res.setEncoding('utf8');
         res.on("data", function (chunk) {
@@ -67,7 +67,7 @@ app.get('/playlist/numTrack', function (request, response) {
 
 // PUT //////////////////////////////////
 
-app.put('/projetweb/tracks.txt/allTracks', function(request, response){
+app.put('/projetweb/tracks/allTracks', function(request, response){
     var song = {id: request.body.id, vote: request.body.vote};
     var update = true;
     for(i = 0; i < songs_play.length; i++){
@@ -88,7 +88,7 @@ app.put('/projetweb/tracks.txt/allTracks', function(request, response){
     response.json(song);
 });
 
-app.put('/projetweb/tracks.txt/catalogueTracks', function(request, response){
+app.put('/projetweb/tracks/catalogueTracks', function(request, response){
     var song = request.body.data;
     var alreadyIn = false;
     for(i = 0; i < songs_cat.length; i++){
