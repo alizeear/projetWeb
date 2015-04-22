@@ -106,7 +106,7 @@
                                 </td>
                                 <td class="col-md-1">
                                     <fieldset class="form-group">
-                                        <input type="submit" class="btn btn-primary" ng-click="mpCtrl.deletePlay(index_song)" value="-" />
+                                        <input type="submit" class="btn btn-primary" ng-click="mpCtrl.deletePlay(data.id)" value="-" />
                                     </fieldset>
                                 </td>
                             </div>
@@ -362,13 +362,15 @@
                     error(function(){
                         console.log("GET failed");
                     });
-            $http.delete('http://localhost:3000/projetweb/catalogueTracks/delete/'+that.catSongs[index]).
+            $http.delete('http://localhost:3000/projetweb/catalogueTracks/delete/'+index).
                     success(function(resp){
                         var newCat = [ ];
+                        console.log(resp);
                         for(i = 0; i < $scope.catDatas.length; i++){
                             if($scope.catDatas[i].id != resp)
                                 newCat.push($scope.catDatas[i]);
                         }
+                        console.log(newCat);
                         $scope.catDatas = newCat;
                     }).
                     error(function(){
