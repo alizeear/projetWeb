@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Glyphicons Halflings';
-    src: url('fonts/glyphicons-halflings-regular.eot');
-    src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('fonts/glyphicons-halflings-regular.woff') format('woff'), url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 body{
     background-color: #202020;
@@ -84,7 +84,6 @@ header{
     text-emphasis: filled;
     text-align : center;
     margin-bottom: 50px;
-    background-image: url('header.jpg');
     background-position : center;
     font-family : Arial, Verdana, sans-serif;
     line-height : 90px;
@@ -181,7 +180,7 @@ a{
     position: relative;
     height: 13px;
     background-color: #8e8d8d;
-    background: url('images/bg-track.png') repeat top left;
+    background: url('../images/bg-track.png') repeat top left;
     box-shadow: inset 0 1px 5px 0px rgba(0, 0, 0, .5),
     0 1px 0 0px rgba(250, 250, 250, .5);
 }
@@ -214,7 +213,7 @@ a{
     display: inline-block;
     width: 25px;
     height: 20px;
-    background: url('images/volume.png') no-repeat 0 -50px;
+    background: url('../images/volume.png') no-repeat 0 -50px;
     position: relative;
     margin-top: -5px;
 }
@@ -224,7 +223,7 @@ a{
     width: 25px;
     height: 25px;
     cursor: pointer;
-    background: url('images/handle.png') no-repeat 50% 50%;
+    background: url('../images/handle.png') no-repeat 50% 50%;
     font-weight: bold;
     color: #D93829;
     outline: none;
