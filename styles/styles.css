@@ -383,6 +383,9 @@ footer p{
     #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
     img{width: 49%}
     .playliste {margin-right: 0px;}
+    .description{float:right;}
+    .playliste {margin-right: 0px;}
+    .gril-pic{width:130%}
 }
 
 /* Tablet Screen Small */
@@ -390,6 +393,9 @@ footer p{
     #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
     img{width: 49%}
     .playliste {margin-right: 0px;}
+    .description{float:right;}
+    .playliste {margin-right: 0px;}
+    .gril-pic{width:130%}
 }
 
 /* Mobile Screen Wide */
@@ -397,6 +403,9 @@ footer p{
     #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
     img{width: 49%}
     .playliste {margin-right: 0px;}
+    .description{float:right;}
+    .playliste {margin-right: 0px;}
+    .gril-pic{width:130%}
 }
 
 /* Mobile portrait */
@@ -404,4 +413,5 @@ footer p{
     #player {width: 50%; margin: 0 auto;margin-bottom: 30px;}
     img{width: 49%}
     .playliste {margin-right: 0px;}
+    .gril-pic{width:130%}
 }
