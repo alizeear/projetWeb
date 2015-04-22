@@ -97,7 +97,7 @@
                                     <span class="glyphicon glyphicon-plus" ng-click="mpCtrl.addPlay(index_song)"></span>
                                 </td>
                                 <td class="col-md-1">
-                                    <span class="glyphicon glyphicon-remove" ng-click="mpCtrl.deletePlay(index_song)"></span>
+                                    <span class="glyphicon glyphicon-remove" ng-click="mpCtrl.deletePlay(data.id)"></span>
                                 </td>
                             </div>
                         </tr>
@@ -168,7 +168,7 @@
                                             <p class="titreChanson">{{data.title}}</p>
                                             <p>{{data.artist.name}}</p>
                                             <p class="nomAlbum">{{data.album.title}}<br/></p>
-                                            <p class="infosTrack">{{data.duration/60 | number:0}}:{{data.duration%60}} <span class="glyphicon glyphicon-plus optionsCatalogue" ng-click="mpCtrl.addPlay(index_song)"></span>  <span class="glyphicon glyphicon-remove optionsCatalogue" ng-click="mpCtrl.deletePlay(index_song)"></span><br/></p>
+                                            <p class="infosTrack">{{data.duration/60 | number:0}}:{{data.duration%60}} <span class="glyphicon glyphicon-plus optionsCatalogue" ng-click="mpCtrl.addPlay(index_song)"></span>  <span class="glyphicon glyphicon-remove optionsCatalogue" ng-click="mpCtrl.deletePlay(data.id)"></span><br/></p>
                                         </div>
                                     </div>
                                 </div>
@@ -208,7 +208,7 @@
     <div class="clearfix"></div>
     <footer>
         <p>Projet LTW2 - Master IC²A</p>
-        <p>ARNAUD Alizée - COTE Guillaume - SIBE Mickaël - Qi</p>
+        <p>ARNAUD Alizée - COTE Guillaume - SIBE Mickaël - ZHANG Qi</p>
     </footer>
 
 <!--SCRIPTS-->
@@ -298,6 +298,13 @@
         //Fonction d'ajout de la recherche vers le catalogue.txt
         $scope.catDatas = [ ];
         that.addCat = function(index){
+            $http.get('http://localhost:3000/projetweb/tracks/catalogueTracks').
+                    success(function(resp){
+                        console.log("GET successful : " + resp + " (addCat)");
+                    }).
+                    error(function(){
+                        console.log("GET failed");
+                    });
             $http.put('http://localhost:3000/projetweb/tracks/catalogueTracks',
                     JSON.stringify({data: that.datas.data[index].id}),
                     {headers: { 'Content-Type': 'application/json'}}).
@@ -322,6 +329,13 @@
                     success(function(resp){
                         that.catSongs = resp;
                         //console.log("GET successful : " + that.catSongs + " (addPlay)");
+                    }).
+                    error(function(){
+                        console.log("GET failed");
+                    });
+            $http.get('http://localhost:3000/projetweb/tracks/allTracks').
+                    success(function(resp){
+                        console.log("GET successful : " + resp + " (addPlay)");
                     }).
                     error(function(){
                         console.log("GET failed");
@@ -352,12 +366,16 @@
                     error(function(){
                         console.log("GET failed");
                     });
-            $http.delete('http://localhost:3000/projetweb/catalogueTracks/delete/'+that.catSongs[index]).
+            $http.delete('http://localhost:3000/projetweb/catalogueTracks/delete/'+index).
                     success(function(resp){
-                        $scope.catDatas = [];
-                        DZ.api('/track/' + resp, function(response){
-                            $scope.catDatas.push(response);
-                        });
+                        var newCat = [ ];
+                        console.log(resp);
+                        for(i = 0; i < $scope.catDatas.length; i++){
+                            if($scope.catDatas[i].id != resp)
+                                newCat.push($scope.catDatas[i]);
+                        }
+                        console.log(newCat);
+                        $scope.catDatas = newCat;
                     }).
                     error(function(){
                         console.log("DELETE failed");
