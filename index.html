@@ -333,6 +333,13 @@
                     error(function(){
                         console.log("GET failed");
                     });
+            $http.get('http://localhost:3000/projetweb/tracks/allTracks').
+                    success(function(resp){
+                        console.log("GET successful : " + resp + " (addPlay)");
+                    }).
+                    error(function(){
+                        console.log("GET failed");
+                    });
             $http.put('http://localhost:3000/projetweb/tracks/allTracks',
                     JSON.stringify({id: that.catSongs[index], vote: 0}),
                     {headers: { 'Content-Type': 'application/json'}}).
